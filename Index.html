@@ -19,7 +19,7 @@
 #grad1 {
   height: 200px;
   background-color: grey; /* For browsers that do not support gradients */
-  background-image: linear-gradient(grey, #0080FF);
+  background-image: linear-gradient(to left,grey, white);
 }
 
 </style>
@@ -28,98 +28,281 @@
 #grad2 {
   height: 200px;
   background-color: white; /* For browsers that do not support gradients */
-  background-image: linear-gradient(white, #0080FF);
+  background-image: linear-gradient(to right, white, #0080FF);
 }
 
 </style>
 
+<style>
+* {box-sizing: border-box}
+body {font-family: Times New Roman, sans-serif; margin:0}
+.mySlides {display: none}
+img {vertical-align: middle;}
+
+/* Slideshow container */
+.slideshow-container {
+  max-width: 900px;
+  position: relative;
+  margin: auto;
+}
+
+/* Next & previous buttons */
+.prev, .next {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  width: auto;
+  padding: 16px;
+  margin-top: -22px;
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+  transition: 0.6s ease;
+  border-radius: 0 3px 3px 0;
+  user-select: none;
+}
+
+/* Position the "next button" to the right */
+.next {
+  right: 0;
+  border-radius: 3px 0 0 3px;
+}
+
+/* On hover, add a black background color with a little bit see-through */
+.prev:hover, .next:hover {
+  background-color: rgba(0,0,0,0.8);
+}
+
+/* Caption text */
+.text {
+  color: #f2f2f2;
+  font-size: 15px;
+  padding: 8px 12px;
+  position: absolute;
+  bottom: 8px;
+  width: 100%;
+  text-align: center;
+}
+
+/* Number text (1/3 etc) */
+.numbertext {
+  color: #f2f2f2;
+  font-size: 12px;
+  padding: 8px 12px;
+  position: absolute;
+  top: 0;
+}
+
+/* The dots/bullets/indicators */
+.dot {
+  cursor: pointer;
+  height: 15px;
+  width: 15px;
+  margin: 0 2px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+  transition: background-color 0.6s ease;
+}
+
+.active, .dot:hover {
+  background-color: #717171;
+}
+
+/* Fading animation */
+.fade {
+  -webkit-animation-name: fade;
+  -webkit-animation-duration: 1.5s;
+  animation-name: fade;
+  animation-duration: 1.5s;
+}
+
+@-webkit-keyframes fade {
+  from {opacity: .4} 
+  to {opacity: 1}
+}
+
+@keyframes fade {
+  from {opacity: .4} 
+  to {opacity: 1}
+}
+
+/* On smaller screens, decrease text size */
+@media only screen and (max-width: 300px) {
+  .prev, .next,.text {font-size: 11px}
+}
+</style>
 
 
-<body>
 
-<p class="aligncenter">
-<img src="BruteForce-team-logo.jpg" alt="HTML5 Icon" class="center" style="float:center;width:1500px;height:300px;">
-</p>
-
-<center><h1>A tool to Improve Therapy Treatment of Amputees </h1></center>
-
-<hr>
-<p><!--Change the Team name and Team Members here -->
-	<h3>
-	Team Name: Brute Force
-	<br>
-	Team Members: Paul-Jason Mello, Alec White, Daniel Rea, Joseph Dandro, Lucas Thompson, David Liu, Luke Noramczyk
-	<br>
-	Client: Dr. Warren Smith and Dr. Douglas Thomas
-	<br>
-	Adviser: Prof. Dr. Jingwei Yang
-	</h3>
-				  
-</p>
-
-<h4>Background</h4>
+<body id="grad1">>
 
 
 
-<p><!-- Change the description of the project strting from here -->
-	We are working with a Sac State Physical Therapy professor to develop a microcontroller-based monitor of crutch usage on a crutch to be used by amputees. A load cell in the crutch monitors the force versus time. The monitor stores two weeks of data sampled at 1500 samples/second onto an SD card. We looking for a team to develop a user interface for the physical therapist to let him configure and start the crutch monitor and then to upload the data to a PC to graphically display it and generate some summary statistics of the data.<br>
-<br> 
-
-</p>
-
-<h3>Scope</h3>
-
-<p><!-- Change the description of the project strting from here -->
-	The scope of this project is to collect data taken from force measurments of a patient and then graphically display this data. One of the main parts of the business problem that will be addressed will be developing a graphical interface by which the data gets displayed and utilized by the patient and their physician<br> 
-	<br>
-
-<div id="grad2"></div>
-</p>
-
-<h3>Proposed Solution</h3>
-<p><!-- Change the description of the project strting from here -->
-	Give a high-level overview of the proposed solution...... 	A microcontroller will collect pressure sensor data approximately 250 times a second. That data will need to be converted from its hexidecimal form into a decimal representation. Once in decimal form, our team will graphically display this data so that it can be useful to both the cleint and the doctor. One way this data will be displayed will be through through force calculations based on upon intervals of time in which the patient is using the crutch. These pre-set thresholds will indicated interims in time in which the force was greater which would indicate detremental or harmful use that should be corrected to ensure the patients health. This data will be uploaded into a database based upon the patients information so that the doctor can take steps to help his patients <br> 
-
-</p>
-
-<h3>Highlights</h3>
-<p><!-- Change the description of the project strting from here -->
-	What is special about your project?<br> 
-	You may compare your proposed solution with existing ones, and elaborate on why it is innovative, in which aspects.<br>
-	The main focus that our team in going to implement is a display that will clearly utilize data to give the user indications of how to use a crutch in a manner that is to their health benefit.   <br>
-
-	The purpose of Brute Force is to give medical professionals access to previously hidden variables to better service amputees through their recovery process.<br>
-</p>
-
-<h3>Prototypes</h3>
-<p><!-- Change the description of the project strting from here -->
-	Showcase your high-fidelity prototype, with screenshots, embedded link to prototype, and/or video demo, etc.<br> 
-
-	<h2>High Fidelity Prototype</h2>
 	<p class="aligncenter">
+	<img src="BruteForce-team-logo.jpg" alt="HTML5 Icon" class="center" style="float:center;width:1000px;height:300px;">
+	</p>
 
-	<img src="css/Proto3.jpg" alt="HTML5 Icon" class="center" style="float:center;width:800px;height:500px;">
+	<center><h1>A Tool to Improve Therapy Treatment of Amputees </h1></center>
+
+
+
+	<hr>
+	<p><!--Change the Team name and Team Members here -->
+		<h3>
+		Team Name: Brute Force
+		<br>
+		Team Members: Paul-Jason Mello, Alec White, Daniel Rea, Joseph Dandro, Lucas Thompson, David Liu, Luke Noramczyk
+		<br>
+		Client: Dr. Warren Smith and Dr. Douglas Thomas
+		<br>
+		Adviser: Prof. Dr. Jingwei Yang
+		</h3>
+					  
+	</p>
+
+
+
+
+	<h4 style="color:black;font-size:20px;"> Background </h4>
+	<p style="color:black;font-size:18px;">
+
+		We are working with a Sac State Physical Therapy professor to develop a microcontroller-based monitor of crutch usage on a crutch to be used by amputees. A load cell in the crutch monitors the force versus time. The monitor stores two weeks of data sampled at 1500 samples/second onto an SD card. We looking for a team to develop a user interface for the physical therapist to let him configure and start the crutch monitor and then to upload the data to a PC to graphically display it and generate some summary statistics of the data.<br>
+	<br> 
 
 	</p>
 
-	<br></br>.
-	<br></br>
-	<br></br>
-	<br></br>
-
-			
 
 
-	<br>
+	<h4 style="color:black;font-size:20px;"> Scope</h4>
+	<p style="color:black;font-size:18px;">
+
+	<p>
+		The scope of this project is to collect data taken from force measurments of a patient and then graphically display this data. One of the main parts of the business problem that will be addressed will be developing a graphical interface by which the data gets displayed and utilized by the patient and their physician<br> 
+		<br>
+
+	</p>
+
+
+	<h4 style="color:black;font-size:20px;"> Proposed Solution </h4>
+	<p style="color:black;font-size:18px;">
+
+	<p><!-- Change the description of the project strting from here -->
+		A microcontroller will collect pressure sensor data approximately 250 times a second. That data will need to be converted from its hexidecimal form into a decimal representation. Once in decimal form, our team will graphically display this data so that it can be useful to both the cleint and the doctor. One way this data will be displayed will be through through force calculations based on upon intervals of time in which the patient is using the crutch. These pre-set thresholds will indicated interims in time in which the force was greater which would indicate detremental or harmful use that should be corrected to ensure the patients health. This data will be uploaded into a database based upon the patients information so that the doctor can take steps to help his patients <br> 
+
+	</p>
+
+
+	<h4 style="color:black;font-size:20px;"> Highlights </h4>
+	<p style="color:black;font-size:18px;">
+
+	<p>
+			You may compare your proposed solution with existing ones, and elaborate on why it is innovative, in which aspects.<br>
+		The main focus that our team in going to implement is a display that will clearly utilize data to give the user indications of how to use a crutch in a manner that is to their health benefit.   <br>
+
+		The purpose of Brute Force is to give medical professionals access to previously hidden variables to better service amputees through their recovery process.<br>
+	</p>
+
+		<br></br>
+		<br></br>
+
+
+
+		<h3><center>High Fidelity Prototype <a href="https://xd.adobe.com/view/2b5c32c5-697c-4018-9ea2-f4e97f097a5a-7e0f/?fullscreen"> Web Link </a> </center></h3>
+
+		<div class="slideshow-container">
+
+		<div class="mySlides fade">
+		  <div class="numbertext">1 / 3</div>
+		  <img src="F1.png" style="width:100%">
+		  <div class="text">Caption Text</div>
+		</div>
+
+		<div class="mySlides fade">
+		  <div class="numbertext">2 / 3</div>
+		  <img src="F2.png" style="width:100%">
+		  <div class="text">Caption Two</div>
+		</div>
+
+		<div class="mySlides fade">
+		  <div class="numbertext">3 / 3</div>
+		  <img src="F3.png" style="width:100%">
+		  <div class="text">Caption Three</div>
+		</div>
+
+		<div class="mySlides fade">
+		  <div class="numbertext">3 / 3</div>
+		  <img src="F4.png" style="width:100%">
+		  <div class="text">Caption Three</div>
+		</div>
+
+
+		<a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+		<a class="next" onclick="plusSlides(1)">&#10095;</a>
+
+		</div>
+		<br>
+
+		<div style="text-align:center">
+		  <span class="dot" onclick="currentSlide(1)"></span> 
+		  <span class="dot" onclick="currentSlide(2)"></span> 
+		  <span class="dot" onclick="currentSlide(3)"></span> 
+		</div>
+
+		<script>
+		var slideIndex = 1;
+		showSlides(slideIndex);
+
+		function plusSlides(n) 
+		{
+		  showSlides(slideIndex += n);
+		}
+
+		function currentSlide(n) 
+		{
+		  showSlides(slideIndex = n);
+		}
+
+		function showSlides(n) {
+		  var i;
+		  var slides = document.getElementsByClassName("mySlides");
+		  var dots = document.getElementsByClassName("dot");
+
+		  if (n > slides.length) 
+		  	{slideIndex = 1}  
+		  	  
+		  	if (n < 1) 
+		  	{slideIndex = slides.length}
+
+			  for (i = 0; i < slides.length; i++) 
+			  {
+			      slides[i].style.display = "none";  
+			  }
+			  for (i = 0; i < dots.length; i++) 
+			  {
+			      dots[i].className = dots[i].className.replace(" active", "");
+			  }
+
+		  slides[slideIndex-1].style.display = "block";  
+		  dots[slideIndex-1].className += " active";
+		}
+		</script>
+
+
+			<br></br>.
+			<br></br>
+			<br></br>
+
+
+					
+
+
+			<br>
+		</p>
 </p>
 
-<h3>Timeline</h3>
-
-<p><!-- Change the description of the project strting from here -->
-	Give a projected timeline.<br> 
-	You will update this timeline periodically in CSC191.<br>
-	<br></br>
-	<br></br>
+<h4 style="color:black;font-size:20px;"> Timeline </h4>
+<p style="color:black;font-size:18px;">
 
 		November 10: Sprint03 - Planning due<br>
 		November 13: Oral Presentation Sign-Up due<br>
@@ -128,17 +311,13 @@
 		November 30: Oral Presentation day<br>
 		December 4: Project Website and Prototype due<br>
 
-
-
-
 </p>
 
 
 
-<h3>(Any other sections you would like to add...)</h3>
-<p>
-Mission Statement: <br>
-<br>
+<h4 style="color:black;font-size:20px;"> Mission Statement</h4>
+<p style="color:black;font-size:18px;">
+
 Brute force aims to give medical professions data which would otherwise be hidden variables in the rehabilitation process of amputees. Brute force achieves these goals by collecting, visualizing, and analyzing the data acquired from patients devices. Doing so gives medical professionals accurate data in regards to the usage of a patient's devices and can better equip those professionals to give more personalized treatments to each patient. We hope that our process will be able to aid amputees in recovering faster and getting them back on track to living a full and healthy life as an amputee.<br>
 	<br> 
 </p>
@@ -153,20 +332,12 @@ Brute force aims to give medical professions data which would otherwise be hidde
 For example : "~/gaia/student/class/athena_id/images/a.png" should be replace in the SRC in the image tag.
 <p> -->
 </center>
-
-<hr>
-
-<h3>
 <p>
-	<!-- Change the URL of the link below -->
-
-To provide  a URL in this webpage replace the webaddress with the new one. For convienience it is set to google.com initially <b>URL</b> is <i>http://google.com</i>
-<a href="https://www.google.com">Visit Google</a>
-<p>
-</h3>
-	<!-- Change the URL of the video in the src tag below -->
+	<br>
+	<br>
 	
+</p>
 
 
-<body>
+</body>
 
