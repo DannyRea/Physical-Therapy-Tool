@@ -62,42 +62,6 @@ img {vertical-align: middle;}
   user-select: none;
 }
 
-/* Style the tab */
-.tab {
-  overflow: hidden;
-  border: 1px solid #ccc;
-  background-color: #f1f1f1;
-}
-
-/* Style the buttons inside the tab */
-.tab button {
-  background-color: inherit;
-  float: left;
-  border: none;
-  outline: none;
-  cursor: pointer;
-  padding: 14px 16px;
-  transition: 0.3s;
-  font-size: 17px;
-}
-
-/* Change background color of buttons on hover */
-.tab button:hover {
-  background-color: #ddd;
-}
-
-/* Create an active/current tablink class */
-.tab button.active {
-  background-color: #ccc;
-}
-
-/* Style the tab content */
-.tabcontent {
-  display: none;
-  padding: 6px 12px;
-  border: 1px solid #ccc;
-  border-top: none;
-}
 
 /* Position the "next button" to the right */
 .next {
@@ -146,6 +110,14 @@ img {vertical-align: middle;}
 
 .active, .dot:hover {
   background-color: #ffffff;
+
+}
+
+.video {
+  transform: translate(-50%, -50%);
+  position: absolute;
+  top: 50%;
+  left: 50%;
 }
 
 /* Fading animation */
@@ -245,11 +217,14 @@ img {vertical-align: middle;}
 		<br></br>
 
 
-		<h3>Prototype Video Demo</h3>
-		<video class="center" width="320" height="240" controls>
+		<h3><center>Prototype Video Demo</center></h3>
+
+		<p class="aligncenter">
+		<video class="center" width="640" height="240" controls>
 		<source src="prototype demo.mp4" type="video/mp4"/>
-		
-		Your browser does not support integrated video playback.
+		</html>
+	</p>
+
 		 </video>
 
 
@@ -264,25 +239,25 @@ img {vertical-align: middle;}
 
 		<div class="mySlides fade">
 		  <div class="numbertext">1 / 3</div>
-		  <img src="F1.jpg" style="width:100%">
+		  <img src="F1.PNG" style="width:100%">
 		  <div class="text">User login authentication screen</div>
 		</div>
 
 		<div class="mySlides fade">
 		  <div class="numbertext">2 / 3</div>
-		  <img src="F2.jpg" style="width:100%">
+		  <img src="F2.PNG" style="width:100%">
 		  <div class="text">Patient information</div>
 		</div>
 
 		<div class="mySlides fade">
 		  <div class="numbertext">3 / 3</div>
-		  <img src="F3.jpg" style="width:100%">
+		  <img src="F3.PNG" style="width:100%">
 		  <div class="text">Raw Data</div>
 		</div>
 
 		<div class="mySlides fade">
 		  <div class="numbertext">3 / 3</div>
-		  <img src="F4.jpg" style="width:100%">
+		  <img src="F4.PNG" style="width:100%">
 		  <div class="text">Caption Three</div>
 		</div>
 
