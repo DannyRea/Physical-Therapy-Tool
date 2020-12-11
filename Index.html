@@ -123,10 +123,12 @@ img {vertical-align: middle;}
 }
 
 .video {
+  object-fit: fill;
   transform: translate(-50%, -50%);
-  position: absolute;
-  top: 50%;
-  left: 50%;
+  position: relative;
+  top: 100%;
+  left: 100%;
+
 }
 
 /* Fading animation */
@@ -233,7 +235,7 @@ img {vertical-align: middle;}
 		<center><h4 style="color:black;font-size:28px;"> <b> Prototype Video Demonstration </b> </h4></center>
 
 		<p class="aligncenter">
-		<video class="center" width="640" height="240" controls>
+		<video controls height = "auto" width = "1080">
 		<source src="prototype demo.mp4" type="video/mp4"/>
 		</html>
 	</p>
