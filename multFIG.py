@@ -13,8 +13,7 @@ from matplotlib.lines import Line2D
 
 
 global newVal
-
-
+:
 def new_window(_class):                                           # Needed for new window (Patient / Phys)
         new = tk.Toplevel(main_screen)
         _class(new)
