@@ -9,7 +9,7 @@ import csv
 from tkinter import simpledialog
 import mysql.connector as db
 
-db_connection = db.connect(host="localhost", user="root", password="555435", database="test",
+db_connection = db.connect(host="130.86.76.56", user="root", password="555435", database="test",
                            auth_plugin='mysql_native_password')
 
 ##Database connection to local MySQL server
