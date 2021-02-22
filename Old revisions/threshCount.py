@@ -44,7 +44,7 @@ l1 = tk.Button(win,
 l1.grid(row = 1, column = 0, pady = 10)
 
 
-with open('test.txt','r') as csvfile:                        # Set file designation
+with open('../test.txt', 'r') as csvfile:                        # Set file designation
         plots = csv.reader(csvfile)
         for row in plots:
             y.append(int(row[0]))
