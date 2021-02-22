@@ -1,503 +1,413 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+
+<html lang="en">
 
 <head>
 
-	<title>A tool to Improve Therapy Treatment of Amputees </title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, intitial-scaled=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta name="author" content="Brute Force">
+    <meta name="language" content="english">
+    <meta name="description" content="A Tool to Improve Therapy Treatment of Amputees.">
+    <meta name="keywords" content="senior project, Brute Force, Amputee Rehabilitation">
 
+    <title>Amputee Rehabilitation Tool</title>
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" type="image/x-icon" href="Images/Crutch Icon.png">
 </head>
 
-<link rel="stylesheet" type="text/css" href="css/style.css">
-
-<style>
-	.aligncenter {
-		text-align: center;
-	}
-</style>
-
-<style>
-	hr.line2 {
-		border-top: 3px double #8c8b8b;
-	}
-</style>
-
-
-<style>
-	#grad1 {
-		height: 200px;
-		background-color: grey;
-		/* For browsers that do not support gradients */
-		background-image: linear-gradient(to left, grey, white);
-	}
-</style>
-
-<style>
-	#grad2 {
-		height: 200px;
-		background-color: white;
-		/* For browsers that do not support gradients */
-		background-image: linear-gradient(to right, white, #0080FF);
-	}
-</style>
-
-<style>
-	* {
-		box-sizing: border-box
-	}
-
-	body {
-		font-family: Times;
-		margin: 0
-	}
-
-	.mySlides {
-		display: none
-	}
-
-	img {
-		vertical-align: middle;
-	}
-
-	/* Slideshow container */
-	.slideshow-container {
-		max-width: 900px;
-		position: relative;
-		margin: auto;
-	}
-
-	/* Next & previous buttons */
-	.prev,
-	.next {
-		cursor: pointer;
-		position: absolute;
-		top: 50%;
-		width: auto;
-		padding: 16px;
-		margin-top: -22px;
-		color: white;
-		font-weight: bold;
-		font-size: 18px;
-		transition: 0.6s ease;
-		border-radius: 0 3px 3px 0;
-		user-select: none;
-	}
-
-
-	/* Position the "next button" to the right */
-	.next {
-		right: 0;
-		border-radius: 3px 0 0 3px;
-	}
-
-	/* On hover, add a black background color with a little bit see-through */
-	.prev:hover,
-	.next:hover {
-		background-color: rgba(0, 0, 0, 0.8);
-	}
-
-	/* Caption text */
-	.text {
-		color: #f01010;
-		font-size: 15px;
-		padding: 8px 12px;
-		position: absolute;
-		bottom: 8px;
-		width: 100%;
-		text-align: center;
-	}
-
-	/* Number text (1/3 etc) */
-	.numbertext {
-		color: #f2f2f2;
-		font-size: 12px;
-		padding: 8px 12px;
-		position: absolute;
-		top: 0;
-	}
-
-	/* The dots/bullets/indicators */
-	.dot {
-		cursor: pointer;
-		height: 15px;
-		width: 15px;
-		margin: 0 2px;
-		background-color: rgb(51, 48, 48);
-		border-radius: 50%;
-		display: inline-block;
-		transition: background-color 0.6s ease;
-	}
-
-	.center {
-		margin: 0 auto;
-		width: 400px;
-	}
-
-	.active,
-	.dot:hover {
-		background-color: #ffffff;
-
-	}
-
-	.video {
-		object-fit: fill;
-		transform: translate(-50%, -50%);
-		position: relative;
-		top: 100%;
-		left: 100%;
-
-	}
-
-	/* Fading animation */
-	.fade {
-		-webkit-animation-name: fade;
-		-webkit-animation-duration: 1.5s;
-		animation-name: fade;
-		animation-duration: 1.5s;
-	}
-
-	@-webkit-keyframes fade {
-		from {
-			opacity: .4
-		}
-
-		to {
-			opacity: 1
-		}
-	}
-
-	@keyframes fade {
-		from {
-			opacity: .4
-		}
-
-		to {
-			opacity: 1
-		}
-	}
-
-	/* On smaller screens, decrease text size */
-	@media only screen and (max-width: 300px) {
-
-		.prev,
-		.next,
-		.text {
-			font-size: 11px
-		}
-	}
-</style>
-
-
-
-<body id="grad1">>
-
-
-
-	<p class="aligncenter">
-		<img src="BruteForce-team-logo.jpg" alt="HTML5 Icon" class="center"
-			style="float:center;width:1000px;height:300px;">
-	</p>
-
-	<center>
-		<h1>A Tool to Improve Therapy Treatment of Amputees </h1>
-	</center>
-
-
-
-	<hr>
-	<p>
-		<center>
-			<!--Change the Team name and Team Members here -->
-			<h3>
-				Team Name: Brute Force
-				<br>
-				Team Members: Paul-Jason Mello, Alec White, Daniel Rea, Joseph Dandro, Lucas Thompson, Justin Thompson,
-				David Liu, Luke Noramczyk
-				<br>
-				Client: Dr. Warren Smith and Prof. Douglas Thomas
-				<br>
-				Adviser: Prof. Dr. Jingwei Yang
-			</h3>
-
-		</center>
-	</p>
-
-
-
-	<hr class="line2">
-
-
-	<center>
-		<h4 style="color:black;font-size:28px;"> <b> Background </b> </h4>
-	</center>
-	<p style="color:black;font-size:18px;margin-left:4em;margin-right:4em">
-
-		Brute Force is working with multiple clients and an end user to provide a tool for the treatment of amputees
-		using a crutch-based monitor. This crutch contains a load cell that monitors the force versus time. The monitor
-		stores two weeks of data sampled at 250 samples/second onto an SD card. Brute Force is aiming to develop a data
-		visualization application that can allow our end user to see the plotted data points. Our end user
-		will be able to upload the data from the crutch to a PC for a graphical display and generate a summary of the
-		statistics regarding the data.<br>
-		<br>
-
-	</p>
-
-	<hr class="line2">
-
-	<center>
-		<h4 style="color:black;font-size:28px;"> <b> Scope </b> </h4>
-	</center>
-	<p style="color:black;font-size:18px;margin-left:4em;margin-right:4em">
-
-		The scope of this project is to collect data taken from force measurements of a patient and then graphically
-		display this data. One of the main parts of the problem that we will address will be developing a graphical
-		interface by which the data gets displayed and analyzed by the patient and their physician.<br>
-		<br>
-
-	</p>
-
-	<hr class="line2">
-
-	<center>
-		<h4 style="color:black;font-size:28px;"> <b> Proposed Solution </b> </h4>
-	</center>
-	<p style="color:black;font-size:18px;margin-left:4em;margin-right:4em">
-
-		<!-- Change the description of the project strting from here -->
-		A microcontroller will collect pressure sensor data approximately 250 times a second. That data will need to be
-		converted from its hexadecimal form into a decimal representation. Once in decimal form, our team will
-		graphically display this data so that it can be useful to both the patient and the doctor. One way this data
-		will be displayed will be through force calculations based on upon intervals of time in which the patient is
-		using the crutch. These pre-set thresholds will be indicated interims in time in which the force was greater
-		which would indicate detrimental or harmful use that should be corrected to ensure the patients’ health. This
-		data will be uploaded into a database based upon the patient’s information so that the doctor can take steps to
-		help his patients. <br>
-
-	</p>
-
-	<hr class="line2">
-
-	<center>
-		<h4 style="color:black;font-size:28px;"> <b> Highlights </b> </h4>
-	</center>
-	<p style="color:black;font-size:18px;margin-left:4em;margin-right:4em">
-
-		The focus of this project is to implement a graph that will clearly display the data to patients and our end
-		user. It will indicate how the patient is currently using the crutch to give a physical therapist access to
-		hidden variables. This will then allow the physical therapist to specialize the treatment to the individual
-		patient by showing them how much force they may appropriately apply. <br><br>
-
-		The purpose of Brute Force is to give medical professionals access to previously hidden variables to better
-		service amputees through their recovery process.<br>
-	</p>
-
-	<hr class="line2">
-
-	<br></br>
-	<br></br>
-
-
-	<center>
-		<h4 style="color:black;font-size:28px;"> <b> Prototype Video Demonstration </b> </h4>
-	</center>
-
-	<p class="aligncenter">
-		<video controls height="auto" width="1080">
-			<source src="prototype demo.mp4" type="video/mp4" />
-
-</html>
-</p>
-
-
-
-</video>
-
-
-
-<br></br>
-
-<hr class="line2">
-
-<br></br>
-<br></br>
-<br></br>
-
-
-
-<center>
-	<h4 style="color:black;font-size:28px;"> <b> High Fidelity Prototype </b> </h4>
-</center>
-<center>
-	<h4 style="color:black;font-size:28px;"> <a
-			href="https://xd.adobe.com/view/2b5c32c5-697c-4018-9ea2-f4e97f097a5a-7e0f/?fullscreen"> Interactive Demo
-		</a>
-</center>
-</h4>
-
-<div class="slideshow-container">
-
-	<div class="mySlides fade">
-		<div class="numbertext">1 / 3</div>
-		<img src="F1.PNG" style="width:100%">
-		<div class="text">User login authentication screen</div>
-	</div>
-
-	<div class="mySlides fade">
-		<div class="numbertext">2 / 3</div>
-		<img src="F2.PNG" style="width:100%">
-		<div class="text">Patient information</div>
-	</div>
-
-	<div class="mySlides fade">
-		<div class="numbertext">3 / 3</div>
-		<img src="F3.PNG" style="width:100%">
-		<div class="text">Raw Data</div>
-	</div>
-
-	<div class="mySlides fade">
-		<div class="numbertext">3 / 3</div>
-		<img src="F4.PNG" style="width:100%">
-		<div class="text">Caption Three</div>
-	</div>
-
-
-	<a class="prev" onclick="plusSlides(-1)">&#10094;</a>
-	<a class="next" onclick="plusSlides(1)">&#10095;</a>
-
-</div>
-<br>
-
-<div style="text-align:center">
-	<span class="dot" onclick="currentSlide(1)"></span>
-	<span class="dot" onclick="currentSlide(2)"></span>
-	<span class="dot" onclick="currentSlide(3)"></span>
-</div>
-
-<script>
-	var slideIndex = 1;
-	showSlides(slideIndex);
-
-	function plusSlides(n) {
-		showSlides(slideIndex += n);
-	}
-
-	function currentSlide(n) {
-		showSlides(slideIndex = n);
-	}
-
-	function showSlides(n) {
-		var i;
-		var slides = document.getElementsByClassName("mySlides");
-		var dots = document.getElementsByClassName("dot");
-
-		if (n > slides.length) { slideIndex = 1 }
-
-		if (n < 1) { slideIndex = slides.length }
-
-		for (i = 0; i < slides.length; i++) {
-			slides[i].style.display = "none";
-		}
-		for (i = 0; i < dots.length; i++) {
-			dots[i].className = dots[i].className.replace(" active", "");
-		}
-
-		slides[slideIndex - 1].style.display = "block";
-		dots[slideIndex - 1].className += " active";
-	}
-</script>
-
-
-<br></br>.
-<br></br>
-<br></br>
-
-
-
-
-
-<br>
-</p>
-</p>
-
-<hr class="line2">
-
-<center>
-	<h4 style="color:black;font-size:28px;"> <b> Timeline </b> </h4>
-</center>
-<h4 style="color:black;font-size:24px;margin-left:8em"> <i> CSC 190 of Fall 2020 </i> </h4>
-<p style="color:black;font-size:18px;margin-left:4em;margin-right:4em">
-
-<ul>
-	<ul>
-		<li>September 25th: Draft of Project Proposal</li><br>
-		<li>October 4th: Draft of Product Charter Document</li><br>
-		<li>October 13th: Sprint 01 - Planning</li><br>
-		<li>October 23rd: Sprint 01 - Execution Report, Client Review Meeting, Lab Meeting & Retrospective Notes, and
-			Performance</li><br>
-		<li>October 23rd: Signed Product Charter Document</li><br>
-		<li>October 23rd: Business Event Table and Context Diagram</li><br>
-		<li>October 27th: Sprint 02 - Planning</li><br>
-		<li>November 6th: Sprint 02 - Execution Report, Client Review Meeting, Lab Meeting & Retrospective Notes, and
-			Performance</li><br>
-		<li>November 10th: Sprint 03 - Planning</li><br>
-		<li>November 13th: Oral Presentation Sign-Ups</li><br>
-		<li>November 20th: Sprint 03 - Execution Report, Client Review Meeting, Lab Meeting & Retrospective Notes, and
-			Performance</li><br>
-		<li>November 24th: Sprint 04 - Planning</li><br>
-		<li>November 30th: Oral Presentation</li><br>
-		<li>December 4th: Sprint 04 - Execution Report, Client Review Meeting, Lab Meeting & Retrospective Notes, and
-			Performance</li><br>
-		<li>December 4th: Project Website and Prototype</li><br>
-		<li>December 11th: Product Backlog Documentation and Flyingdonut Taskboard</li><br>
-	</ul>
-</ul>
-
-
-</p>
-
-<hr class="line2">
-
-<center>
-	<h4 style="color:black;font-size:28px;"> <b> Mission Statement </b> </h4>
-</center>
-<p style="color:black;font-size:18px;margin-left:4em;margin-right:4em">
-
-	Brute Force aims to give medical professionals data which would otherwise be hidden variables in the rehabilitation
-	process of amputees. Brute Force achieves these goals by collecting, visualizing, and analyzing the data acquired
-	from patients’ devices. Doing so gives medical professionals accurate data regarding the usage of a patient's
-	devices and can better equip those professionals to give more personalized treatments to each patient. We hope that
-	our process will be able to aid amputees in recovering faster and getting them back on track to living a full and
-	healthy life as an amputee. <br>
-	<br>
-</p>
-
-<hr class="line2">
-
-<center>
-	<h4 style="color:black;font-size:28px;"> <b> Tools Used </b> </h4>
-</center>
-<p style="color:black;font-size:18px;margin-left:4em;margin-right:4em">
-	Under Construction
-</p>
-
-
-
-
-<center>
-
-	<!-- Change the hyperlink and the width and height of the image below -->
-	<IMG SRC="https://upload.wikimedia.org/wikipedia/en/thumb/3/36/California_State_University%2C_Sacramento_seal.svg/1200px-California_State_University%2C_Sacramento_seal.svg.png"
-		ALT="Any random image" width=220px height=269px>
-
-
-	<!-- <p>This is the comment section Please insert the hyperlink of the image if its an online image or upload the image to athena and provide the address of the image instead of the hyperlink in the code
-For example : "~/gaia/student/class/athena_id/images/a.png" should be replace in the SRC in the image tag.
-<p> -->
-</center>
-<p>
-	<br>
-	<br>
-
-</p>
-
+<body>
+    <nav class="navbar">
+        <div class="max-width">
+            <ul class="navbar-content">
+                <li> <a href="#home">Home</a></li>
+                <li> <a href="#statement">statement</a></li>
+                <li> <a href="#proposed solutions">Solution</a></li>
+                <li> <a href="#demos">Project Demo</a></li>
+                <li> <a href="#highlights">Highlights</a></li>
+                <li> <a href="#timeline">Timeline</a></li>
+                <li> <a href="#tools used">Tools</a></li>
+            </ul>
+        </div>
+    </nav>
+
+
+    <section class="sections" id="home">
+        <div class="max-width">
+            <h3 class="title">A Tool to Improve Therapy Treatment of Amputees</h3>
+            <div class="home-content">
+                <div class="client-row">
+                    <div class="client-info">
+                        <h4>Clients:</h4>
+                    </div>
+                    <div class="advisor-info">
+                        <h4>Adviser:</h4>
+                    </div>
+                </div>
+                <div class="row1-2">
+                    <div class="client">
+                        <img src="Images/blank-pfp.jpg"
+                            style="height:250px;width:190px;padding-left:20px;padding-right:20px;">
+                        <div class="name">
+                            <p>Dr. Warren Smith</p>
+                        </div>
+                        <div class="email">
+                            <a href="mailto: smithwd@csus.edu">smithwd@csus.edu</a>
+                        </div>
+                    </div>
+                    <div class="client">
+                        <img src="Images/blank-pfp.jpg"
+                            style="height:250px;width:190px;padding-left:20px;padding-right:20px;">
+                        <div class="name">
+                            <p>Prof. Douglas Thomas</p>
+                        </div>
+                        <div class="email">
+                            <a href="mailto: douglas.thomas@csus.edu">douglas.thomas@csus.edu</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="advisor-row">
+                    <div class="advisor">
+                        <img src="Images/blank-pfp.jpg"
+                            style="height:250px;width:190px;padding-left:20px;padding-right:20px;">
+                        <div class="name">
+                            <p>Dr. Jingwei Yang</p>
+                        </div>
+                        <div class="email">
+                            <a href="mailto: yang@csus.edu">yang@csus.edu</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="team-name">
+                    <h4>Team Name: Brute Force</h4>
+                </div>
+                <div class="team-members">
+                    <div class="row1-8">
+                        <div class="Joseph">
+                            <img src="Images/blank-pfp.jpg"
+                                style="height:250px;width:190px;padding-left:20px;padding-right:20px;">
+                            <div class="name">
+                                <p>Joseph Dandro</p>
+                            </div>
+                            <div class="email">
+                                <a href="mailto: jdandro@csus.edu">jdandro@csus.edu</a>
+                            </div>
+                        </div>
+                        <div class="David">
+                            <img src="Images/blank-pfp.jpg"
+                                style="height:250px;width:190px;padding-left:20px;padding-right:20px;">
+                            <div class="name">
+                                <p>David Liu</p>
+                            </div>
+                            <div class="email">
+                                <a href="mailto: dliust16@gmail.com">dliust16@gmail.com</a>
+                            </div>
+                        </div>
+                        <div class="Paul">
+                            <img src="Images/Paul Pic.jpg"
+                                style="height:250px;width:190px;padding-left:20px;padding-right:20px;">
+                            <div class="name">
+                                <p>Paul Mello</p>
+                            </div>
+                            <div class="email">
+                                <a href="mailto: pauljasonmello@csus.edu">pauljasonmello@csus.edu</a>
+                            </div>
+                        </div>
+                        <div class="Luke">
+                            <img src="Images/blank-pfp.jpg"
+                                style="height:250px;width:190px;padding-left:20px;padding-right:20px;">
+                            <div class="name">
+                                <p>Luke Noramczyk</p>
+                            </div>
+                            <div class="email">
+                                <a href="mailto: lukenoramczyk@csus.edu">lukenoramczyk@csus.edu</a>
+                            </div>
+                        </div>
+                        <div class="Daniel">
+                            <img src="Images/blank-pfp.jpg"
+                                style="height:250px;width:190px;padding-left:20px;padding-right:20px;">
+                            <div class="name">
+                                <p>Daniel Rea</p>
+                            </div>
+                            <div class="email">
+                                <a href="mailto: danielrea@csus.edu">danielrea@csus.edu</a>
+                            </div>
+                        </div>
+                        <div class="Justin">
+                            <img src="Images/Justin Pic.jpg"
+                                style="height:250px;width:190px;padding-left:20px;padding-right:20px;">
+                            <div class="name">
+                                <p>Justin Thompson</p>
+                            </div>
+                            <div class="email">
+                                <a href="mailto: jthompson@csus.edu">jthompson@csus.edu</a>
+                            </div>
+                        </div>
+                        <div class="Lucas">
+                            <img src="Images/blank-pfp.jpg"
+                                style="height:250px;width:190px;padding-left:20px;padding-right:20px;">
+                            <div class="name">
+                                <p>Lucas Thompson</p>
+                            </div>
+                            <div class="email">
+                                <a href="mailto: lthompson@csus.edu">lthompson@csus.edu</a>
+                            </div>
+                        </div>
+                        <div class="Alec">
+                            <img src="Images/blank-pfp.jpg"
+                                style="height:250px;width:190px;padding-left:20px;padding-right:20px;">
+                            <div class="name">
+                                <p>Alec White</p>
+                            </div>
+                            <div class="email">
+                                <a href="mailto: alecwhite@csus.edu">alecwhite@csus.edu</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clients"></div>
+                    <div class="advisor"></div>
+                    <div class="row">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="sections" id="statement">
+        <div class="max-width">
+            <h3 class="title">Statements</h3>
+            <div class="statement-content">
+                <div class="row1-2">
+                    <div class="mission">
+                        <h2>Mission Statement</h2>
+                        <p class="mission-text">Brute Force aims to give medical professionals data which would
+                            otherwise be hidden variables in the rehabilitation
+                            process of amputees. Brute Force achieves these goals by collecting, visualizing, and
+                            analyzing the data acquired from
+                            patients’ devices. Doing so gives medical professionals accurate data regarding the usage of
+                            a patient's devices and can
+                            better equip those professionals to give more personalized treatments to each patient. We
+                            hope that our process will be
+                            able to aid amputees in recovering faster and getting them back on track to living a full
+                            and healthy life as an
+                            amputee.</p>
+                    </div>
+                    <div class="purpose">
+                        <h2>Purpose Statement</h2>
+                        <p class="purpose-text">
+                            The purpose of Brute Force is to give medical professionals access to previously hidden
+                            variables to better service
+                            amputees through their recovery process.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="sections" id="proposed solutions">
+        <div class="max-width">
+            <h3 class="title">Proposed Solutions</h3>
+            <div class="solutions-content">
+                <div class="row">
+                    <p class="solution-text">
+                        A microcontroller will collect pressure sensor data approximately 250 times a second. That data
+                        will need to be
+                        converted from its hexadecimal form into a decimal representation. Once in decimal form, our
+                        team will
+                        graphically display this data so that it can be useful to both the patient and the doctor. One
+                        way this data
+                        will be displayed will be through force calculations based on upon intervals of time in which
+                        the patient is
+                        using the crutch. These pre-set thresholds will be indicated interims in time in which the force
+                        was greater
+                        which would indicate detrimental or harmful use that should be corrected to ensure the patients’
+                        health. This
+                        data will be uploaded into a database based upon the patient’s information so that the doctor
+                        can take steps to
+                        help his patients.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="sections" id="demos">
+        <div class="max-width">
+            <h3 class="title">Project Demonstrations</h3>
+            <div class="demo-content">
+                <div class="demo-text">
+                    <h2>High Fidelity Prototype</h2>
+                    <div class="interactive-demo-text">
+                        <a href="https://xd.adobe.com/view/2b5c32c5-697c-4018-9ea2-f4e97f097a5a-7e0f/?fullscreen">Interactive
+                            Demo</a>
+                    </div>
+                </div>
+                <div class="row1-2">
+                    <div class="slideshow-container">
+                        <div class="mySlides fade">
+                            <div class="numbertext">1 / 4</div>
+                            <img src="Images/Login Page.PNG" style="vertical-align:center;height:540px;width:830px;">
+                            <div class="text">Login Screen
+                            </div>
+                        </div>
+
+                        <div class="mySlides fade">
+                            <div class="numbertext">2 / 4</div>
+                            <img src="Images/Split View Page.PNG"
+                                style="vertical-align:center;height:540px;width:830px;">
+                            <div class="text">Split Screen View
+                            </div>
+                        </div>
+
+                        <div class="mySlides fade">
+                            <div class="numbertext">3 / 4</div>
+                            <img src="Images/Analysis View Page.PNG"
+                                style="vertical-align:center;height:540px;width:830px;">
+                            <div class="text">Analysis View
+                            </div>
+                        </div>
+
+                        <div class="mySlides fade">
+                            <div class="numbertext">4 / 4</div>
+                            <img src="Images/Patient View Page.PNG"
+                                style="vertical-align:center;height:540px;width:830px;">
+                            <div class="text">Patient View</div>
+                        </div>
+                        <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+                        <a class="next" onclick="plusSlides(1)">&#10095;</a>
+                        <div style="text-align:center">
+                            <span class="dot" onclick="currentSlide(1)"></span>
+                            <span class="dot" onclick="currentSlide(2)"></span>
+                            <span class="dot" onclick="currentSlide(3)"></span>
+                            <span class="dot" onclick="currentSlide(4)"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="video">
+                    <video controls height="590" width="930">
+                        <source src="Videos/prototype demo.mp4" type="video/mp4" />
+                </div>
+            </div>
+        </div>
+        </div>
+    </section>
+
+    <section class="sections" id="highlights">
+        <div class="max-width">
+            <h3 class="title">Highlights</h3>
+            <div class="highlights-content">
+                <div class="row">
+                    <p class="highlights-text">
+                        The focus of this project is to implement a graph that will clearly display the data to patients
+                        and
+                        our end
+                        user. It will indicate how the patient is currently using the crutch to give a physical
+                        therapist
+                        access to
+                        hidden variables. This will then allow the physical therapist to specialize the treatment to the
+                        individual
+                        patient by showing them how much force they may appropriately apply. <br><br>
+
+                        The purpose of Brute Force is to give medical professionals access to previously hidden
+                        variables to
+                        better
+                        service amputees through their recovery process.<br>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="sections" id="timeline">
+        <div class="max-width">
+            <h3 class="title">Timeline</h3>
+            <div class="timeline-content">
+                <div class="row1-2">
+                    <div class="fall">
+                        <h2>Fall of 2020</h2>
+                        <ul>
+                            <li>September 25th: Draft of Project Proposal</li><br>
+                            <li>October 4th: Draft of Product Charter Document</li><br>
+                            <li>October 13th: Sprint 01 - Planning</li><br>
+                            <li>October 23rd: Sprint 01 - Execution Report, Client Review Meeting, Lab Meeting &
+                                Retrospective Notes,
+                                and
+                                Performance</li><br>
+                            <li>October 23rd: Signed Product Charter Document</li><br>
+                            <li>October 23rd: Business Event Table and Context Diagram</li><br>
+                            <li>October 27th: Sprint 02 - Planning</li><br>
+                            <li>November 6th: Sprint 02 - Execution Report, Client Review Meeting, Lab Meeting &
+                                Retrospective Notes,
+                                and
+                                Performance</li><br>
+                            <li>November 10th: Sprint 03 - Planning</li><br>
+                            <li>November 13th: Oral Presentation Sign-Ups</li><br>
+                            <li>November 20th: Sprint 03 - Execution Report, Client Review Meeting, Lab Meeting &
+                                Retrospective Notes,
+                                and
+                                Performance</li><br>
+                            <li>November 24th: Sprint 04 - Planning</li><br>
+                            <li>November 30th: Oral Presentation</li><br>
+                            <li>December 4th: Sprint 04 - Execution Report, Client Review Meeting, Lab Meeting &
+                                Retrospective Notes,
+                                and
+                                Performance</li><br>
+                            <li>December 4th: Project Website and Prototype</li><br>
+                            <li>December 11th: Product Backlog Documentation and Flyingdonut Taskboard</li><br>
+                        </ul>
+                    </div>
+                    <div class="spring">
+                        <h2>Spring of 2021</h2>
+                        <ul>
+                            <li>Currently in Progress
+                            </li><br>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="sections" id="tools used">
+        <div class="max-width">
+            <h3 class="title">Tools Used</h3>
+            <div class="tools-content">
+                <div class="row">
+                    <h2>Under Construction</h2>
+                </div>
+                <div class="temp-padding">
+                    <img src="Images/Sac State Logo.png" style="width:130px;height:150px;padding: 30px 0px 20px 890px;">
+                </div>
+            </div>
+        </div>
+    </section>
 
 </body>
+
+<script>
+    var slideIndex = 1;
+    showSlides(slideIndex);
+
+    function plusSlides(n) {
+        showSlides(slideIndex += n);
+    }
+
+    function currentSlide(n) {
+        showSlides(slideIndex = n);
+    }
+
+    function showSlides(n) {
+        var i;
+        var slides = document.getElementsByClassName(" mySlides"); var dots = document.getElementsByClassName("dot"); if
+            (n > slides.length) {
+            slideIndex = 1
+        }
+        if (n < 1) { slideIndex = slides.length } for (i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";
+        } for (i = 0; i < dots.length; i++) {
+            dots[i].className = dots[i].className.replace(" active", "");
+        } slides[slideIndex -
+            1].style.display = "block"; dots[slideIndex - 1].className += " active";
+    } </script>
