@@ -127,7 +127,7 @@ def logSuccess():
     x = []
     y = []
 
-    with open('test.txt', 'r') as csvfile:  # Set file designation
+    with open('../test.txt', 'r') as csvfile:  # Set file designation
         plots = csv.reader(csvfile)  # Counts Rows 'x' data for 'y'
         for row in plots:
             y.append(int(row[0]))

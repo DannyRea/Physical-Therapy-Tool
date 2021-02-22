@@ -24,7 +24,7 @@ class pGraphOne:
         yGraph = []
         
 
-        with open('test.txt','r') as csvfile:
+        with open('../test.txt', 'r') as csvfile:
             plots = csv.reader(csvfile, delimiter=',')
             for row in plots:
                 yGraph.append(int(row[0]))
