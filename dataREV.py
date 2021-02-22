@@ -140,6 +140,7 @@ def logSuccess():
     window.ax = fig.add_subplot(111, facecolor='#FFFFCC')
 
     # line1, = window.ax.plot(x, y, 'b-')
+
     yVal = 800  # initial Threshold Set
     x_coord = [0, Counter]
     y_coord = [yVal, yVal]
