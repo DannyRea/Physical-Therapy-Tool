@@ -7,7 +7,7 @@ from matplotlib.widgets import Cursor
 import numpy as np
 import matplotlib.pyplot as plt
 import csv
-from tkinter import simpledialog
+from tkinter import simpledialog, ttk
 import matplotlib.lines as lines
 from matplotlib.lines import Line2D
 from tkinter import filedialog
@@ -48,6 +48,16 @@ class logSuccess:
         fileMenu.add_command(label="Exit", command = window.quit)
         menubar.add_cascade(label="Menu", menu = fileMenu)
 
+        fileMenu = Menu(menubar)
+        fileMenu.add_command(label="Exit", command=window.quit)
+        menubar.add_cascade(label="Menu", menu=fileMenu)
+
+        tabControl = ttk.Notebook(window)
+        patientView = ttk.Frame(tabControl)
+        analysisView = ttk.Frame(tabControl)
+        tabControl.add(patientView, text='Patient View')
+        tabControl.add(analysisView, text='Analysis View')
+        tabControl.grid(sticky=NW)
 
         #val2=np.array([[20.,20.],[80.,80.],[20.,20.]])
         threshold = 1200
@@ -134,41 +144,41 @@ class logSuccess:
         # Grid widget designations 
 
 
-        l1 = Label(window,
+        l1 = Label(patientView,
                 text = "Threshold Exceeded: ",
                 font = "bold")
 
-        l2 = Label(window, 
+        l2 = Label(patientView,
                 borderwidth = 10,
                 width = 20,
                 bg = "mint cream",                      # sets background color
                 relief = "flat",                        # flat, grooved, raised, solid, sunken for different looks in gui
                 text = "Patient ID - Name")
-        l3 = Label(window, 
+        l3 = Label(patientView,
                 borderwidth = 10,
                 width = 20,
                 bg = "mint cream",
                 relief = "flat",
                 text = "Data Set - Primary")
-        l4 = Label(window, 
+        l4 = Label(patientView,
                 borderwidth = 10,
                 width = 20,
                 bg = "mint cream",
                 relief = "flat",
                 text = "Data Set - Secondary")
 
-        l5 = Label(window,
+        l5 = Label(patientView,
                 text = "Total Activity: ",
                 font = "bold")
 
 
-        R2 = Label(window,
+        R2 = Label(patientView,
                 text = "Analysis Tools",
                 font = "bold")
 
-        checkbutton=Checkbutton(window, text="Autoscale")           # Not being implemented but an example of setup
+        checkbutton=Checkbutton(patientView, text="Autoscale")           # Not being implemented but an example of setup
                                                                     
-        R3 = Label(window, 
+        R3 = Label(patientView,
                 borderwidth = 10,
                 width = 20,
                 relief = "flat",
@@ -184,14 +194,14 @@ class logSuccess:
                 command = clear)
         """
                   
-        R5 = Label(window, 
+        R5 = Label(patientView,
                 borderwidth = 10,
                 width = 20,
                 relief = "flat",
                 bg = "mint cream",
                 text = impactCounter)
 
-        setThreshold = tk.Button(window,
+        setThreshold = tk.Button(patientView,
                 text="Set Threshold",
                 bg = "mint cream",
                 command = setFunc)                  # command calls any function you want (setFunc, clear.....) !
@@ -242,24 +252,24 @@ class logSuccess:
                                                                                 # End pie chart code block for verification.
         # Instances of figs included into a single Canvas
         
-        canvas1 = FigureCanvasTkAgg(fig1, master=window)                        
+        canvas1 = FigureCanvasTkAgg(fig1, master=patientView)
         canvas1.draw()
         canvas1.get_tk_widget().grid(row=1, column=3, rowspan = 4, padx = 10, pady = 150)  # Setting positions of Analysis graph    
 
-        canvas2 = FigureCanvasTkAgg(fig2, master=window)
+        canvas2 = FigureCanvasTkAgg(fig2, master=patientView)
         canvas2.draw()
         canvas2.get_tk_widget().grid(row=0, column=2, rowspan = 4, padx = 10, pady = 150)   # Setting position of Pie chart threshold         
 
-        canvas3 = FigureCanvasTkAgg(fig3, master=window)
+        canvas3 = FigureCanvasTkAgg(fig3, master=patientView)
         canvas3.draw()
         canvas3.get_tk_widget().grid(row=3, column=2, rowspan = 4, padx = 10, pady = 150)   # Setting posision of Pie chart Impacts     
 
                                                                                             # navigational toolbar setup & pos
-        toolbarFrame = Frame(master=window)
+        toolbarFrame = Frame(master=patientView)
         toolbarFrame.grid(row=4,column=3)
         toolbar = NavigationToolbar2Tk(canvas1, toolbarFrame)
         
-        window.cursor = Cursor(a, useblit=True, color='red', linewidth=2)       #   Used for Analysis graph cursor
+        patientView.cursor = Cursor(a, useblit=True, color='red', linewidth=2)       #   Used for Analysis graph cursor
 
 
 
