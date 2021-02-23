@@ -132,7 +132,8 @@ class logSuccess:
 
 
         # Grid widget designations 
-        
+
+
         l1 = Label(window,
                 text = "Threshold Exceeded: ",
                 font = "bold")
