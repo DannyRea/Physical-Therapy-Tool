@@ -48,8 +48,8 @@ class logSuccess:
         fileMenu.add_command(label="Exit", command = window.quit)
         menubar.add_cascade(label="Menu", menu = fileMenu)
 
-                            
-        #val2=np.array([[20.,20.],[80.,80.],[20.,20.]]) 
+
+        #val2=np.array([[20.,20.],[80.,80.],[20.,20.]])
         threshold = 1200
 
         cmap = plt.get_cmap("tab20c")
@@ -238,7 +238,7 @@ class logSuccess:
                     wedgeprops=dict(width=size, edgecolor='w'),
                     textprops={'fontsize': 7})
 
-
+                                                                                # End pie chart code block for verification.
         # Instances of figs included into a single Canvas
         
         canvas1 = FigureCanvasTkAgg(fig1, master=window)                        
