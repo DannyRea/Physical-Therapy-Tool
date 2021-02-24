@@ -16,11 +16,69 @@ global newVal
 global line_1
 
 
-def new_window(_class):  # Needed to create new window (Patient / Phys) Views
+# Creates a new window for patient and physician views
+def new_window(_class):
     new = tk.Toplevel(main_screen)
     _class(new)
 
 
+# ---------- Start ---------- User Login --------------------
+# After initializing login display it asks for the user's info.
+# From there appropriate methods are called for success or failure to login respectively.
+def login():
+    global login_screen
+    login_screen = Toplevel(main_screen)
+    login_screen.title("Login")
+    login_screen.geometry("400x300")
+    Label(login_screen, text="Please enter login information").pack()
+    Label(login_screen, text="").pack()
+
+    global username_verify
+    global password_verify
+
+    username_verify = StringVar()
+    password_verify = StringVar()
+
+    global username_login_entry
+    global password_login_entry
+
+    Label(login_screen, text="Username * ").pack()
+    username_login_entry = Entry(login_screen, textvariable=username_verify)
+    username_login_entry.pack()
+    Label(login_screen, text="").pack()
+    Label(login_screen, text="Password * ").pack()
+    password_login_entry = Entry(login_screen, textvariable=password_verify, show='*')
+    password_login_entry.pack()
+    Label(login_screen, text="").pack()
+    Button(login_screen, text="Login", width=10, height=1,
+           command=login_verify).pack()  # calls login_verify to parse user file
+
+
+# Verifies user login credentials against current list.
+def login_verify():
+    username1 = username_verify.get()
+    password1 = password_verify.get()
+    username_login_entry.delete(0, END)
+    password_login_entry.delete(0, END)
+
+    list_of_files = os.listdir()
+    if username1 in list_of_files:  # if username is found
+        file1 = open(username1, "r")
+        verify = file1.read().splitlines()
+        if password1 in verify:  # if password is found
+            # logSuccess()                               # Calls function with verification
+            # new_window(logSuccess)                     # Class call for valid entry
+            importFile()  # Call importFile for option for file destination
+
+        else:
+            password_not_recognised()  # calls password_not_recognised
+
+    else:
+        user_not_found()  # calls user_not_found
+
+
+# Login Success.
+# Maintains most functionality to see user appropriate data.
 class logSuccess:
     def __init__(self, window):
 
@@ -262,12 +320,11 @@ class logSuccess:
                                      pady=150)
         # Setting positions of Analysis graph
 
-
         canvas1b = FigureCanvasTkAgg(fig1, master=splitView)
         splitView.cursor = Cursor(a, useblit=True, color='red', linewidth=2)  # Used for Analysis graph cursor
         canvas1b.draw()
         canvas1b.get_tk_widget().grid(row=1, column=3, rowspan=4, padx=10,
-                                     pady=150)
+                                      pady=150)
 
         canvas2 = FigureCanvasTkAgg(fig2, master=splitView)
         canvas2.draw()
@@ -284,11 +341,38 @@ class logSuccess:
         toolbarFrame.grid(row=4, column=3)
         toolbar = NavigationToolbar2Tk(canvas1, toolbarFrame)
 
-##
 
-          # Used for Analysis graph cursor
+# Used for Analysis graph cursor
 
 
+# Failed login attempt.
+# Clears user input and informs user of failed login.
+def password_not_recognised():
+    global password_not_recog_screen
+
+    password_not_recog_screen = Toplevel(login_screen)
+    password_not_recog_screen.title("Success")
+    password_not_recog_screen.geometry("150x100")
+    Label(password_not_recog_screen, text="Invalid Password ").pack()
+    Button(password_not_recog_screen, text="OK", command=delete_password_not_recognised).pack()  # Destroys screen
+
+
+# User not found.
+# Clears user input and informs user of failed login.
+def user_not_found():
+    global user_not_found_screen
+    user_not_found_screen = Toplevel(login_screen)
+    user_not_found_screen.title("Success")
+    user_not_found_screen.geometry("150x100")
+    Label(user_not_found_screen, text="User Not Found").pack()
+    Button(user_not_found_screen, text="OK", command=delete_user_not_found_screen).pack()
+
+
+# -------------------- User Login ---------- End ----------
+
+
+# ---------- Start ---------- User Registration --------------------
+# This method displays a registration screen for the user.
 def register():
     global register_screen
     register_screen = Toplevel(main_screen)
@@ -321,7 +405,7 @@ def register():
     username = StringVar()
     password = StringVar()
 
-    Label(register_screen, text="Login or Registor", bg="blue").pack()
+    Label(register_screen, text="Login or Register", bg="blue").pack()
     Label(register_screen, text="").pack()
     username_lable = Label(register_screen, text="Username * ")
     username_lable.pack()
@@ -360,40 +444,11 @@ def register():
 
     Label(register_screen, text="").pack()
     Button(register_screen, text="Register", width=10, height=1, bg="blue",
-           command=register_user).pack()  # calls registar_user
+           command=register_user).pack()  # calls register_user
 
 
-def login():
-    global login_screen
-    login_screen = Toplevel(main_screen)
-    login_screen.title("Login")
-    login_screen.geometry("400x300")
-    Label(login_screen, text="Please enter login information").pack()
-    Label(login_screen, text="").pack()
-
-    global username_verify
-    global password_verify
-
-    username_verify = StringVar()
-    password_verify = StringVar()
-
-    global username_login_entry
-    global password_login_entry
-
-    Label(login_screen, text="Username * ").pack()
-    username_login_entry = Entry(login_screen, textvariable=username_verify)
-    username_login_entry.pack()
-    Label(login_screen, text="").pack()
-    Label(login_screen, text="Password * ").pack()
-    password_login_entry = Entry(login_screen, textvariable=password_verify, show='*')
-    password_login_entry.pack()
-    Label(login_screen, text="").pack()
-    Button(login_screen, text="Login", width=10, height=1,
-           command=login_verify).pack()  # calls login_verify to parse user file
-
-
-def register_user():  # registar Users into files in same DIR
-
+# This method collects the user's info. Then it saves the user's info into a File.
+def register_user():
     username_info = username.get()
     password_info = password.get()
     email_info = email.get()
@@ -410,7 +465,7 @@ def register_user():  # registar Users into files in same DIR
 
     ##db_connection.commit()
 
-    file = open(username_info, "w")  # creates file with a user name and pswd
+    file = open(username_info, "w")  # creates file with a user name and password
     file.write(username_info + "\n")
     file.write(password_info + "\n")
     file.write(email_info + "\n")
@@ -431,30 +486,29 @@ def register_user():  # registar Users into files in same DIR
     Label(register_screen, text="Registration Success", fg="green", font=("calibri", 11)).pack()
 
 
-# Implementing event on login button
+# -------------------- User Registration ---------- End ----------
 
-def login_verify():
-    username1 = username_verify.get()
-    password1 = password_verify.get()
-    username_login_entry.delete(0, END)
-    password_login_entry.delete(0, END)
 
-    list_of_files = os.listdir()
-    if username1 in list_of_files:  # if username is found
-        file1 = open(username1, "r")
-        verify = file1.read().splitlines()
-        if password1 in verify:  # if pswd is found
-            # logSuccess()                               # Calls function with verification
-            # new_window(logSuccess)                     # Class call for valid entry
-            importFile()  # Call importFile for option for file destination
+# ---------- Start ---------- File Exploration  --------------------
+# Allows user to browse through local files for data.
+def browseFiles():
+    global filename
 
-        else:
-            password_not_recognised()  # calls password_not_recognised
+    filename = filedialog.askopenfilename(initialdir="/", title="Select a File",
+                                          filetypes=(("Text files", "*.txt*"),  # Only pulls txt files
+                                                     ("all files", "*.*")))
+
+    fileExplorer.configure(text="File Opened: " + filename)
+
+    if os.stat(filename).st_size == 0:  # If file is not null open main class else no go!
+        print('File is empty')
 
     else:
-        user_not_found()  # calls user_not_found
+        print('File is not empty')
+        new_window(logSuccess)  # Calls main class here!!!!!
 
 
+# Allows user to search and import data from external service.
 def importFile():
     window = Tk()
 
@@ -481,45 +535,10 @@ def importFile():
     buttonExit.grid(column=1, row=3)
 
 
-def browseFiles():
-    global filename
-
-    filename = filedialog.askopenfilename(initialdir="/", title="Select a File",
-                                          filetypes=(("Text files", "*.txt*"),  # Only pulls txt files
-                                                     ("all files", "*.*")))
-
-    fileExplorer.configure(text="File Opened: " + filename)
-
-    if os.stat(filename).st_size == 0:  # If file is not null open main class else no go!
-        print('File is empty')
-
-    else:
-        print('File is not empty')
-        new_window(logSuccess)  # Calls main class here!!!!!
+# -------------------- File Exploration ---------- End ----------
 
 
-def password_not_recognised():
-    global password_not_recog_screen  # Failed login attempt
-
-    password_not_recog_screen = Toplevel(login_screen)
-    password_not_recog_screen.title("Success")
-    password_not_recog_screen.geometry("150x100")
-    Label(password_not_recog_screen, text="Invalid Password ").pack()
-    Button(password_not_recog_screen, text="OK", command=delete_password_not_recognised).pack()  # Destroys screen
-
-
-# User not found
-
-def user_not_found():
-    global user_not_found_screen
-    user_not_found_screen = Toplevel(login_screen)
-    user_not_found_screen.title("Success")
-    user_not_found_screen.geometry("150x100")
-    Label(user_not_found_screen, text="User Not Found").pack()
-    Button(user_not_found_screen, text="OK", command=delete_user_not_found_screen).pack()
-
-
-# Deleting popups
+# ---------- Start ---------- Remove Pop Ups From Display --------------------
 
 def delete_login_success():
     login_success_screen.destroy()  # destroy instances of function when called
@@ -533,7 +552,11 @@ def delete_user_not_found_screen():
     user_not_found_screen.destroy()
 
 
-def main_account_screen():  # Parent Node
+# -------------------- Remove Pop Ups From Display ---------- End ----------
+
+
+# Creates foundation for login display.
+def main_account_screen():
     global main_screen
     main_screen = tk.Tk()
     # menubar = Menu(main_screen)
