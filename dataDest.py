@@ -55,8 +55,10 @@ class logSuccess:
         tabControl = ttk.Notebook(window)
         patientView = ttk.Frame(tabControl)
         analysisView = ttk.Frame(tabControl)
+        splitView = ttk.Frame(tabControl)
         tabControl.add(patientView, text='Patient View')
         tabControl.add(analysisView, text='Analysis View')
+        tabControl.add(splitView, text = 'Split View')
         tabControl.grid(sticky=NW)
 
         # val2=np.array([[20.,20.],[80.,80.],[20.,20.]])
@@ -147,40 +149,40 @@ class logSuccess:
 
         # Grid widget designations
 
-        l1 = Label(patientView,
+        l1 = Label(splitView,
                    text="Threshold Exceeded: ",
                    font="bold")
 
-        l2 = Label(patientView,
+        l2 = Label(splitView,
                    borderwidth=10,
                    width=20,
                    bg="mint cream",  # sets background color
                    relief="flat",  # flat, grooved, raised, solid, sunken for different looks in gui
                    text="Patient ID - Name")
-        l3 = Label(patientView,
+        l3 = Label(splitView,
                    borderwidth=10,
                    width=20,
                    bg="mint cream",
                    relief="flat",
                    text="Data Set - Primary")
-        l4 = Label(patientView,
+        l4 = Label(splitView,
                    borderwidth=10,
                    width=20,
                    bg="mint cream",
                    relief="flat",
                    text="Data Set - Secondary")
 
-        l5 = Label(patientView,
+        l5 = Label(splitView,
                    text="Total Activity: ",
                    font="bold")
 
-        R2 = Label(patientView,
+        R2 = Label(splitView,
                    text="Analysis Tools",
                    font="bold")
 
         checkbutton = Checkbutton(patientView, text="Autoscale")  # Not being implemented but an example of setup
 
-        R3 = Label(patientView,
+        R3 = Label(splitView,
                    borderwidth=10,
                    width=20,
                    relief="flat",
@@ -196,14 +198,14 @@ class logSuccess:
                 command = clear)
         """
 
-        R5 = Label(patientView,
+        R5 = Label(splitView,
                    borderwidth=10,
                    width=20,
                    relief="flat",
                    bg="mint cream",
                    text=impactCounter)
 
-        setThreshold = tk.Button(patientView,
+        setThreshold = tk.Button(splitView,
                                  text="Set Threshold",
                                  bg="mint cream",
                                  command=setFunc)  # command calls any function you want (setFunc, clear.....) !
@@ -257,27 +259,27 @@ class logSuccess:
         # End pie chart code block for verification.
         # Instances of figs included into a single Canvas
 
-        canvas1 = FigureCanvasTkAgg(fig1, master=patientView)
+        canvas1 = FigureCanvasTkAgg(fig1, master=splitView)
         canvas1.draw()
         canvas1.get_tk_widget().grid(row=1, column=3, rowspan=4, padx=10,
                                      pady=150)  # Setting positions of Analysis graph
 
-        canvas2 = FigureCanvasTkAgg(fig2, master=patientView)
+        canvas2 = FigureCanvasTkAgg(fig2, master=splitView)
         canvas2.draw()
         canvas2.get_tk_widget().grid(row=0, column=2, rowspan=4, padx=10,
                                      pady=150)  # Setting position of Pie chart threshold
 
-        canvas3 = FigureCanvasTkAgg(fig3, master=patientView)
+        canvas3 = FigureCanvasTkAgg(fig3, master=splitView)
         canvas3.draw()
         canvas3.get_tk_widget().grid(row=3, column=2, rowspan=4, padx=10,
                                      pady=150)  # Setting posision of Pie chart Impacts
 
         # navigational toolbar setup & pos
-        toolbarFrame = Frame(master=patientView)
+        toolbarFrame = Frame(master=splitView)
         toolbarFrame.grid(row=4, column=3)
         toolbar = NavigationToolbar2Tk(canvas1, toolbarFrame)
 
-        patientView.cursor = Cursor(a, useblit=True, color='red', linewidth=2)  # Used for Analysis graph cursor
+        splitView.cursor = Cursor(a, useblit=True, color='red', linewidth=2)  # Used for Analysis graph cursor
 
 
 def register():
