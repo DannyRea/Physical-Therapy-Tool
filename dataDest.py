@@ -274,9 +274,19 @@ class logSuccess:
         canvas2.get_tk_widget().grid(row=0, column=2, rowspan=4, padx=10,
                                      pady=150)  # Setting position of Pie chart threshold
 
+        canvas2b = FigureCanvasTkAgg(fig2, master=patientView)
+        canvas2b.draw()
+        canvas2b.get_tk_widget().grid(row=4, column=1, rowspan=4, padx=100,
+                                     pady=150)  # Setting position of Pie chart threshold
+
         canvas3 = FigureCanvasTkAgg(fig3, master=splitView)
         canvas3.draw()
         canvas3.get_tk_widget().grid(row=3, column=2, rowspan=4, padx=10,
+                                     pady=150)  # Setting posision of Pie chart Impacts
+
+        canvas3b = FigureCanvasTkAgg(fig3, master=patientView)
+        canvas3b.draw()
+        canvas3b.get_tk_widget().grid(row=4, column=5, rowspan=4, padx=100,
                                      pady=150)  # Setting posision of Pie chart Impacts
 
         # navigational toolbar setup & pos
@@ -284,7 +294,7 @@ class logSuccess:
         toolbarFrame.grid(row=4, column=3)
         toolbar = NavigationToolbar2Tk(canvas1, toolbarFrame)
 
-##
+
 
           # Used for Analysis graph cursor
 
