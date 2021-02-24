@@ -1,16 +1,15 @@
+import csv
+import os
 import tkinter as tk
 from tkinter.ttk import *
 from tkinter import *
-import os
+from tkinter import filedialog
+from tkinter import simpledialog, ttk
+
+import matplotlib.pyplot as plt
+import numpy as np
 from matplotlib.backends.backend_tkagg import (FigureCanvasTkAgg, NavigationToolbar2Tk)
 from matplotlib.widgets import Cursor
-import numpy as np
-import matplotlib.pyplot as plt
-import csv
-from tkinter import simpledialog, ttk
-import matplotlib.lines as lines
-from matplotlib.lines import Line2D
-from tkinter import filedialog
 
 global newVal
 global line_1
@@ -23,6 +22,31 @@ def new_window(_class):
 
 
 # ---------- Start ---------- User Login --------------------
+# Creates foundation for login display.
+def main_account_screen():
+    global main_screen
+    main_screen = tk.Tk()
+    # menubar = Menu(main_screen)
+    # main_screen.config(menu = menubar)
+
+    main_screen.geometry("300x250")
+    main_screen.title("Account Login")
+    Label(text="Select Your Choice", bg="blue", width="300", height="2", font=("Calibri", 13)).pack()
+    Label(text="").pack()
+
+    Button(text="Login", height="2",
+           width="30",
+           command=login).pack()  # calls function login
+
+    Label(text="").pack()
+
+    Button(text="Register",
+           height="2", width="30",
+           command=register).pack()  # calls function register
+
+    main_screen.mainloop()
+
+
 # After initializing login display it asks for the user's info.
 # From there appropriate methods are called for success or failure to login respectively.
 def login():
@@ -554,30 +578,5 @@ def delete_user_not_found_screen():
 
 # -------------------- Remove Pop Ups From Display ---------- End ----------
 
-
-# Creates foundation for login display.
-def main_account_screen():
-    global main_screen
-    main_screen = tk.Tk()
-    # menubar = Menu(main_screen)
-    # main_screen.config(menu = menubar)
-
-    main_screen.geometry("300x250")
-    main_screen.title("Account Login")
-    Label(text="Select Your Choice", bg="blue", width="300", height="2", font=("Calibri", 13)).pack()
-    Label(text="").pack()
-
-    Button(text="Login", height="2",
-           width="30",
-           command=login).pack()  # calls function login
-
-    Label(text="").pack()
-
-    Button(text="Register",
-           height="2", width="30",
-           command=register).pack()  # calls function register
-
-    main_screen.mainloop()
-
-
-main_account_screen()  # Calls main_account_screen()
+# This line starts the program by calling the beginning function.
+main_account_screen()
