@@ -255,10 +255,19 @@ class logSuccess:
         # End pie chart code block for verification.
         # Instances of figs included into a single Canvas
 
-        canvas1 = FigureCanvasTkAgg(fig1, master=splitView)
+        canvas1 = FigureCanvasTkAgg(fig1, master=analysisView)
+        analysisView.cursor = Cursor(a, useblit=True, color='red', linewidth=2)
         canvas1.draw()
         canvas1.get_tk_widget().grid(row=1, column=3, rowspan=4, padx=10,
-                                     pady=150)  # Setting positions of Analysis graph
+                                     pady=150)
+        # Setting positions of Analysis graph
+
+
+        canvas1b = FigureCanvasTkAgg(fig1, master=splitView)
+        splitView.cursor = Cursor(a, useblit=True, color='red', linewidth=2)  # Used for Analysis graph cursor
+        canvas1b.draw()
+        canvas1b.get_tk_widget().grid(row=1, column=3, rowspan=4, padx=10,
+                                     pady=150)
 
         canvas2 = FigureCanvasTkAgg(fig2, master=splitView)
         canvas2.draw()
@@ -275,7 +284,9 @@ class logSuccess:
         toolbarFrame.grid(row=4, column=3)
         toolbar = NavigationToolbar2Tk(canvas1, toolbarFrame)
 
-        splitView.cursor = Cursor(a, useblit=True, color='red', linewidth=2)  # Used for Analysis graph cursor
+##
+
+          # Used for Analysis graph cursor
 
 
 def register():
