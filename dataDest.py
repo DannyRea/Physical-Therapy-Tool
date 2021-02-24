@@ -48,17 +48,13 @@ class logSuccess:
         fileMenu.add_command(label="Exit", command=window.quit)
         menubar.add_cascade(label="Menu", menu=fileMenu)
 
-        fileMenu = Menu(menubar)
-        fileMenu.add_command(label="Exit", command=window.quit)
-        menubar.add_cascade(label="Menu", menu=fileMenu)
-
         tabControl = ttk.Notebook(window)
         patientView = ttk.Frame(tabControl)
         analysisView = ttk.Frame(tabControl)
         splitView = ttk.Frame(tabControl)
         tabControl.add(patientView, text='Patient View')
         tabControl.add(analysisView, text='Analysis View')
-        tabControl.add(splitView, text = 'Split View')
+        tabControl.add(splitView, text='Split View')
         tabControl.grid(sticky=NW)
 
         # val2=np.array([[20.,20.],[80.,80.],[20.,20.]])
