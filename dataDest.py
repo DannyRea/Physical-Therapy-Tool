@@ -80,6 +80,8 @@ def login():
 
 # Verifies user login credentials against current list.
 def login_verify():
+    global username1
+
     username1 = username_verify.get()
     password1 = password_verify.get()
     username_login_entry.delete(0, END)
@@ -122,9 +124,12 @@ class logSuccess:
 
         # window = Toplevel(main_screen)
 
+        delete_importFile()         # Clean up import screen
+        delete_login()              # Clean up login screen
+
         menubar = Menu(window)
         window.config(menu=menubar)
-        window.geometry("1500x1500")  # Set overall size of screen
+        window.geometry("1700x1500")  # Set overall size of screen
 
         fileMenu = Menu(menubar)  # Sets drop down menu just exit is implemented right now
         fileMenu.add_command(label="Exit", command=window.quit)
@@ -232,23 +237,17 @@ class logSuccess:
                    font="bold")
 
         l2 = Label(splitView,
-                   borderwidth=10,
-                   width=20,
-                   bg="mint cream",  # sets background color
-                   relief="flat",  # flat, grooved, raised, solid, sunken for different looks in gui
-                   text="Patient ID - Name")
+                    text="Patient ID - Name: ",
+                    font="bold")
+                   
         l3 = Label(splitView,
-                   borderwidth=10,
-                   width=20,
-                   bg="mint cream",
-                   relief="flat",
-                   text="Data Set - Primary")
+                    text="Data Set - Primary: ",
+                    font="bold")
+                   
         l4 = Label(splitView,
-                   borderwidth=10,
-                   width=20,
-                   bg="mint cream",
-                   relief="flat",
-                   text="Data Set - Secondary")
+                    text="Data Set - Secondary: ",
+                    font="bold")
+                    
 
         l5 = Label(splitView,
                    text="Total Activity: ",
@@ -267,34 +266,42 @@ class logSuccess:
                    bg="mint cream",
                    text=threshCounter)  # One way to display a calculated value
 
-        """
-        R4 = tk.Button(window, 
-                borderwidth = 2,
-                width = 20,
-                text = "Clear",
-                bg = "mint cream",
-                command = clear)
-        """
+        R4 = Label(splitView,
+                   borderwidth=10,
+                   width=15,
+                   relief="flat",
+                   bg="mint cream",
+                   text=threshCounter)
+
 
         R5 = Label(splitView,
                    borderwidth=10,
-                   width=20,
+                   width=15,
+                   relief="flat",
+                   bg="mint cream",
+                   text=username1)
+
+        R6 = Label(splitView,
+                   borderwidth=10,
+                   width=15,
                    relief="flat",
                    bg="mint cream",
                    text=impactCounter)
 
         setThreshold = tk.Button(splitView,
-                                 text="Set Threshold",
-                                 bg="mint cream",
-                                 command=setFunc)  # command calls any function you want (setFunc, clear.....) !
+                 text="Set Threshold",
+                 bg="mint cream",
+                 command=setFunc)  # command calls any function you want (setFunc, clear.....) !
 
-        l1.grid(row=2, column=4, pady=5)
-        l2.grid(row=2, column=0, pady=5)
-        l3.grid(row=3, column=0, pady=5)
-        l4.grid(row=4, column=0, pady=5)
-        l5.grid(row=3, column=4, pady=5)
-        R3.grid(row=2, column=5, pady=5)
-        R5.grid(row=3, column=5, pady=5)
+        l1.grid(row=2, column=4, pady=2)
+        l2.grid(row=2, column=0, pady=2)
+        l3.grid(row=3, column=0, pady=2)
+        l4.grid(row=4, column=0, pady=2)
+        l5.grid(row=3, column=4, pady=2)
+        R3.grid(row=2, column=5, pady=2)
+        R4.grid(row=2, column=5, pady=2)
+        R5.grid(row=2, column=1, pady=2)
+        R6.grid(row=3, column=5, pady=2)
 
         p1 = Label(patientView,
                    borderwidth=10,
@@ -366,7 +373,7 @@ class logSuccess:
         analysisView.cursor = Cursor(a, useblit=True, color='red', linewidth=2)
         canvas1.draw()
         canvas1.get_tk_widget().grid(row=1, column=3, rowspan=4, padx=10,
-                                     pady=150)
+                                     pady=10)
         # Setting positions of Analysis graph
 
         canvas1b = FigureCanvasTkAgg(fig1, master=splitView)
@@ -570,29 +577,31 @@ def browseFiles():
 
 # Allows user to search and import data from external service.
 def importFile():
-    window = Tk()
 
+    global importFile_screen
     global fileExplorer
 
-    window.title('File Explorer')  # Window Title
-    window.geometry("500x500")
-    window.config(background="white")  # Set window background color
-    fileExplorer = Label(window,
+    importFile_screen = tk.Tk()
+
+    importFile_screen.title('File Explorer')  # Window Title
+    importFile_screen.geometry("350x300")
+    importFile_screen.config(background="white")  # Set window background color
+    fileExplorer = Label(importFile_screen,
                          text="File Explorer ",
-                         width=100, height=4,
+                         width=50, height=4,
                          fg="blue")
 
-    buttonExplore = Button(window,
+    buttonExplore = Button(importFile_screen,
                            text="Browse Files",
                            command=browseFiles)  # Command call for browseFile function
 
-    buttonExit = Button(window,
+    buttonExit = Button(importFile_screen,
                         text="Exit",
                         command=exit)  # Exits out of program
 
-    fileExplorer.grid(column=1, row=1)  # Using grid layout
-    buttonExplore.grid(column=1, row=2)
-    buttonExit.grid(column=1, row=3)
+    fileExplorer.grid(column=0, row=1)  # Using grid layout
+    buttonExplore.grid(column=0, row=2)
+    buttonExit.grid(column=0, row=3)
 
 
 # -------------------- File Exploration ---------- End ----------
@@ -610,6 +619,12 @@ def delete_password_not_recognised():
 
 def delete_user_not_found_screen():
     user_not_found_screen.destroy()
+
+def delete_importFile():
+    importFile_screen.destroy()
+
+def delete_login():
+    login_screen.destroy()
 
 
 # -------------------- Remove Pop Ups From Display ---------- End ----------
