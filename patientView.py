@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter.ttk import *
 from tkinter import *
+from PIL import ImageTk, Image
 import os
 from matplotlib.backends.backend_tkagg import (FigureCanvasTkAgg, NavigationToolbar2Tk)
 from matplotlib.widgets import Cursor
@@ -34,6 +35,7 @@ class patientView:
         threshTot = 0
         seconds = 0
         totalCount = 0
+        root = Tk()
 
         size = 0.3
 
@@ -94,11 +96,30 @@ class patientView:
         sizesC = [7, 93]  # Setting pie c (Impact) chart labels
         labelsC = 'Above %', 'Total %'
 
-        l1 = Label(patientView,
-                   text="Impacts",
+        p1 = Label(patientView,
+                   borderwidth=10,
+                   width=15,
+                   relief="flat",
+                   bg="mint cream",
+                   text=("Impacts", impactCounter),
                    font="bold")
 
-        l1.grid(row=6, column=3, padx=50)
+        p2 = Label(patientView,
+                   text="Time period",
+                   font="bold")
+
+        p3 = Label(patientView,
+                   text="Average Newtons",
+                   font="bold")
+
+        p4 = Label(patientView,
+                   text="Total Datapoints",
+                   font="bold")
+
+        p1.grid(row=6, column=3)
+        p2.grid(row=7, column=3)
+        p3.grid(row=8, column=2)
+        p4.grid(row=8, column=4)
 
         fig2 = plt.figure(figsize=(4, 3), dpi=95)  # figsize sets overall size of each figure
         fig3 = plt.figure(figsize=(4, 3), dpi=95)  # dpi zooms out and in with a change of value
@@ -120,12 +141,12 @@ class patientView:
 
         canvas2 = FigureCanvasTkAgg(fig2, master=patientView)
         canvas2.draw()
-        canvas2.get_tk_widget().grid(row=4, column=1, rowspan=4, padx=100,
+        canvas2.get_tk_widget().grid(row=4, column=1, rowspan=4, padx=50,
                                      pady=150)  # Setting position of Pie chart threshold
 
         canvas3 = FigureCanvasTkAgg(fig3, master=patientView)
         canvas3.draw()
-        canvas3.get_tk_widget().grid(row=4, column=5, rowspan=4, padx=100,
+        canvas3.get_tk_widget().grid(row=4, column=5, rowspan=4, padx=50,
                                      pady=150)  # Setting position of Pie chart Impacts
 
 
