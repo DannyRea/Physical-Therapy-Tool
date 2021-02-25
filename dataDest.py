@@ -296,6 +296,31 @@ class logSuccess:
         R3.grid(row=2, column=5, pady=5)
         R5.grid(row=3, column=5, pady=5)
 
+        p1 = Label(patientView,
+                   borderwidth=10,
+                   width=15,
+                   relief="flat",
+                   bg="mint cream",
+                   text=("Impacts", impactCounter),
+                   font="bold")
+
+        p2 = Label(patientView,
+                   text="Time period",
+                   font="bold")
+
+        p3 = Label(patientView,
+                   text="Average Newtons",
+                   font="bold")
+
+        p4 = Label(patientView,
+                   text="Total Datapoints",
+                   font="bold")
+
+        p1.grid(row=6, column=3)
+        p2.grid(row=7, column=3)
+        p3.grid(row=8, column=2)
+        p4.grid(row=8, column=4)
+
         # checkbutton.grid(row = 2, column = 6, pady = 5)
         setThreshold.grid(row=4, column=5, pady=5)
 
@@ -355,10 +380,21 @@ class logSuccess:
         canvas2.get_tk_widget().grid(row=0, column=2, rowspan=4, padx=10,
                                      pady=150)  # Setting position of Pie chart threshold
 
+        canvas2b = FigureCanvasTkAgg(fig2, master=patientView)
+        canvas2b.draw()
+        canvas2b.get_tk_widget().grid(row=4, column=1, rowspan=4, padx=50,
+                                     pady=150)  # Setting position of Pie chart threshold
+
         canvas3 = FigureCanvasTkAgg(fig3, master=splitView)
         canvas3.draw()
         canvas3.get_tk_widget().grid(row=3, column=2, rowspan=4, padx=10,
                                      pady=150)  # Setting posision of Pie chart Impacts
+
+
+        canvas3b = FigureCanvasTkAgg(fig3, master=patientView)
+        canvas3b.draw()
+        canvas3b.get_tk_widget().grid(row=4, column=5, rowspan=4, padx=50,
+                                     pady=150)  # Setting position of Pie chart Impacts
 
         # navigational toolbar setup & pos
         toolbarFrame = Frame(master=splitView)
