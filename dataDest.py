@@ -236,9 +236,11 @@ class logSuccess:
                    text="Threshold Exceeded: ",
                    font="bold")
 
-        l2 = Label(splitView,
+        l2 = Button(splitView,
                     text="Patient ID - Name: ",
-                    font="bold")
+                    font="bold",
+                    command=patientSelection
+                    )
                    
         l3 = Label(splitView,
                     text="Data Set - Primary: ",
@@ -554,6 +556,60 @@ def register_user():
 
 
 # -------------------- User Registration ---------- End ----------
+
+
+# -------------------- Patient Select ---------- Start ----------
+
+
+def patientSelection():
+    global patientSelect
+
+    master = Tk()
+
+    #create the label
+    l1 = Label(master, text="Height")
+    l2 = Label(master, text="Width")
+
+    #Grid
+    l1.grid(row=0, column=0, sticky=W, pady=2)
+    l2.grid(row=0, column=0, sticky=W, pady=2)
+
+    #sql stuff for fetching info from the DB
+
+    #referenceLOGIN stuff - Should be elsewhere
+    #mydb = mysql.connector.connect(
+       # host="dbName??",
+      #  user="userName",
+     #   password="myPass"
+
+    #)
+
+    #DB select from Monitors table where login ID matches the Doc's ID
+    #mycursor = mydb.cursor()
+
+    #sql = "SELECT patientID FROM monitors WHERE docID = %s"
+    #myVal = ("loginID")
+
+    #mycursor.execute(sql, myVal)
+
+    #myresult = mycursor.fetchall()
+
+
+    #for x in myresult
+        #myTable(x) = myresult(x)
+
+
+
+
+
+
+
+
+
+
+
+
+# -------------------- Patient Select ------------- End ----------
 
 
 # ---------- Start ---------- File Exploration  --------------------
