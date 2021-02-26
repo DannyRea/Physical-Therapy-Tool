@@ -570,15 +570,17 @@ def register_user():
 
 
 def patientSelection():
-    global patientSelect
+    global patientSelect_Screen
     global patientFname
     global patientLname
 
-    master = Tk()
+    patientSelect_Screen = tk.Tk()
+    patientSelect_Screen.geometry("350x350")
+    #master = Tk()
 
     #create the label
-    l1 = Label(master, text="Height")
-    l2 = Label(master, text="Patient selection")
+    l1 = Label(patientSelect_Screen, text="Height")
+    l2 = Label(patientSelect_Screen, text="Patient selection")
 
     #Grid
     l1.grid(row=0, column=0, sticky=W, pady=2)
@@ -607,9 +609,10 @@ def patientSelection():
 
     #myresult = mycursor.fetchall()
 
-
-    #for x in myresult
-        #myTable(x) = myresult(x)
+    #Populate a table using the DB results
+    #for row in myresult
+        #for column in myresult
+            #mytable(column) = row[0]
 
 
 
