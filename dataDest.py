@@ -122,6 +122,14 @@ class logSuccess:
         size = 0.3
         yVal = 800
 
+        #Global for Viewing
+        global patientFname
+        global patientLname
+
+        patientFname = "John"
+        patientLname = "Doe"
+
+
         # window = Toplevel(main_screen)
 
         delete_importFile()         # Clean up import screen
@@ -281,7 +289,7 @@ class logSuccess:
                    width=15,
                    relief="flat",
                    bg="mint cream",
-                   text=username1)
+                   text=(patientFname + " " + patientLname))
 
         R6 = Label(splitView,
                    borderwidth=10,
@@ -563,16 +571,21 @@ def register_user():
 
 def patientSelection():
     global patientSelect
+    global patientFname
+    global patientLname
 
     master = Tk()
 
     #create the label
     l1 = Label(master, text="Height")
-    l2 = Label(master, text="Width")
+    l2 = Label(master, text="Patient selection")
 
     #Grid
     l1.grid(row=0, column=0, sticky=W, pady=2)
     l2.grid(row=0, column=0, sticky=W, pady=2)
+
+    patientFname = "Sarah"
+    patientLname = "Doe"
 
     #sql stuff for fetching info from the DB
 
@@ -597,15 +610,6 @@ def patientSelection():
 
     #for x in myresult
         #myTable(x) = myresult(x)
-
-
-
-
-
-
-
-
-
 
 
 
