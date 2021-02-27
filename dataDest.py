@@ -110,7 +110,11 @@ class logSuccess:
 
         self.window = window
 
-        Counter = 0
+        global patientFname
+        global patientLname
+        
+
+        #Counter = 0
         threshold = 1100
         impactThreshold = 0
         threshCounter = 0
@@ -118,14 +122,12 @@ class logSuccess:
         threshTot = 0
         seconds = 0
         totalCount = 0
+        Counter = 0
 
         size = 0.3
         yVal = 800
 
-        #Global for Viewing
-        global patientFname
-        global patientLname
-
+        
         patientFname = "John"
         patientLname = "Doe"
 
@@ -133,7 +135,7 @@ class logSuccess:
         # window = Toplevel(main_screen)
 
         delete_importFile()         # Clean up import screen
-        delete_login()              # Clean up login screen
+        #delete_login()              # Clean up login screen
 
         menubar = Menu(window)
         window.config(menu=menubar)
@@ -171,6 +173,8 @@ class logSuccess:
                 if row:
                     Counter += 1  # Counting rows in text file and using them for x-axis
 
+        
+
         for i in y:  # Number of impacts over set threshold
             if i > threshold:
                 threshCounter += 1
@@ -207,14 +211,72 @@ class logSuccess:
 
         sizesC = [7, 93]  # Setting pie c (Impact) chart labels
         labelsC = 'Above %', 'Total %'
+        
 
         # **********************************************************************
         def setFunc():  # NOW FUNCTIONING CORRECTLY!!!
             global line_1
 
+            Counter = 0                 # Set vals back to Zero
+            threshCounter = 0
+            impactCounter = 0
+            totalCount = 0
+
             plt.ion()
 
             threshold = simpledialog.askinteger("Theshold Value ", "Enter new value: ")  # FINALLY !!!
+
+        
+            print(threshold)
+
+            with open(filename, 'r') as csvfile:  # Re-set file designation
+                plots = csv.reader(csvfile)
+                for row in plots:
+                    y.append(int(row[0]))  # Using data points as y-axis points
+                    x.append(Counter)
+                    if row:
+                        Counter += 1  # Counting rows in text file and using them for x-axis
+
+
+            for i in y:  # Number of impacts over set threshold
+                if i > threshold:
+                    threshCounter += 1
+                    continue
+
+            for i in y:  # Number of impacts over ZERO
+                if i > impactThreshold:
+                    impactCounter += 1
+                    continue
+
+            for i in x:  # Number of impacts
+                totalCount += 1
+                continue
+
+            print("In setFunc.......")              # Now IN Function   
+            print("Total Above: ", threshCounter)   # Output to make sure everything is right
+            print("Total Impacts: ", impactCounter)
+            print("Total Points: ", Counter)
+            print("Threshold %: ", threshCalc)
+            print("Total Thresh %: ", threshTot)
+            print("Impact Counter: ", impactCounter)
+            print("Total Count: ", totalCount)
+            print("Seconds total: ", second)
+
+            
+            R4 = Label(splitView,                   # Re-set Grid Label Val
+                   borderwidth=10,
+                   width=15,
+                   relief="flat",
+                   bg="mint cream",
+                   text=threshCounter)
+
+            R4.grid(row=2, column=5, pady=2)
+              
+
+
+            plt.ion()
+
+            #threshold = simpledialog.askinteger("Theshold Value ", "Enter new value: ")  # FINALLY !!!
             if line_1:  # Checks to see if theres something in list, if so then pop it and remove line
                 line = line_1.pop(0)
                 line.remove()
@@ -222,8 +284,7 @@ class logSuccess:
             if not line_1:  # Checks empty list, and if true, plots the graph.
                 line_1 = a.plot([0., Counter], [threshold, threshold], "k--")
 
-            print(threshold)
-
+             
             # plt_list.append(a.plot([0., Counter], [threshold, threshold], "k--"))
 
         # ******************************************************************
@@ -232,13 +293,9 @@ class logSuccess:
 
             line_1 = a.plot([0., Counter], [threshold, threshold], "k--")  # plots threshold line, assigns to list
 
-        def clear():  # Not being called as of now
-            # plt.ion()
-            # threshold = 0
-            newVal = simpledialog.askstring("Theshold Value ", "Enter new value: ")
-            print(newVal)
+        #def clear():  # Not being called as of now
 
-        # Grid widget designations
+            
 
         l1 = Label(splitView,
                    text="Threshold Exceeded: ",
@@ -355,8 +412,7 @@ class logSuccess:
         a.set_ylabel('Force in Newtons')  # Set Y axis title
         # a.set_xticks(['0','10','20','30','40','50','60','70','80'])
         a.set_xticklabels(['0', '10', '20', '30', '40', '50', '60', '70', '80'])
-        a.set_yticks(
-            [0, 250, 500, 750, 1000, 1250, 1500, 1750, 2000])  # Just using this right now but will most likely change
+        a.set_yticks([0, 250, 500, 750, 1000, 1250, 1500, 1750, 2000])  # Just using this right now but will most likely change
         # a.xticks(x,values)
 
         # https://matplotlib.org/3.1.1/api/_as_gen/matplotlib.axes.Axes.pie.html#matplotlib.axes.Axes.pie
@@ -416,7 +472,7 @@ class logSuccess:
         # navigational toolbar setup & pos
         toolbarFrame = Frame(master=splitView)
         toolbarFrame.grid(row=4, column=3)
-        toolbar = NavigationToolbar2Tk(canvas1, toolbarFrame)
+        toolbar = NavigationToolbar2Tk(canvas1b, toolbarFrame)
 
 
 # Used for Analysis graph cursor
@@ -620,6 +676,7 @@ def patientSelection():
 # Allows user to browse through local files for data.
 def browseFiles():
     global filename
+    #delete_importFile()         # Clean up import screen
 
     filename = filedialog.askopenfilename(initialdir="/", title="Select a File",
                                           filetypes=(("Text files", "*.txt*"),  # Only pulls txt files
@@ -638,9 +695,11 @@ def browseFiles():
 # Allows user to search and import data from external service.
 def importFile():
 
+
     global importFile_screen
     global fileExplorer
 
+    delete_login()              # Clean up login screen
     importFile_screen = tk.Tk()
 
     importFile_screen.title('File Explorer')  # Window Title
