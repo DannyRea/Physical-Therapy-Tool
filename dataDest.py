@@ -135,7 +135,7 @@ class logSuccess:
         # window = Toplevel(main_screen)
 
         delete_importFile()         # Clean up import screen
-        #delete_login()              # Clean up login screen
+       
 
         menubar = Menu(window)
         window.config(menu=menubar)
