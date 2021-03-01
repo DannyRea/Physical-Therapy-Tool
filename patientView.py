@@ -16,7 +16,7 @@ from tkinter import filedialog
 global newVal
 global line_1
 
-
+# Just the patient view, nothing else
 
 def new_window(_class):  # Needed to create new window (Patient / Phys) Views
     new = tk.Toplevel(main_screen)
