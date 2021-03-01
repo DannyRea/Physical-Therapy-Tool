@@ -1,0 +1,15 @@
+create view DOCTOR_VIEW
+	as Select d.docID, d.licNum, d.phone, d.website, u.userName, u.email, u.passWord, u.first_Name, u.last_Name
+	from DOCTOR as d join USER as u on d.docID = u.ID
+	where userType = TRUE; /*true means doctor, added in for an extra error check*/
+
+create view PATIENT_VIEW
+	as Select p.patID, p.bio, p.goals, p.lowThreshold, p.highThreshold, u.userName, u.email, u.passWord, u.first_Name, u.last_Name
+	from PATIENT as p join USER as u on p.patID = u.ID
+	where userType = FALSE; /*false means not doctor, added in for an extra error check*/
+
+/* broke with datapoints being a blob cant get individual info from it to get derived attributes.
+create VIEW RECORD_VIEW
+	as r.patientID, r.recordID, r.dataPoints, count(all dataPoints)
+	from RECORD;
+*/
