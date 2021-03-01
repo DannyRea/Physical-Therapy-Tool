@@ -112,10 +112,11 @@ class logSuccess:
 
         global patientFname
         global patientLname
+        global threshold
         
 
         #Counter = 0
-        threshold = 1100
+        threshold = 0
         impactThreshold = 0
         threshCounter = 0
         impactCounter = 0
@@ -135,7 +136,7 @@ class logSuccess:
         # window = Toplevel(main_screen)
 
         delete_importFile()         # Clean up import screen
-       
+        #delete_login()              # Clean up login screen
 
         menubar = Menu(window)
         window.config(menu=menubar)
@@ -155,7 +156,7 @@ class logSuccess:
         tabControl.grid(sticky=NW)
 
         # val2=np.array([[20.,20.],[80.,80.],[20.,20.]])
-        threshold = 1200
+        #threshold = 1200
 
         cmap = plt.get_cmap("tab20c")
         outer_colors = cmap(np.arange(3) * 4)  # Random color generated for pie charts
@@ -212,22 +213,21 @@ class logSuccess:
         sizesC = [7, 93]  # Setting pie c (Impact) chart labels
         labelsC = 'Above %', 'Total %'
         
+     
+        def setFunc():
 
-        # **********************************************************************
-        def setFunc():  # NOW FUNCTIONING CORRECTLY!!!
             global line_1
+            global line_2
 
             Counter = 0                 # Set vals back to Zero
             threshCounter = 0
             impactCounter = 0
             totalCount = 0
 
-            plt.ion()
-
             threshold = simpledialog.askinteger("Theshold Value ", "Enter new value: ")  # FINALLY !!!
 
-        
-            print(threshold)
+            print("In replot....")
+           
 
             with open(filename, 'r') as csvfile:  # Re-set file designation
                 plots = csv.reader(csvfile)
@@ -252,6 +252,10 @@ class logSuccess:
                 totalCount += 1
                 continue
 
+            threshCalc = threshCounter / Counter  # % Calc
+            threshTot = 1 - threshCalc
+
+
             print("In setFunc.......")              # Now IN Function   
             print("Total Above: ", threshCounter)   # Output to make sure everything is right
             print("Total Impacts: ", impactCounter)
@@ -261,8 +265,51 @@ class logSuccess:
             print("Impact Counter: ", impactCounter)
             print("Total Count: ", totalCount)
             print("Seconds total: ", second)
+            print(threshold)
+
 
             
+            vals = np.array([[10., 10.], [threshCounter, threshCounter]])  # Setting pie chart %
+            vals2 = np.array([[50., 50.], [10., 10.]])  #
+
+            sizesB = [threshCalc, threshTot]  # Setting pie b (Threshold) chart labels
+            labelsB = 'Above %', 'Total %'
+
+        
+            #plt.ion()
+
+            fig4 = plt.figure(figsize=(4, 3), dpi=95)  # dpi zooms out and in with a change of value
+            fig5 = plt.figure(figsize=(4, 3), dpi=95)  # dpi zooms out and in with a change of value
+
+           
+
+            rePlot = fig4.add_subplot(1, 1, 1)  # Pie chart for client
+            rePlot.set_title("High Activity Peaks", fontsize=12)
+            rePlot.pie(sizesB, labels=labelsB, autopct='%1.1f%%', colors=outer_colors,
+                  # startangle sets starting point of % divisions
+              radius=1.2, shadow=True, startangle=180,  # colors are random right now calling outer_colors
+              wedgeprops=dict(width=size, edgecolor='w'),
+              textprops={'fontsize': 7})
+
+            rePlotPV = fig5.add_subplot(1, 1, 1)  # Pie chart for client
+            rePlotPV.set_title("High Activity Peaks", fontsize=12)
+            rePlotPV.pie(sizesB, labels=labelsB, autopct='%1.1f%%', colors=outer_colors,
+                  # startangle sets starting point of % divisions
+              radius=1.2, shadow=True, startangle=180,  # colors are random right now calling outer_colors
+              wedgeprops=dict(width=size, edgecolor='w'),
+              textprops={'fontsize': 7})
+
+          
+            canvasRP = FigureCanvasTkAgg(fig4, master=splitView)
+            #canvasRP.draw()
+            canvasRP.get_tk_widget().grid(row=0, column=2, rowspan=4, padx=10,
+                                         pady=150)  # Setting position of Pie chart threshold
+
+            canvasPV = FigureCanvasTkAgg(fig5, master=patientView)
+            #canvasPV.draw()
+            canvasPV.get_tk_widget().grid(row=4, column=5, rowspan=4, padx=50,
+                                         pady=150)  # Setting position of Pie chart threshold
+              
             R4 = Label(splitView,                   # Re-set Grid Label Val
                    borderwidth=10,
                    width=15,
@@ -271,9 +318,8 @@ class logSuccess:
                    text=threshCounter)
 
             R4.grid(row=2, column=5, pady=2)
-              
 
-
+            
             plt.ion()
 
             #threshold = simpledialog.askinteger("Theshold Value ", "Enter new value: ")  # FINALLY !!!
@@ -283,17 +329,22 @@ class logSuccess:
 
             if not line_1:  # Checks empty list, and if true, plots the graph.
                 line_1 = a.plot([0., Counter], [threshold, threshold], "k--")
+              
+               
+            if line_2:                  #  For Analysis View
+                line = line_2.pop(0)
+                line.remove()
+            if not line_2:
+                line_2 = av.plot([0., Counter], [threshold, threshold], "k--")
 
-             
-            # plt_list.append(a.plot([0., Counter], [threshold, threshold], "k--"))
+            plt.ioff()     # Trapping updated threshold inbetween ion() & ioff() so only threshold get drawn     
 
-        # ******************************************************************
         def setThreshLine():
             global line_1
+            global line_2
 
             line_1 = a.plot([0., Counter], [threshold, threshold], "k--")  # plots threshold line, assigns to list
-
-        #def clear():  # Not being called as of now
+            line_2 = av.plot([0., Counter], [threshold, threshold], "k--")  # plots threshold line, to Analysis View
 
             
 
@@ -359,7 +410,13 @@ class logSuccess:
                  text="Set Threshold",
                  bg="mint cream",
                  command=setFunc)  # command calls any function you want (setFunc, clear.....) !
-
+        """
+        replot = tk.Button(splitView,
+                    text="Re-plot Graph",
+                    bg="mint cream",
+                    command=replotPIE)
+        
+        """
         l1.grid(row=2, column=4, pady=2)
         l2.grid(row=2, column=0, pady=2)
         l3.grid(row=3, column=0, pady=2)
@@ -397,22 +454,32 @@ class logSuccess:
 
         # checkbutton.grid(row = 2, column = 6, pady = 5)
         setThreshold.grid(row=4, column=5, pady=5)
+        #replot.grid(row=1, column=5, pady=5)
 
         fig1 = plt.figure(figsize=(6, 6), dpi=95)  # Instances of individual figures for alignment
+        figAV = plt.figure(figsize=(6, 6), dpi=95)  # Instances of individual figures for alignment
         fig2 = plt.figure(figsize=(4, 3), dpi=95)  # figsize sets overall size of each figure
         fig3 = plt.figure(figsize=(4, 3), dpi=95)  # dpi zooms out and in with a change of value
 
         # plt.ion()
         a = fig1.add_subplot(1, 1, 1)  # Analysis View Graph plot
+        av = figAV.add_subplot(1, 1, 1)  # Analysis View Graph plot
         # a.subplots_adjust(bottom=0.1, right=0.8, top=0.9)
         a.plot(x, y, label='Loaded from file!')
+        av.plot(x, y, label='Loaded from file!')
         # a.plot([0., Counter], [threshold, threshold], "k--")            # Plotting threshold designation
         setThreshLine()
         a.set_xlabel('Time(seconds)')  # Set X axis title
         a.set_ylabel('Force in Newtons')  # Set Y axis title
+
+        av.set_xlabel('Time(seconds)')  # Set X axis title
+        av.set_ylabel('Force in Newtons')  # Set Y axis title
         # a.set_xticks(['0','10','20','30','40','50','60','70','80'])
         a.set_xticklabels(['0', '10', '20', '30', '40', '50', '60', '70', '80'])
         a.set_yticks([0, 250, 500, 750, 1000, 1250, 1500, 1750, 2000])  # Just using this right now but will most likely change
+
+        av.set_xticklabels(['0', '10', '20', '30', '40', '50', '60', '70', '80'])
+        av.set_yticks([0, 250, 500, 750, 1000, 1250, 1500, 1750, 2000])  # Just using this right now but will most likely change
         # a.xticks(x,values)
 
         # https://matplotlib.org/3.1.1/api/_as_gen/matplotlib.axes.Axes.pie.html#matplotlib.axes.Axes.pie
@@ -435,8 +502,8 @@ class logSuccess:
         # End pie chart code block for verification.
         # Instances of figs included into a single Canvas
 
-        canvas1 = FigureCanvasTkAgg(fig1, master=analysisView)
-        analysisView.cursor = Cursor(a, useblit=True, color='red', linewidth=2)
+        canvas1 = FigureCanvasTkAgg(figAV, master=analysisView)
+        analysisView.cursor = Cursor(av, useblit=True, color='red', linewidth=2)
         canvas1.draw()
         canvas1.get_tk_widget().grid(row=1, column=3, rowspan=4, padx=10,
                                      pady=10)
@@ -453,7 +520,7 @@ class logSuccess:
         canvas2.get_tk_widget().grid(row=0, column=2, rowspan=4, padx=10,
                                      pady=150)  # Setting position of Pie chart threshold
 
-        canvas2b = FigureCanvasTkAgg(fig2, master=patientView)
+        canvas2b = FigureCanvasTkAgg(fig3, master=patientView)
         canvas2b.draw()
         canvas2b.get_tk_widget().grid(row=4, column=1, rowspan=4, padx=50,
                                      pady=150)  # Setting position of Pie chart threshold
@@ -464,7 +531,7 @@ class logSuccess:
                                      pady=150)  # Setting posision of Pie chart Impacts
 
 
-        canvas3b = FigureCanvasTkAgg(fig3, master=patientView)
+        canvas3b = FigureCanvasTkAgg(fig2, master=patientView)
         canvas3b.draw()
         canvas3b.get_tk_widget().grid(row=4, column=5, rowspan=4, padx=50,
                                      pady=150)  # Setting position of Pie chart Impacts
@@ -626,17 +693,15 @@ def register_user():
 
 
 def patientSelection():
-    global patientSelect_Screen
+    global patientSelect
     global patientFname
     global patientLname
 
-    patientSelect_Screen = tk.Tk()
-    patientSelect_Screen.geometry("350x350")
-    #master = Tk()
+    master = Tk()
 
     #create the label
-    l1 = Label(patientSelect_Screen, text="Height")
-    l2 = Label(patientSelect_Screen, text="Patient selection")
+    l1 = Label(master, text="Height")
+    l2 = Label(master, text="Patient selection")
 
     #Grid
     l1.grid(row=0, column=0, sticky=W, pady=2)
@@ -665,10 +730,9 @@ def patientSelection():
 
     #myresult = mycursor.fetchall()
 
-    #Populate a table using the DB results
-    #for row in myresult
-        #for column in myresult
-            #mytable(column) = row[0]
+
+    #for x in myresult
+        #myTable(x) = myresult(x)
 
 
 
