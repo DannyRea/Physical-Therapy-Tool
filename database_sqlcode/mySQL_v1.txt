@@ -37,7 +37,7 @@ create table DOCTOR (
 create table PATIENT (
 	patID int not null,
 	bio varchar(20000)
-	/*goals ???*/
+	goals TEXT, /*TEXT is 65k characters, blob is 65k bytes*/
 	lowThreshold int,
 	highThreshold int
 	primary key(patID),
