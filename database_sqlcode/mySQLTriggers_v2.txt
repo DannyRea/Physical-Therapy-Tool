@@ -1,0 +1,17 @@
+/*
+trigger to set the boolean value of doctor to the correct value for the users
+
+do we want functions/procedures? to make calling from database easier?
+*/
+
+delimiter $
+	create trigger set_doctor after insert on USER
+	for each row
+	begin
+	if(new.licNum is not null) then
+		update USER
+		set USER.userType = TRUE
+		where new.ID = USER.ID; /*not sure if this will work correctly*/
+	end if;
+end $
+delimiter ;

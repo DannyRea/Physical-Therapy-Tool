@@ -1,0 +1,58 @@
+/*password should be stores as the hash of the password entered, so...as a binary(#) type
+
+we should only be storing the hash of the password, not sure where the hash funtion should be kept possibly database somehow, to keep it from being decoded if its client side.
+
+	some code from stack overflow possibly creating hashes.
+	from "https://stackoverflow.com/questions/14722305/what-kind-of-datatype-should-one-use-to-store-hashes"
+	
+	DATALENGTH(HASHBYTES('MD2', 'Testing')) AS [MD2Length],
+        DATALENGTH(HASHBYTES('MD4', 'Testing')) AS [MD4Length],
+        DATALENGTH(HASHBYTES('MD5', 'Testing')) AS [MD5Length],
+
+	select HASHBYTES('MD5','MD5Text')
+*/
+
+/*
+v2 changed user, doctor, patient tables, into one table of all 3 called user then i changed the views to be the 2 individual doctor and patient.
+*/
+
+create table USER (
+	ID int not null,
+	userName varchar(20),
+	email varchar(50),
+	userType Boolean default FALSE, /*true being a doctor or has doctor id info*/
+	passWord varchar(20),
+	first_Name varchar(20),
+	last_Name varchar(20),
+	
+	/*doctor specific*/
+	licNum double,
+	phone varchar(10),
+	website varchar(100),
+
+	/*patient specific*/
+	bio varchar(20000)
+	goals TEXT, /*TEXT is 65k characters, blob is 65k bytes*/
+	lowThreshold int,
+	highThreshold int
+
+	primary Key(ID),
+	unique(userName),
+	unique(email)
+	);
+
+create table RECORD (
+	patientID int not null,
+	recordID int not null,
+	dataPoints LONGBLOB, /*4gb of data can be stored we are expecting 1gb per 2 weeks*/
+	primary key(patientID, recordID),
+	foreign key(patientID) refrences USER(ID)
+	);
+
+create table MONITERS (
+	doctorID int not null,
+	userID int not null,
+	primary key(doctorID, userID),
+	foreign key(doctorID) refrences USER(ID),
+	foreign key(userID) refrences USER(ID)
+	);

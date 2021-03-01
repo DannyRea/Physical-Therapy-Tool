@@ -1,0 +1,18 @@
+create view DOCTOR_VIEW
+	as Select u.docID, u.licNum, u.phone, u.website, u.userName, u.email, u.passWord, u.first_Name, u.last_Name
+	from USER as u
+	where userType = TRUE; /*true means doctor, added in for an extra error check*/
+
+create view PATIENT_VIEW
+	as Select u.patID, u.bio, u.goals, u.lowThreshold, u.highThreshold, u.userName, u.email, u.passWord, u.first_Name, u.last_Name
+	from USER as u
+	where userType = FALSE; /*false means not doctor, added in for an extra error check*/
+
+/* broke with datapoints being a blob cant get individual info from it to get derived attributes.
+create VIEW RECORD_VIEW
+	as r.patientID, r.recordID, r.dataPoints, count(all dataPoints) /*other derived attributes??*/
+	from RECORD;
+*/
+
+/* for the derived attributes if we store the incoming data differently in many many table values spots instead of giant chunk, we can use procedures or functions to access multiple tuples(rows) in one call.
+*/
