@@ -1,0 +1,88 @@
+/*password should be stores as the hash of the password entered, so...as a binary(#) type
+
+we should only be storing the hash of the password, not sure where the hash function should be kept possibly database somehow, to keep it from being decoded if its client side.
+
+	some code from stack overflow possibly creating hashes.
+	from "https://stackoverflow.com/questions/14722305/what-kind-of-datatype-should-one-use-to-store-hashes"
+	
+	DATALENGTH(HASHBYTES('MD2', 'Testing')) AS [MD2Length],
+        DATALENGTH(HASHBYTES('MD4', 'Testing')) AS [MD4Length],
+        DATALENGTH(HASHBYTES('MD5', 'Testing')) AS [MD5Length],
+
+	select HASHBYTES('MD5','MD5Text')
+*/
+
+/*
+can use this if changing how registration is on the program and not using a trigger to set the doctor.
+probably better split tables because of storage space usage. lot sof nulls if tons of patients get added.
+*/
+
+create table USER (
+	ID int not null,
+	userName varchar(20),
+	email varchar(50),
+	userType Boolean default FALSE, /*true being a doctor or has doctor id info this should be set by the program when registering a doctor*/
+	passWord varchar(20),
+	first_Name varchar(20),
+	last_Name varchar(20),
+	primary Key(ID),
+	unique(userName),
+	unique(email)
+	);
+
+create table DOCTOR (
+	docID int not null,
+	licNum double,
+	phone varchar(10),
+	website varchar(100),
+	primary key(docID),
+	foreign key(docID) refrences USER(ID)
+	);
+
+create table PATIENT (
+	patID int not null,
+	bio varchar(20000)
+	goals TEXT, /*TEXT is 65k characters, blob is 65k bytes*/
+	lowThreshold int,
+	highThreshold int
+	primary key(patID),
+	foreign key(patID) refrences USER(ID)
+	);
+
+create table RECORD (
+	patientID int not null,
+	recordID int not null,
+	dataPoints LONGBLOB, /*4gb of data can be stored we are expecting 1gb per 2 weeks*/
+	primary key(patientID, recordID),
+	foreign key(patientID) refrences PATIENT(patID)
+	);
+
+create table MONITERS (
+	doctorID int not null,
+	userID int not null,
+	primary key(doctorID, userID),
+	foreign key(doctorID) refrences DOCTOR(docID),
+	foreign key(userID) refrences PATIENT(patID)
+	);
+	
+create view DOCTOR_VIEW
+	as Select d.docID, d.licNum, d.phone, d.website, u.userName, u.email, u.passWord, u.first_Name, u.last_Name
+	from DOCTOR as d join USER as u on d.docID = u.ID
+	where userType = TRUE; /*true means doctor, added in for an extra error check*/
+
+create view PATIENT_VIEW
+	as Select p.patID, p.bio, p.goals, p.lowThreshold, p.highThreshold, u.userName, u.email, u.passWord, u.first_Name, u.last_Name
+	from PATIENT as p join USER as u on p.patID = u.ID
+	where userType = FALSE; /*false means not doctor, added in for an extra error check*/
+
+/* 
+	broke with datapoints being a blob cant get individual info from it to get derived attributes.
+	create VIEW RECORD_VIEW
+	as r.patientID, r.recordID, r.dataPoints, count(all dataPoints)
+	from RECORD;
+*/
+/* 
+	for the derived attributes of records if we store the incoming data
+	differently in many many table values spots instead of giant chunk,
+	we can use procedures or functions to access multiple tuples(rows) in one call.
+*/
