@@ -667,15 +667,24 @@ def register_Doctor():
     doctorID_info = doctorID.get()
     website_info = website.get()
 
-    ##sql = "INSERT INTO employee (username, password) VALUES (%s, %s)"
+    ##sql = "INSERT INTO DOCTOR (docID, licNum, phone, website) VALUES (%s, %s, %s, %s)"
 
-    ##val = (username_info, password_info)
+    ##val = (ID_info, doctorID_info, phonenumber_info, website_info)
+
+    ##db_cursor.execute(sql, val)
+    
+    ##sql = "INSERT INTO USER (ID, userName, passWord, email, userType, first_Name, last_Name) VALUES (%s, %s, %s, %s, %s, %s, %s)"
+
+    ##val = (ID_info, username_info, password_info, email_info, userType_info(TRUE), fname_info, lname_info)
 
     ##db_cursor.execute(sql, val)
 
     ##db_connection.commit()
 
     file = open(username_info, "w")  # creates file with a user name and password
+    
+    file.write("userID" + "\n")#need to get a method to create unique user IDs
+    
     file.write(username_info + "\n")
     file.write(password_info + "\n")
     file.write(email_info + "\n")
@@ -700,28 +709,37 @@ def register_Doctor():
     
     #----------------------------------------------separator between doctors registration and patient registration------------------
     
-    # This method collects the Patients's info. Then it saves the user's info into a File.
+    # This method collects the Patients's info. Then it saves the patient's info into a File.
 def register_Patient():
-    username_info = username.get()
-    password_info = password.get()
-    email_info = email.get()
-    fname_info = fname.get()
-    lname_info = lname.get()
+    patient_username_info = username.get()
+    patient_password_info = password.get()
+    patient_email_info = email.get()
+    patient_fname_info = fname.get()
+    patient_lname_info = lname.get()
 
-    ##sql = "INSERT INTO employee (username, password) VALUES (%s, %s)"
+    ##sql = "INSERT INTO PATIENT (patID, bio, goals, lowThreshold, highThreshold) VALUES (%s, %s, %s, %s, %s)"
 
-    ##val = (username_info, password_info)
+    ##val = (ID_info, bio_info(NULL), goals_info(NULL), lowThreshold_info(NULL), highThreshold_info(NULL))
+
+    ##db_cursor.execute(sql, val)
+    
+    ##sql = "INSERT INTO USER (ID, userName, passWord, email, userType, first_Name, last_Name) VALUES (%s, %s, %s, %s, %s, %s, %s)"
+
+    ##val = (ID_info, username_info, password_info, email_info, userType_info(FALSE), fname_info, lname_info)
 
     ##db_cursor.execute(sql, val)
 
     ##db_connection.commit()
 
-    file = open(username_info, "w")  # creates file with a user name and password
-    file.write(username_info + "\n")
-    file.write(password_info + "\n")
-    file.write(email_info + "\n")
-    file.write(fname_info + "\n")
-    file.write(lname_info + "\n")
+    file = open(patient_username_info, "w")  # creates file with a user name and password
+    
+    file.write("userID" + "\n")#need to get a method to create unique user IDs
+    
+    file.write(patient_username_info + "\n")
+    file.write(patient_password_info + "\n")
+    file.write(patient_email_info + "\n")
+    file.write(patient_fname_info + "\n")
+    file.write(patient_lname_info + "\n")
     file.write("FALSE")#false here being for being the patient type.
     file.close()
 
@@ -823,7 +841,7 @@ def importFile():
     fileExplorer = Label(importFile_screen,
                          text="File Explorer ",
                          width=50, height=4,
-                         fg="#42e9f5")
+                         fg="Blue")
 
     buttonExplore = Button(importFile_screen,
                            text="Browse Files",
