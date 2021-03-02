@@ -31,7 +31,7 @@ def main_account_screen():
 
     main_screen.geometry("300x250")
     main_screen.title("Account Login")
-    Label(text="Select Your Choice", bg="blue", width="300", height="2", font=("Calibri", 13)).pack()
+    Label(text="Select Your Choice", bg="#42e9f5", width="300", height="2", font=("Calibri", 13)).pack()
     Label(text="").pack()
 
     Button(text="Login", height="2",
@@ -609,7 +609,7 @@ def register():
     username = StringVar()
     password = StringVar()
 
-    Label(register_screen, text="Login or Register", bg="blue").pack()
+    Label(register_screen, text="Login or Register", bg="#42e9f5").pack()
     Label(register_screen, text="").pack()
     username_lable = Label(register_screen, text="Username * ")
     username_lable.pack()
@@ -823,7 +823,7 @@ def importFile():
     fileExplorer = Label(importFile_screen,
                          text="File Explorer ",
                          width=50, height=4,
-                         fg="blue")
+                         fg="#42e9f5")
 
     buttonExplore = Button(importFile_screen,
                            text="Browse Files",
