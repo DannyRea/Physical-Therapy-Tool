@@ -708,7 +708,65 @@ def register_Doctor():
     Label(register_screen, text="Registration Success", fg="green", font=("calibri", 11)).pack()
     
     #----------------------------------------------separator between doctors registration and patient registration------------------
+def registerPatient():
+    global register_screen
+    register_screen = Toplevel(main_screen)
+    register_screen.title("Patient Register")
+    register_screen.geometry("300x420")
+
+    global patient_username  # Globals for patient database
+    global patient_password
+    global patient_username_entry
+    global patient_password_entry
+
+    global patient_email
+    global patient_fname
+    global patient_lname
+
+    global patient_email_entry
+    global patient_fname_entry
+    global patient_lname_entry
+
+    patient_email = StringVar()
+    patient_fname = StringVar()
+    patient_lname = StringVar()
+
+    patient_username = StringVar()
+    patient_password = StringVar()
+
+    Label(register_screen, text="Register a Patient", bg="#42e9f5").pack()
+    Label(register_screen, text="").pack()
     
+    patient_username_lable = Label(register_screen, text="Username * ")
+    patient_username_lable.pack()
+    patient_username_entry = Entry(register_screen, textvariable=username)
+    patient_username_entry.pack()
+    patient_password_lable = Label(register_screen, text="Password * ")
+    patient_password_lable.pack()
+    patient_password_entry = Entry(register_screen, textvariable=password, show='*')
+    patient_password_entry.pack()
+
+    # email text and enter box
+    patient_email_lable = Label(register_screen, text="Email * ")
+    patient_email_lable.pack()
+    patient_email_entry = Entry(register_screen, textvariable=email)
+    patient_email_entry.pack()
+
+    patient_fname_lable = Label(register_screen, text="First name * ")
+    patient_fname_lable.pack()
+    patient_fname_entry = Entry(register_screen, textvariable=fname)
+    patient_fname_entry.pack()
+
+    patient_lname_lable = Label(register_screen, text="Last name * ")
+    patient_lname_lable.pack()
+    patient_lname_entry = Entry(register_screen, textvariable=lname)
+    patient_lname_entry.pack()
+
+    Label(register_screen, text="").pack()
+    Button(register_screen, text="Register", width=10, height=1, bg="#42e9f5",
+           command=register_Doctor).pack()  # calls register_Doctor
+           
+               
     # This method collects the Patients's info. Then it saves the patient's info into a File.
 def register_Patient():
     patient_username_info = username.get()
