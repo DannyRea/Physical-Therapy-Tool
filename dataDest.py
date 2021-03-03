@@ -764,7 +764,7 @@ def registerPatient():
 
     Label(register_screen, text="").pack()
     Button(register_screen, text="Register", width=10, height=1, bg="#42e9f5",
-           command=register_Doctor).pack()  # calls register_Doctor
+           command=register_Patient).pack()  # calls register_Patient
            
                
     # This method collects the Patients's info. Then it saves the patient's info into a File.
