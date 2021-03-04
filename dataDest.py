@@ -22,7 +22,7 @@ server = SSHTunnelForwarder(
     ("ecs-pw-proj-web.ecs.csus.edu", 22),
     ssh_host_key=None,
     ssh_username="danielrea",
-    ssh_password='ZwK@8FeGs3@AjEi',
+    ssh_password='',
     remote_bind_address=("10.115.234.32", 3306))
 
 server.start()
