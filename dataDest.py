@@ -21,8 +21,8 @@ global line_1
 server = SSHTunnelForwarder(
     ("ecs-pw-proj-web.ecs.csus.edu", 22),
     ssh_host_key=None,
-    ssh_username="", #username goes here!
-    ssh_password='', #password goes here!
+    ssh_username="jthompson", #username goes here!
+    ssh_password='wildsquirrels', #password goes here!
     remote_bind_address=("10.115.234.32", 3306))
 
 server.start()
@@ -38,7 +38,6 @@ if cnx is not None:
     print("Server connected")
 
 db_cursor = cnx.cursor(buffered=True)
-
 
 db_cursor.execute("SELECT * FROM TEST")
 
@@ -715,11 +714,12 @@ def user_not_found():
 
 # ---------- Start ---------- User Registration --------------------
 # This method displays a registration screen for the user.
+# registration for doctor.
 def register():
     global register_screen
     register_screen = Toplevel(main_screen)
-    register_screen.title("Register")
-    register_screen.geometry("300x400")
+    register_screen.title("Doctor Register")
+    register_screen.geometry("300x420")
 
     global username  # Globals for patient database
     global password
@@ -731,23 +731,26 @@ def register():
     global fname
     global lname
     global doctorID
+    global website
 
     global email_entry
     global phonenumber_entry
     global fname_entry
     global lname_entry
     global doctorID_entry
+    global website_entry
 
     email = StringVar()
     phonenumber = StringVar()
     fname = StringVar()
     lname = StringVar()
     doctorID = StringVar()
+    website = StringVar()
 
     username = StringVar()
     password = StringVar()
 
-    Label(register_screen, text="Login or Register", bg="blue").pack()
+    Label(register_screen, text="Login or Register", bg="#42e9f5").pack()
     Label(register_screen, text="").pack()
     username_lable = Label(register_screen, text="Username * ")
     username_lable.pack()
@@ -768,6 +771,11 @@ def register():
     phonenumber_lable.pack()
     phonenumber_entry = Entry(register_screen, textvariable=phonenumber)
     phonenumber_entry.pack()
+    
+    website_lable = Label(register_screen, text="website * ")
+    website_lable.pack()
+    website_entry = Entry(register_screen, textvariable=website)
+    website_entry.pack()
 
     fname_lable = Label(register_screen, text="First name * ")
     fname_lable.pack()
@@ -785,12 +793,12 @@ def register():
     doctorID_entry.pack()
 
     Label(register_screen, text="").pack()
-    Button(register_screen, text="Register", width=10, height=1, bg="blue",
-           command=register_user).pack()  # calls register_user
+    Button(register_screen, text="Register", width=10, height=1, bg="#42e9f5",
+           command=register_Doctor).pack()  # calls register_Doctor
 
 
-# This method collects the user's info. Then it saves the user's info into a File.
-def register_user():
+# This method collects the Doctor's info. Then it saves the user's info into a File.
+def register_Doctor():
     username_info = username.get()
     password_info = password.get()
     email_info = email.get()
@@ -798,34 +806,150 @@ def register_user():
     fname_info = fname.get()
     lname_info = lname.get()
     doctorID_info = doctorID.get()
+    website_info = website.get()
 
-    ##sql = "INSERT INTO employee (username, password) VALUES (%s, %s)"
+    ##sql = "INSERT INTO DOCTOR (docID, licNum, phone, website) VALUES (%s, %s, %s, %s)"
 
-    ##val = (username_info, password_info)
+    ##val = (ID_info, doctorID_info, phonenumber_info, website_info)
+
+    ##db_cursor.execute(sql, val)
+    
+    ##sql = "INSERT INTO USER (ID, userName, passWord, email, userType, first_Name, last_Name) VALUES (%s, %s, %s, %s, %s, %s, %s)"
+
+    ##val = (ID_info, username_info, password_info, email_info, userType_info(TRUE), fname_info, lname_info)
 
     ##db_cursor.execute(sql, val)
 
     ##db_connection.commit()
 
     file = open(username_info, "w")  # creates file with a user name and password
+    
+    file.write("userID" + "\n")#need to get a method to create unique user IDs
+    
     file.write(username_info + "\n")
     file.write(password_info + "\n")
     file.write(email_info + "\n")
     file.write(phonenumber_info + "\n")
+    file.write(website_info + "\n")
     file.write(fname_info + "\n")
     file.write(lname_info + "\n")
-    file.write(doctorID_info)
+    file.write(doctorID_info + "\n")
+    file.write("TRUE")#true here being for doctor type.
     file.close()
 
     username_entry.delete(0, END)
     password_entry.delete(0, END)
     email_entry.delete(0, END)
     phonenumber_entry.delete(0, END)
+    website_entry.delete(0, END)
     fname_entry.delete(0, END)
     lname_entry.delete(0, END)
     doctorID_entry.delete(0, END)
 
     Label(register_screen, text="Registration Success", fg="green", font=("calibri", 11)).pack()
+    
+    #----------------------------------------------separator between doctors registration and patient registration------------------
+def registerPatient():
+    global register_screen
+    register_screen = Toplevel(main_screen)
+    register_screen.title("Patient Register")
+    register_screen.geometry("300x420")
+
+    global patient_username  # Globals for patient database
+    global patient_password
+    global patient_username_entry
+    global patient_password_entry
+
+    global patient_email
+    global patient_fname
+    global patient_lname
+
+    global patient_email_entry
+    global patient_fname_entry
+    global patient_lname_entry
+
+    patient_email = StringVar()
+    patient_fname = StringVar()
+    patient_lname = StringVar()
+
+    patient_username = StringVar()
+    patient_password = StringVar()
+
+    Label(register_screen, text="Register a Patient", bg="#42e9f5").pack()
+    Label(register_screen, text="").pack()
+    
+    patient_username_lable = Label(register_screen, text="Username * ")
+    patient_username_lable.pack()
+    patient_username_entry = Entry(register_screen, textvariable=username)
+    patient_username_entry.pack()
+    patient_password_lable = Label(register_screen, text="Password * ")
+    patient_password_lable.pack()
+    patient_password_entry = Entry(register_screen, textvariable=password, show='*')
+    patient_password_entry.pack()
+
+    # email text and enter box
+    patient_email_lable = Label(register_screen, text="Email * ")
+    patient_email_lable.pack()
+    patient_email_entry = Entry(register_screen, textvariable=email)
+    patient_email_entry.pack()
+
+    patient_fname_lable = Label(register_screen, text="First name * ")
+    patient_fname_lable.pack()
+    patient_fname_entry = Entry(register_screen, textvariable=fname)
+    patient_fname_entry.pack()
+
+    patient_lname_lable = Label(register_screen, text="Last name * ")
+    patient_lname_lable.pack()
+    patient_lname_entry = Entry(register_screen, textvariable=lname)
+    patient_lname_entry.pack()
+
+    Label(register_screen, text="").pack()
+    Button(register_screen, text="Register", width=10, height=1, bg="#42e9f5",
+           command=register_Patient).pack()  # calls register_Patient
+           
+               
+    # This method collects the Patients's info. Then it saves the patient's info into a File.
+def register_Patient():
+    patient_username_info = username.get()
+    patient_password_info = password.get()
+    patient_email_info = email.get()
+    patient_fname_info = fname.get()
+    patient_lname_info = lname.get()
+
+    ##sql = "INSERT INTO PATIENT (patID, bio, goals, lowThreshold, highThreshold) VALUES (%s, %s, %s, %s, %s)"
+
+    ##val = (ID_info, bio_info(NULL), goals_info(NULL), lowThreshold_info(NULL), highThreshold_info(NULL))
+
+    ##db_cursor.execute(sql, val)
+    
+    ##sql = "INSERT INTO USER (ID, userName, passWord, email, userType, first_Name, last_Name) VALUES (%s, %s, %s, %s, %s, %s, %s)"
+
+    ##val = (ID_info, username_info, password_info, email_info, userType_info(FALSE), fname_info, lname_info)
+
+    ##db_cursor.execute(sql, val)
+
+    ##db_connection.commit()
+
+    file = open(patient_username_info, "w")  # creates file with a user name and password
+    
+    file.write("userID" + "\n")#need to get a method to create unique user IDs
+    
+    file.write(patient_username_info + "\n")
+    file.write(patient_password_info + "\n")
+    file.write(patient_email_info + "\n")
+    file.write(patient_fname_info + "\n")
+    file.write(patient_lname_info + "\n")
+    file.write("FALSE")#false here being for being the patient type.
+    file.close()
+
+    username_entry.delete(0, END)
+    password_entry.delete(0, END)
+    email_entry.delete(0, END)
+    fname_entry.delete(0, END)
+    lname_entry.delete(0, END)
+
+    Label(register_screen, text="Registration Success", fg="green", font=("calibri", 11)).pack()
+
 
 
 # -------------------- User Registration ---------- End ----------
