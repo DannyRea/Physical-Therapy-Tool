@@ -39,12 +39,12 @@ create table DOCTOR (
 
 create table PATIENT (
 	patUserName varchar(20),
-	bio varchar(20000)
+	bio TEXT
 	goals TEXT, /*TEXT is 65k characters, blob is 65k bytes*/
 	lowThreshold int,
 	highThreshold int
 	primary key(patUserName),
-	foreign key(UserName) refrences USER(userName)
+	foreign key(patUserName) refrences USER(userName)
 	);
 
 create table RECORD (
