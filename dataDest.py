@@ -21,8 +21,8 @@ global line_1
 server = SSHTunnelForwarder(
     ("ecs-pw-proj-web.ecs.csus.edu", 22),
     ssh_host_key=None,
-    ssh_username="danielrea",
-    ssh_password='',
+    ssh_username="", #username goes here!
+    ssh_password='', #password goes here!
     remote_bind_address=("10.115.234.32", 3306))
 
 server.start()
@@ -40,7 +40,7 @@ if cnx is not None:
 db_cursor = cnx.cursor(buffered=True)
 
 
-db_cursor.execute("SELECT * FROM team_bruteforce")
+db_cursor.execute("SELECT * FROM TEST")
 
 result = db_cursor.fetchall()
 

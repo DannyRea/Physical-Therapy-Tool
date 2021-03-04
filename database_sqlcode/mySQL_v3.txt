@@ -86,3 +86,12 @@ create view PATIENT_VIEW
 	differently in many many table values spots instead of giant chunk,
 	we can use procedures or functions to access multiple tuples(rows) in one call.
 */
+
+create table TEST (
+	user varchar(5),
+	num int,
+	primary key(num)
+	);
+	
+	insert into TEST (user, num)
+		values ('stuff', 42);
