@@ -147,12 +147,14 @@ class logSuccess:
         menubar.add_cascade(label="Menu", menu=fileMenu)
 
         tabControl = ttk.Notebook(window)
+      
+        splitView = ttk.Frame(tabControl)
         patientView = ttk.Frame(tabControl)
         analysisView = ttk.Frame(tabControl)
-        splitView = ttk.Frame(tabControl)
+    
+        tabControl.add(splitView, text='Split View')
         tabControl.add(patientView, text='Patient View')
         tabControl.add(analysisView, text='Analysis View')
-        tabControl.add(splitView, text='Split View')
         tabControl.grid(sticky=NW)
 
         # val2=np.array([[20.,20.],[80.,80.],[20.,20.]])
@@ -417,6 +419,133 @@ class logSuccess:
                     command=replotPIE)
         
         """
+
+        #******* Analysis View ************************************
+
+        jerkCalc = 0
+        rofD = 0
+        foP = 0
+
+        A1 = Label(analysisView,
+                       text="Threshold Exceeded: ",
+                       font="bold")
+
+        A2 = Button(analysisView,
+                    text="Patient ID - Name: ",
+                    font="bold",
+                    command=patientSelection
+                    )
+                   
+        A3 = Label(analysisView,
+                    text="Data Set - Primary: ",
+                    font="bold")
+                   
+        A4 = Label(analysisView,
+                    text="Data Set - Secondary: ",
+                    font="bold")
+
+        A5 = Label(analysisView,
+                   text="Total Activity: ",
+                   font="bold")
+        """
+        R2 = Label(splitView,
+                   text="Analysis Tools",
+                   font="bold")
+
+        checkbutton = Checkbutton(patientView, text="Autoscale")  # Not being implemented but an example of setup
+
+        """
+
+        A6 = Label(analysisView,
+                   borderwidth=10,
+                   width=20,
+                   relief="flat",
+                   bg="mint cream",
+                   text=threshCounter)  # One way to display a calculated value
+
+        A7 = Label(analysisView,
+                   borderwidth=10,
+                   width=15,
+                   relief="flat",
+                   bg="mint cream",
+                   text=threshCounter)
+
+
+        A8 = Label(analysisView,
+                   borderwidth=10,
+                   width=15,
+                   relief="flat",
+                   bg="mint cream",
+                   text=(patientFname + " " + patientLname))
+
+        A9 = Label(analysisView,
+                   borderwidth=10,
+                   width=15,
+                   relief="flat",
+                   bg="mint cream",
+                   text=impactCounter)
+
+        setThresholdAV = tk.Button(analysisView,
+                 text="Set Threshold",
+                 bg="mint cream",
+                 command=setFunc)  # command calls any function you want (setFunc, clear.....) !
+        
+        A10 = Label(analysisView,
+                   text="Jerk: ",
+                   font="bold")
+
+        A11 = Label(analysisView,
+                   borderwidth=10,
+                   width=15,
+                   relief="flat",
+                   bg="mint cream",
+                   text=jerkCalc)
+
+        A12 = Label(analysisView,
+                   text="Rate of Force: ",
+                   font="bold")
+
+        A13 = Label(analysisView,
+                   borderwidth=10,
+                   width=15,
+                   relief="flat",
+                   bg="mint cream",
+                   text=rofD)
+
+        A14 = Label(analysisView,
+                   text="Force at point: ",
+                   font="bold")
+
+        A15 = Label(analysisView,
+                   borderwidth=10,
+                   width=15,
+                   relief="flat",
+                   bg="mint cream",
+                   text=foP)
+        
+                    
+        A1.grid(row=2, column=4, pady=2)
+        A2.grid(row=2, column=0, pady=2)
+        A3.grid(row=3, column=0, pady=2)
+        A4.grid(row=4, column=0, pady=2)
+        A5.grid(row=3, column=4, pady=2)
+        A6.grid(row=2, column=5, pady=2)
+        A7.grid(row=2, column=5, pady=2)
+        A8.grid(row=2, column=1, pady=2)
+        A9.grid(row=3, column=5, pady=2)
+        A10.grid(row=5, column=4, pady=2)
+        A11.grid(row=5, column=5, pady=2)
+        A12.grid(row=6, column=4, pady=2)
+        A13.grid(row=6, column=5, pady=2)
+        A14.grid(row=7, column=4, pady=2)
+        A15.grid(row=7, column=5, pady=2)
+
+        setThresholdAV.grid(row=1, column=4, pady=5)
+
+
+        # ***********************************************************
+
+
         l1.grid(row=2, column=4, pady=2)
         l2.grid(row=2, column=0, pady=2)
         l3.grid(row=3, column=0, pady=2)
@@ -457,7 +586,7 @@ class logSuccess:
         #replot.grid(row=1, column=5, pady=5)
 
         fig1 = plt.figure(figsize=(6, 6), dpi=95)  # Instances of individual figures for alignment
-        figAV = plt.figure(figsize=(6, 6), dpi=95)  # Instances of individual figures for alignment
+        figAV = plt.figure(figsize=(10, 6), dpi=95)  # Instances of individual figures for alignment
         fig2 = plt.figure(figsize=(4, 3), dpi=95)  # figsize sets overall size of each figure
         fig3 = plt.figure(figsize=(4, 3), dpi=95)  # dpi zooms out and in with a change of value
 
@@ -541,6 +670,10 @@ class logSuccess:
         toolbarFrame.grid(row=4, column=3)
         toolbar = NavigationToolbar2Tk(canvas1b, toolbarFrame)
 
+        toolbarFrame = Frame(master=analysisView)
+        toolbarFrame.grid(row=5, column=3)
+        toolbar = NavigationToolbar2Tk(canvas1, toolbarFrame)
+
 
 # Used for Analysis graph cursor
 
@@ -573,12 +706,11 @@ def user_not_found():
 
 # ---------- Start ---------- User Registration --------------------
 # This method displays a registration screen for the user.
-# registration for doctor.
 def register():
     global register_screen
     register_screen = Toplevel(main_screen)
-    register_screen.title("Doctor Register")
-    register_screen.geometry("300x420")
+    register_screen.title("Register")
+    register_screen.geometry("300x400")
 
     global username  # Globals for patient database
     global password
@@ -590,26 +722,23 @@ def register():
     global fname
     global lname
     global doctorID
-    global website
 
     global email_entry
     global phonenumber_entry
     global fname_entry
     global lname_entry
     global doctorID_entry
-    global website_entry
 
     email = StringVar()
     phonenumber = StringVar()
     fname = StringVar()
     lname = StringVar()
     doctorID = StringVar()
-    website = StringVar()
 
     username = StringVar()
     password = StringVar()
 
-    Label(register_screen, text="Login or Register", bg="#42e9f5").pack()
+    Label(register_screen, text="Login or Register", bg="blue").pack()
     Label(register_screen, text="").pack()
     username_lable = Label(register_screen, text="Username * ")
     username_lable.pack()
@@ -630,11 +759,6 @@ def register():
     phonenumber_lable.pack()
     phonenumber_entry = Entry(register_screen, textvariable=phonenumber)
     phonenumber_entry.pack()
-    
-    website_lable = Label(register_screen, text="website * ")
-    website_lable.pack()
-    website_entry = Entry(register_screen, textvariable=website)
-    website_entry.pack()
 
     fname_lable = Label(register_screen, text="First name * ")
     fname_lable.pack()
@@ -652,12 +776,12 @@ def register():
     doctorID_entry.pack()
 
     Label(register_screen, text="").pack()
-    Button(register_screen, text="Register", width=10, height=1, bg="#42e9f5",
-           command=register_Doctor).pack()  # calls register_Doctor
+    Button(register_screen, text="Register", width=10, height=1, bg="blue",
+           command=register_user).pack()  # calls register_user
 
 
-# This method collects the Doctor's info. Then it saves the user's info into a File.
-def register_Doctor():
+# This method collects the user's info. Then it saves the user's info into a File.
+def register_user():
     username_info = username.get()
     password_info = password.get()
     email_info = email.get()
@@ -665,147 +789,32 @@ def register_Doctor():
     fname_info = fname.get()
     lname_info = lname.get()
     doctorID_info = doctorID.get()
-    website_info = website.get()
 
-    ##sql = "INSERT INTO DOCTOR (docID, licNum, phone, website) VALUES (%s, %s, %s, %s)"
+    ##sql = "INSERT INTO employee (username, password) VALUES (%s, %s)"
 
-    ##val = (ID_info, doctorID_info, phonenumber_info, website_info)
-
-    ##db_cursor.execute(sql, val)
-    
-    ##sql = "INSERT INTO USER (ID, userName, passWord, email, userType, first_Name, last_Name) VALUES (%s, %s, %s, %s, %s, %s, %s)"
-
-    ##val = (ID_info, username_info, password_info, email_info, userType_info(TRUE), fname_info, lname_info)
+    ##val = (username_info, password_info)
 
     ##db_cursor.execute(sql, val)
 
     ##db_connection.commit()
 
     file = open(username_info, "w")  # creates file with a user name and password
-    
-    file.write("userID" + "\n")#need to get a method to create unique user IDs
-    
     file.write(username_info + "\n")
     file.write(password_info + "\n")
     file.write(email_info + "\n")
     file.write(phonenumber_info + "\n")
-    file.write(website_info + "\n")
     file.write(fname_info + "\n")
     file.write(lname_info + "\n")
-    file.write(doctorID_info + "\n")
-    file.write("TRUE")#true here being for doctor type.
+    file.write(doctorID_info)
     file.close()
 
     username_entry.delete(0, END)
     password_entry.delete(0, END)
     email_entry.delete(0, END)
     phonenumber_entry.delete(0, END)
-    website_entry.delete(0, END)
     fname_entry.delete(0, END)
     lname_entry.delete(0, END)
     doctorID_entry.delete(0, END)
-
-    Label(register_screen, text="Registration Success", fg="green", font=("calibri", 11)).pack()
-    
-    #----------------------------------------------separator between doctors registration and patient registration------------------
-def registerPatient():
-    global register_screen
-    register_screen = Toplevel(main_screen)
-    register_screen.title("Patient Register")
-    register_screen.geometry("300x420")
-
-    global patient_username  # Globals for patient database
-    global patient_password
-    global patient_username_entry
-    global patient_password_entry
-
-    global patient_email
-    global patient_fname
-    global patient_lname
-
-    global patient_email_entry
-    global patient_fname_entry
-    global patient_lname_entry
-
-    patient_email = StringVar()
-    patient_fname = StringVar()
-    patient_lname = StringVar()
-
-    patient_username = StringVar()
-    patient_password = StringVar()
-
-    Label(register_screen, text="Register a Patient", bg="#42e9f5").pack()
-    Label(register_screen, text="").pack()
-    
-    patient_username_lable = Label(register_screen, text="Username * ")
-    patient_username_lable.pack()
-    patient_username_entry = Entry(register_screen, textvariable=username)
-    patient_username_entry.pack()
-    patient_password_lable = Label(register_screen, text="Password * ")
-    patient_password_lable.pack()
-    patient_password_entry = Entry(register_screen, textvariable=password, show='*')
-    patient_password_entry.pack()
-
-    # email text and enter box
-    patient_email_lable = Label(register_screen, text="Email * ")
-    patient_email_lable.pack()
-    patient_email_entry = Entry(register_screen, textvariable=email)
-    patient_email_entry.pack()
-
-    patient_fname_lable = Label(register_screen, text="First name * ")
-    patient_fname_lable.pack()
-    patient_fname_entry = Entry(register_screen, textvariable=fname)
-    patient_fname_entry.pack()
-
-    patient_lname_lable = Label(register_screen, text="Last name * ")
-    patient_lname_lable.pack()
-    patient_lname_entry = Entry(register_screen, textvariable=lname)
-    patient_lname_entry.pack()
-
-    Label(register_screen, text="").pack()
-    Button(register_screen, text="Register", width=10, height=1, bg="#42e9f5",
-           command=register_Patient).pack()  # calls register_Patient
-           
-               
-    # This method collects the Patients's info. Then it saves the patient's info into a File.
-def register_Patient():
-    patient_username_info = username.get()
-    patient_password_info = password.get()
-    patient_email_info = email.get()
-    patient_fname_info = fname.get()
-    patient_lname_info = lname.get()
-
-    ##sql = "INSERT INTO PATIENT (patID, bio, goals, lowThreshold, highThreshold) VALUES (%s, %s, %s, %s, %s)"
-
-    ##val = (ID_info, bio_info(NULL), goals_info(NULL), lowThreshold_info(NULL), highThreshold_info(NULL))
-
-    ##db_cursor.execute(sql, val)
-    
-    ##sql = "INSERT INTO USER (ID, userName, passWord, email, userType, first_Name, last_Name) VALUES (%s, %s, %s, %s, %s, %s, %s)"
-
-    ##val = (ID_info, username_info, password_info, email_info, userType_info(FALSE), fname_info, lname_info)
-
-    ##db_cursor.execute(sql, val)
-
-    ##db_connection.commit()
-
-    file = open(patient_username_info, "w")  # creates file with a user name and password
-    
-    file.write("userID" + "\n")#need to get a method to create unique user IDs
-    
-    file.write(patient_username_info + "\n")
-    file.write(patient_password_info + "\n")
-    file.write(patient_email_info + "\n")
-    file.write(patient_fname_info + "\n")
-    file.write(patient_lname_info + "\n")
-    file.write("FALSE")#false here being for being the patient type.
-    file.close()
-
-    username_entry.delete(0, END)
-    password_entry.delete(0, END)
-    email_entry.delete(0, END)
-    fname_entry.delete(0, END)
-    lname_entry.delete(0, END)
 
     Label(register_screen, text="Registration Success", fg="green", font=("calibri", 11)).pack()
 
@@ -899,7 +908,7 @@ def importFile():
     fileExplorer = Label(importFile_screen,
                          text="File Explorer ",
                          width=50, height=4,
-                         fg="Blue")
+                         fg="blue")
 
     buttonExplore = Button(importFile_screen,
                            text="Browse Files",
