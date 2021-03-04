@@ -21,8 +21,8 @@ global line_1
 server = SSHTunnelForwarder(
     ("ecs-pw-proj-web.ecs.csus.edu", 22),
     ssh_host_key=None,
-    ssh_username="jthompson", #username goes here!
-    ssh_password='wildsquirrels', #password goes here!
+    ssh_username="", #username goes here!
+    ssh_password='', #password goes here!
     remote_bind_address=("10.115.234.32", 3306))
 
 server.start()
@@ -807,6 +807,10 @@ def register_Doctor():
     lname_info = lname.get()
     doctorID_info = doctorID.get()
     website_info = website.get()
+    
+    #db_cursor = cnx.cursor(buffered=True)
+
+    #db_cursor.execute("insert into TEST (user, num) values ('hello', 18)")
 
     ##sql = "INSERT INTO DOCTOR (docID, licNum, phone, website) VALUES (%s, %s, %s, %s)"
 
