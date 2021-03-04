@@ -27,6 +27,8 @@ server = SSHTunnelForwarder(
 
 server.start()
 
+global cnx
+
 cnx=mysql.connector.connect(user='bruteforce_user',
     password='bruteforce_db',
     host="127.0.0.1",
@@ -807,10 +809,17 @@ def register_Doctor():
     lname_info = lname.get()
     doctorID_info = doctorID.get()
     website_info = website.get()
-    
-    #db_cursor = cnx.cursor(buffered=True)
 
-    #db_cursor.execute("insert into TEST (user, num) values ('hello', 18)")
+    sql = "insert into TEST (user, num) values (%s, %s)"
+    val = ('hello', int(18))
+    
+    #sql = "insert into TEST (user, num) values (%(users)s, %(number)s)"
+    #val = {
+    #   'users': 'hello',
+    #    'number': 18,
+    #    }
+    db_cursor.execute(sql, val)
+    cnx.commit()
 
     ##sql = "INSERT INTO DOCTOR (docID, licNum, phone, website) VALUES (%s, %s, %s, %s)"
 
