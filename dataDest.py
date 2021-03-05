@@ -1026,7 +1026,7 @@ def browseFiles():
     global filename
     # delete_importFile()         # Clean up import screen
 
-    filename = HexToDec(filedialog.askopenfilename(initialdir="/", title="Select a File",
+    filename = HexToDec(filedialog.askopenfilename(initialdir="/", title="Select a File", # Passes file to the HexToDec class. Returns filepath of modified file
                                                   filetypes=(("Text files", "*.txt*"),  # Only pulls txt files
                                                               ("all files", "*.*"))))
 
