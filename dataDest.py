@@ -12,6 +12,7 @@ import numpy as np
 from matplotlib.backends.backend_tkagg import (FigureCanvasTkAgg, NavigationToolbar2Tk)
 from matplotlib.widgets import Cursor
 import mysql.connector as db
+from _overlapped import NULL
 
 global newVal
 global line_1
@@ -836,20 +837,21 @@ def register_Doctor():
     db_cursor.execute(sql, val)
     cnx.commit()
 
-    file = open(username_info, "w")  # creates file with a user name and password
+
+    #file = open(username_info, "w")  # creates file with a user name and password
     
-    file.write("userID" + "\n")#need to get a method to create unique user IDs
+    #file.write("userID" + "\n")#need to get a method to create unique user IDs
     
-    file.write(username_info + "\n")
-    file.write(password_info + "\n")
-    file.write(email_info + "\n")
-    file.write(phonenumber_info + "\n")
-    file.write(website_info + "\n")
-    file.write(fname_info + "\n")
-    file.write(lname_info + "\n")
-    file.write(doctorID_info + "\n")
-    file.write("TRUE")#true here being for doctor type.
-    file.close()
+    #file.write(username_info + "\n")
+    #file.write(password_info + "\n")
+    #file.write(email_info + "\n")
+    #file.write(phonenumber_info + "\n")
+    #file.write(website_info + "\n")
+    #file.write(fname_info + "\n")
+    #file.write(lname_info + "\n")
+    #file.write(doctorID_info + "\n")
+    #file.write("TRUE")#true here being for doctor type.
+    #file.close()
 
     username_entry.delete(0, END)
     password_entry.delete(0, END)
@@ -930,31 +932,27 @@ def register_Patient():
     patient_fname_info = fname.get()
     patient_lname_info = lname.get()
 
-    ##sql = "INSERT INTO PATIENT (patID, bio, goals, lowThreshold, highThreshold) VALUES (%s, %s, %s, %s, %s)"
+    sql = "insert into USER (userName, email, userType, passWord, first_Name, last_Name) values (%s, %s, %s, %s, %s, %s)"
+    val = (patient_username_info, patient_email_info, FALSE, patient_password_info, patient_fname_info, patient_lname_info)
+    db_cursor.execute(sql, val)
 
-    ##val = (ID_info, bio_info(NULL), goals_info(NULL), lowThreshold_info(NULL), highThreshold_info(NULL))
-
-    ##db_cursor.execute(sql, val)
+    sql = "insert into PATIENT (patUserName, bio, goals, lowThreshold, highThreshold) values (%s, %s, %s, %s, %s)"
+    val = (patient_username_info, 'NULL', 'NULL', 'NULL', 'NULL')
+    db_cursor.execute(sql, val)
     
-    ##sql = "INSERT INTO USER (ID, userName, passWord, email, userType, first_Name, last_Name) VALUES (%s, %s, %s, %s, %s, %s, %s)"
-
-    ##val = (ID_info, username_info, password_info, email_info, userType_info(FALSE), fname_info, lname_info)
-
-    ##db_cursor.execute(sql, val)
-
-    ##db_connection.commit()
-
-    file = open(patient_username_info, "w")  # creates file with a user name and password
+    cnx.commit()
     
-    file.write("userID" + "\n")#need to get a method to create unique user IDs
     
-    file.write(patient_username_info + "\n")
-    file.write(patient_password_info + "\n")
-    file.write(patient_email_info + "\n")
-    file.write(patient_fname_info + "\n")
-    file.write(patient_lname_info + "\n")
-    file.write("FALSE")#false here being for being the patient type.
-    file.close()
+    #file = open(patient_username_info, "w")  # creates file with a user name and password
+    
+    #file.write("userID" + "\n")#need to get a method to create unique user IDs
+    #file.write(patient_username_info + "\n")
+    #file.write(patient_password_info + "\n")
+    #file.write(patient_email_info + "\n")
+    #file.write(patient_fname_info + "\n")
+    #file.write(patient_lname_info + "\n")
+    #file.write("FALSE")#false here being for being the patient type.
+    #file.close()
 
     username_entry.delete(0, END)
     password_entry.delete(0, END)
