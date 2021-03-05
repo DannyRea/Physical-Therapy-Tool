@@ -1027,7 +1027,7 @@ def browseFiles():
     # delete_importFile()         # Clean up import screen
 
     filename = HexToDec(filedialog.askopenfilename(initialdir="/", title="Select a File",
-                                                   filetypes=(("Text files", "*.txt*"),  # Only pulls txt files
+                                                  filetypes=(("Text files", "*.txt*"),  # Only pulls txt files
                                                               ("all files", "*.*"))))
 
     fileExplorer.configure(text="File Opened: " + "" + filename)
