@@ -12,10 +12,10 @@ import numpy as np
 from matplotlib.backends.backend_tkagg import (FigureCanvasTkAgg, NavigationToolbar2Tk)
 from matplotlib.widgets import Cursor
 import mysql.connector as db
+from HexToDec import HexToDec
 
 global newVal
 global line_1
-
 
 sacUser = input('SacLink username: ')
 sacPass = input('SacLink password: ')
@@ -23,20 +23,19 @@ sacPass = input('SacLink password: ')
 server = SSHTunnelForwarder(
     ("ecs-pw-proj-web.ecs.csus.edu", 22),
     ssh_host_key=None,
-    ssh_username=sacUser, #username goes here!
-    ssh_password=sacPass, #password goes here!
+    ssh_username=sacUser,  # username goes here!
+    ssh_password=sacPass,  # password goes here!
     remote_bind_address=("10.115.234.32", 3306))
 
 server.start()
 
 global cnx
 
-cnx=mysql.connector.connect(user='bruteforce_user',
-    password='bruteforce_db',
-    host="127.0.0.1",
-    port=server.local_bind_port,
-    database='team_bruteforce')
-
+cnx = mysql.connector.connect(user='bruteforce_user',
+                              password='bruteforce_db',
+                              host="127.0.0.1",
+                              port=server.local_bind_port,
+                              database='team_bruteforce')
 
 if cnx is not None:
     print("Server connected")
@@ -50,6 +49,7 @@ result = db_cursor.fetchall()
 for row in result:
     print(row)
     print("\n")
+
 
 # Creates a new window for patient and physician views
 def new_window(_class):
@@ -775,7 +775,7 @@ def register():
     phonenumber_lable.pack()
     phonenumber_entry = Entry(register_screen, textvariable=phonenumber)
     phonenumber_entry.pack()
-    
+
     website_lable = Label(register_screen, text="website * ")
     website_lable.pack()
     website_entry = Entry(register_screen, textvariable=website)
@@ -814,9 +814,9 @@ def register_Doctor():
 
     sql = "insert into TEST (user, num) values (%s, %s)"
     val = ('hello', int(18))
-    
-    #sql = "insert into TEST (user, num) values (%(users)s, %(number)s)"
-    #val = {
+
+    # sql = "insert into TEST (user, num) values (%(users)s, %(number)s)"
+    # val = {
     #   'users': 'hello',
     #    'number': 18,
     #    }
@@ -828,7 +828,7 @@ def register_Doctor():
     ##val = (ID_info, doctorID_info, phonenumber_info, website_info)
 
     ##db_cursor.execute(sql, val)
-    
+
     ##sql = "INSERT INTO USER (ID, userName, passWord, email, userType, first_Name, last_Name) VALUES (%s, %s, %s, %s, %s, %s, %s)"
 
     ##val = (ID_info, username_info, password_info, email_info, userType_info(TRUE), fname_info, lname_info)
@@ -838,9 +838,9 @@ def register_Doctor():
     ##db_connection.commit()
 
     file = open(username_info, "w")  # creates file with a user name and password
-    
-    file.write("userID" + "\n")#need to get a method to create unique user IDs
-    
+
+    file.write("userID" + "\n")  # need to get a method to create unique user IDs
+
     file.write(username_info + "\n")
     file.write(password_info + "\n")
     file.write(email_info + "\n")
@@ -849,7 +849,7 @@ def register_Doctor():
     file.write(fname_info + "\n")
     file.write(lname_info + "\n")
     file.write(doctorID_info + "\n")
-    file.write("TRUE")#true here being for doctor type.
+    file.write("TRUE")  # true here being for doctor type.
     file.close()
 
     username_entry.delete(0, END)
@@ -862,8 +862,10 @@ def register_Doctor():
     doctorID_entry.delete(0, END)
 
     Label(register_screen, text="Registration Success", fg="green", font=("calibri", 11)).pack()
-    
-    #----------------------------------------------separator between doctors registration and patient registration------------------
+
+    # ----------------------------------------------separator between doctors registration and patient registration------------------
+
+
 def registerPatient():
     global register_screen
     register_screen = Toplevel(main_screen)
@@ -892,7 +894,7 @@ def registerPatient():
 
     Label(register_screen, text="Register a Patient", bg="#42e9f5").pack()
     Label(register_screen, text="").pack()
-    
+
     patient_username_lable = Label(register_screen, text="Username * ")
     patient_username_lable.pack()
     patient_username_entry = Entry(register_screen, textvariable=username)
@@ -921,9 +923,10 @@ def registerPatient():
     Label(register_screen, text="").pack()
     Button(register_screen, text="Register", width=10, height=1, bg="#42e9f5",
            command=register_Patient).pack()  # calls register_Patient
-           
-               
+
     # This method collects the Patients's info. Then it saves the patient's info into a File.
+
+
 def register_Patient():
     patient_username_info = username.get()
     patient_password_info = password.get()
@@ -936,7 +939,7 @@ def register_Patient():
     ##val = (ID_info, bio_info(NULL), goals_info(NULL), lowThreshold_info(NULL), highThreshold_info(NULL))
 
     ##db_cursor.execute(sql, val)
-    
+
     ##sql = "INSERT INTO USER (ID, userName, passWord, email, userType, first_Name, last_Name) VALUES (%s, %s, %s, %s, %s, %s, %s)"
 
     ##val = (ID_info, username_info, password_info, email_info, userType_info(FALSE), fname_info, lname_info)
@@ -946,15 +949,15 @@ def register_Patient():
     ##db_connection.commit()
 
     file = open(patient_username_info, "w")  # creates file with a user name and password
-    
-    file.write("userID" + "\n")#need to get a method to create unique user IDs
-    
+
+    file.write("userID" + "\n")  # need to get a method to create unique user IDs
+
     file.write(patient_username_info + "\n")
     file.write(patient_password_info + "\n")
     file.write(patient_email_info + "\n")
     file.write(patient_fname_info + "\n")
     file.write(patient_lname_info + "\n")
-    file.write("FALSE")#false here being for being the patient type.
+    file.write("FALSE")  # false here being for being the patient type.
     file.close()
 
     username_entry.delete(0, END)
@@ -964,7 +967,6 @@ def register_Patient():
     lname_entry.delete(0, END)
 
     Label(register_screen, text="Registration Success", fg="green", font=("calibri", 11)).pack()
-
 
 
 # -------------------- User Registration ---------- End ----------
@@ -1024,17 +1026,18 @@ def browseFiles():
     global filename
     # delete_importFile()         # Clean up import screen
 
-    filename = filedialog.askopenfilename(initialdir="/", title="Select a File",
-                                          filetypes=(("Text files", "*.txt*"),  # Only pulls txt files
-                                                     ("all files", "*.*")))
+    filename = HexToDec(filedialog.askopenfilename(initialdir="/", title="Select a File",
+                                                   filetypes=(("Text files", "*.txt*"),  # Only pulls txt files
+                                                              ("all files", "*.*"))))
 
-    fileExplorer.configure(text="File Opened: " + filename)
+    fileExplorer.configure(text="File Opened: " + "" + filename)
 
     if os.stat(filename).st_size == 0:  # If file is not null open main class else no go!
         print('File is empty')
 
     else:
         print('File is not empty')
+
         new_window(logSuccess)  # Calls main class here!!!!!
 
 
