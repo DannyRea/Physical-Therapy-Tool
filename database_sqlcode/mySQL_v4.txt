@@ -33,7 +33,7 @@ create table DOCTOR (
 	licNum double,
 	phone varchar(10),
 	website varchar(100),
-	primary key(docID),
+	primary key(docUserName),
 	foreign key(docUserName) refrences USER(userName)
 	);
 
