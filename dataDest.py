@@ -6,7 +6,6 @@ from tkinter import *
 from tkinter import filedialog
 from tkinter import simpledialog, ttk
 import mysql
-import sshtunnel
 from sshtunnel import SSHTunnelForwarder
 import matplotlib.pyplot as plt
 import numpy as np
@@ -18,11 +17,14 @@ global newVal
 global line_1
 
 
+sacUser = input('SacLink username: ')
+sacPass = input('SacLink password: ')
+
 server = SSHTunnelForwarder(
     ("ecs-pw-proj-web.ecs.csus.edu", 22),
     ssh_host_key=None,
-    ssh_username="", #username goes here!
-    ssh_password='', #password goes here!
+    ssh_username=sacUser, #username goes here!
+    ssh_password=sacPass, #password goes here!
     remote_bind_address=("10.115.234.32", 3306))
 
 server.start()
