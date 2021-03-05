@@ -42,9 +42,19 @@ if cnx is not None:
 db_cursor = cnx.cursor(buffered=True)
 
 db_cursor.execute("SELECT * FROM TEST")
-
 result = db_cursor.fetchall()
-
+for row in result:
+    print(row)
+    print("\n")
+    
+db_cursor.execute("SELECT * FROM USER")
+result = db_cursor.fetchall()
+for row in result:
+    print(row)
+    print("\n")
+    
+db_cursor.execute("SELECT * FROM DOCTOR")
+result = db_cursor.fetchall()
 for row in result:
     print(row)
     print("\n")
@@ -810,30 +820,19 @@ def register_Doctor():
     doctorID_info = doctorID.get()
     website_info = website.get()
 
-    sql = "insert into TEST (user, num) values (%s, %s)"
-    val = ('hello', int(18))
+    #sql = "insert into TEST (user, num) values (%s, %s)"
+    #val = ('hello', int(18))
+    #db_cursor.execute(sql, val)
+    #cnx.commit()
+
+    sql = "insert into USER (userName, email, userType, passWord, first_Name, last_Name) values (%s, %s, %s, %s, %s, %s)"
+    val = (username_info, email_info, TRUE, password_info, fname_info, lname_info)
+    db_cursor.execute(sql, val)
     
-    #sql = "insert into TEST (user, num) values (%(users)s, %(number)s)"
-    #val = {
-    #   'users': 'hello',
-    #    'number': 18,
-    #    }
+    sql = "insert into DOCTOR (docUserName, licNum, phone, website) values (%s, %s, %s, %s)"
+    val = (username_info, doctorID_info, phonenumber_info, website_info)
     db_cursor.execute(sql, val)
     cnx.commit()
-
-    ##sql = "INSERT INTO DOCTOR (docID, licNum, phone, website) VALUES (%s, %s, %s, %s)"
-
-    ##val = (ID_info, doctorID_info, phonenumber_info, website_info)
-
-    ##db_cursor.execute(sql, val)
-    
-    ##sql = "INSERT INTO USER (ID, userName, passWord, email, userType, first_Name, last_Name) VALUES (%s, %s, %s, %s, %s, %s, %s)"
-
-    ##val = (ID_info, username_info, password_info, email_info, userType_info(TRUE), fname_info, lname_info)
-
-    ##db_cursor.execute(sql, val)
-
-    ##db_connection.commit()
 
     file = open(username_info, "w")  # creates file with a user name and password
     
