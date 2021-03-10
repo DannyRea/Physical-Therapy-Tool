@@ -5,8 +5,8 @@ from tkinter.ttk import *
 from tkinter import *
 from tkinter import filedialog
 from tkinter import simpledialog, ttk
-import mysql
-from sshtunnel import SSHTunnelForwarder
+#import mysql
+#from sshtunnel import SSHTunnelForwarder
 import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.backends.backend_tkagg import (FigureCanvasTkAgg, NavigationToolbar2Tk)
@@ -17,13 +17,14 @@ from HexToDec import HexToDec
 global newVal
 global line_1
 
+"""
 sacUser = input('SacLink username: ')
 sacPass = input('SacLink password: ')
 
 server = SSHTunnelForwarder(
     ("ecs-pw-proj-web.ecs.csus.edu", 22),
     ssh_host_key=None,
-    ssh_username= sacUser,  # username goes here!
+    ssh_username=sacUser,  # username goes here!
     ssh_password=sacPass,  # password goes here!
     remote_bind_address=("10.115.234.32", 3306))
 
@@ -49,7 +50,7 @@ result = db_cursor.fetchall()
 for row in result:
     print(row)
     print("\n")
-
+"""
 
 # Creates a new window for patient and physician views
 def new_window(_class):
@@ -367,6 +368,33 @@ class logSuccess:
             line_1 = a.plot([0., Counter], [threshold, threshold], "k--")  # plots threshold line, assigns to list
             line_2 = av.plot([0., Counter], [threshold, threshold], "k--")  # plots threshold line, to Analysis View
 
+        #***********  SELECT EVENT ******************************
+
+        def onpick(event):
+            thisline = event.artist
+            xdata = thisline.get_xdata()
+            ydata = thisline.get_ydata()
+            ind = event.ind
+            points = tuple(zip(xdata[ind], ydata[ind]))
+            #print('onpick points:', points)
+            print(xdata[ind])
+            print(ydata[ind])
+
+            foP = ydata[ind]
+
+            A15 = Label(analysisView,
+                    borderwidth=10,
+                    width=15,
+                    relief="flat",
+                    bg="mint cream",
+                    text=foP)
+
+            A15.grid(row=7, column=5, pady=2)
+
+
+        #*********************************************************
+
+
         l1 = Label(splitView,
                    text="Threshold Exceeded: ",
                    font="bold")
@@ -606,7 +634,13 @@ class logSuccess:
         av = figAV.add_subplot(1, 1, 1)  # Analysis View Graph plot
         # a.subplots_adjust(bottom=0.1, right=0.8, top=0.9)
         a.plot(x, y, label='Loaded from file!')
-        av.plot(x, y, label='Loaded from file!')
+        av.plot(x, y, label='Loaded from file!', linewidth=1)
+
+
+        line, = av.plot(x, y,'o',picker=0.01)  # 5 points tolerance
+        #line, = av.scatter(x, y, 'o', picker=5)  # 5 points tolerance
+
+
         # a.plot([0., Counter], [threshold, threshold], "k--")            # Plotting threshold designation
         setThreshLine()
         a.set_xlabel('Time(seconds)')  # Set X axis title
@@ -615,14 +649,17 @@ class logSuccess:
         av.set_xlabel('Time(seconds)')  # Set X axis title
         av.set_ylabel('Force in Newtons')  # Set Y axis title
         # a.set_xticks(['0','10','20','30','40','50','60','70','80'])
+        """
         a.set_xticklabels(['0', '10', '20', '30', '40', '50', '60', '70', '80'])
         a.set_yticks(
             [0, 250, 500, 750, 1000, 1250, 1500, 1750, 2000])  # Just using this right now but will most likely change
 
+        
         av.set_xticklabels(['0', '10', '20', '30', '40', '50', '60', '70', '80'])
         av.set_yticks(
             [0, 250, 500, 750, 1000, 1250, 1500, 1750, 2000])  # Just using this right now but will most likely change
         # a.xticks(x,values)
+        """
 
         # https://matplotlib.org/3.1.1/api/_as_gen/matplotlib.axes.Axes.pie.html#matplotlib.axes.Axes.pie
 
@@ -641,6 +678,8 @@ class logSuccess:
               wedgeprops=dict(width=size, edgecolor='w'),
               textprops={'fontsize': 7})
 
+
+
         # End pie chart code block for verification.
         # Instances of figs included into a single Canvas
 
@@ -649,6 +688,9 @@ class logSuccess:
         canvas1.draw()
         canvas1.get_tk_widget().grid(row=1, column=3, rowspan=4, padx=10,
                                      pady=10)
+
+        figAV.canvas.mpl_connect('pick_event', onpick)
+
         # Setting positions of Analysis graph
 
         canvas1b = FigureCanvasTkAgg(fig1, master=splitView)
@@ -1025,12 +1067,21 @@ def patientSelection():
 def browseFiles():
     global filename
     # delete_importFile()         # Clean up import screen
-
+    
     filename = HexToDec(filedialog.askopenfilename(initialdir="/", title="Select a File", # Passes file to the
                                                    # HexToDec class. Returns filepath of modified file
                                                   filetypes=(("Text files", "*.txt*"),  # Only pulls txt files
                                                               ("all files", "*.*"))))
+    
+    """
+    filename = filedialog.askopenfilename(initialdir = "/",
+                                          title = "Select a File",
+                                          filetypes = (("Text files",
+                                                        "*.txt*"),
+                                                       ("all files",
+                                                        "*.*")))
 
+    """
     fileExplorer.configure(text="File Opened: " + "" + filename)
 
     if os.stat(filename).st_size == 0:  # If file is not null open main class else no go!
