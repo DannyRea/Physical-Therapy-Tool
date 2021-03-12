@@ -81,10 +81,10 @@ def main_account_screen():
     Button(text="Register",
            height="2", width="30",
            command=register).pack()  # calls function register
-
+    """
     Button(text="Exit Application",
-           command=sys.exit(0)).pack()  # Button to exit app
-
+           command=exit(0)).pack()  # Button to exit app
+    """
     main_screen.mainloop()
 
 
@@ -118,9 +118,11 @@ def login():
     Button(login_screen, text="Login", width=10, height=1,
            command=login_verify).pack()  # calls login_verify to parse user file
 
+    """
     Button(login_screen,
            text="Exit Application",
            command=sys.exit(0)).pack()  # Button to exit app
+    """
 
 # Verifies user login credentials against current list.
 def login_verify():
@@ -659,7 +661,7 @@ class logSuccess:
                     relief="flat",
                     bg="mint cream",
                     text=foP)
-
+        """
         A16 = Label(analysisView,
                     text="Patient Notes",
                     font="bold")             #creates the header for Patient notes
@@ -668,6 +670,7 @@ class logSuccess:
                    height=20,
                    width=40)                 #creates the text box for patient notes
 
+        """
 
         A1.grid(row=2, column=4, pady=2)
         A2.grid(row=2, column=0, pady=2)
@@ -684,8 +687,8 @@ class logSuccess:
         A13.grid(row=6, column=5, pady=2)
         A14.grid(row=7, column=4, pady=2)
         A15.grid(row=7, column=5, pady=2)
-        A16.grid(row=6, column=0, pady=2)
-        A17.grid(row=7, column=0, pady=2)
+        #A16.grid(row=6, column=0, pady=2)
+        #A17.grid(row=7, column=0, pady=2)
 
         setThresholdAV.grid(row=1, column=4, pady=5)
 
