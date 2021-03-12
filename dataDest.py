@@ -18,6 +18,7 @@ global newVal
 global line_1
 global line_2
 
+
 sacUser = input('SacLink username: ')
 sacPass = input('SacLink password: ')
 
@@ -155,8 +156,7 @@ class logSuccess:
 
         global patientFname
         global patientLname
-        global highThreshold
-        global lowThreshold
+        
 
         highThreshold = 0
         lowThreshold = 0
@@ -278,6 +278,9 @@ class logSuccess:
             impactCounter = 0
             totalCount = 0
 
+            y = []
+
+
             highThreshold = simpledialog.askinteger("Upper Threshold Value ", "Enter new value: ")  # FINALLY !!!
             lowThreshold = simpledialog.askinteger("Lower Threshold Value ", "Enter new value: ")  # FINALLY !!!
 
@@ -313,6 +316,7 @@ class logSuccess:
             highthreshCalc = highthreshCounter / Counter  # % Calc
             lowthreshCalc = lowthreshCounter / Counter  # % Calc
             threshTot = highthreshCounter + lowthreshCounter
+            #threshTot = 1 - highthreshCalc
 
             print("In setFunc.......")  # Now IN Function
             print("Total Above: ", highthreshCounter)  # Output to make sure everything is right
@@ -331,7 +335,8 @@ class logSuccess:
             vals3 = np.array([[100., 100.], [lowthreshCounter, lowthreshCounter]])  # Setting pie chart %
             vals2 = np.array([[50., 50.], [10., 10.], [100., 100.]])  #
 
-            sizesB = [highthreshCalc, lowthreshCalc, (totalCount - threshTot)]  # Setting pie b (Threshold) chart labels
+            sizesB = [highthreshCalc, lowthreshCalc, (impactCounter - threshTot)]  # Setting pie b (Threshold) chart labels
+            #sizesB = [highthreshCalc, threshTot]  # Setting pie b (Threshold) chart labels
             labelsB = '% Above', '% Below', 'Total %'
 
             sizesC = [7, 93]  # Setting pie c (Impact) chart labels
@@ -367,22 +372,41 @@ class logSuccess:
             canvasPV.get_tk_widget().grid(row=4, column=5, rowspan=4, padx=50,
                                           pady=150)  # Setting position of Pie chart threshold
 
-            R4 = Label(splitView,  # Re-set Grid Label Val
-                       borderwidth=10,
-                       width=15,
-                       relief="flat",
-                       bg="mint cream",
-                       text=highthreshCounter)
+            R3 = Label(splitView,
+                   borderwidth=10,
+                   width=15,
+                   relief="flat",
+                   bg="mint cream",
+                   text=highthreshCounter)  # One way to display a calculated value
 
-            R5 = Label(splitView,  # Re-set Grid Label Val
-                       borderwidth=10,
-                       width=15,
-                       relief="flat",
-                       bg="mint cream",
-                       text=lowthreshCounter)
+            R4 = Label(splitView,
+                   borderwidth=10,
+                   width=15,
+                   relief="flat",
+                   bg="mint cream",
+                   text=lowthreshCounter)
 
-            R4.grid(row=2, column=5, pady=2)
-            R5.grid(row=2, column=5, pady=2)
+            A6 = Label(analysisView,
+                   borderwidth=10,
+                   width=15,
+                   relief="flat",
+                   bg="mint cream",
+                   text=highthreshCounter)  # One way to display a calculated value
+
+            A7 = Label(analysisView,
+                   borderwidth=10,
+                   width=15,
+                   relief="flat",
+                   bg="mint cream",
+                   text=lowthreshCounter)
+
+            
+
+            R3.grid(row=0, column=5, pady=2)
+            R4.grid(row=1, column=5, pady=2)
+
+            A6.grid(row=2, column=5, pady=2)
+            A7.grid(row=3, column=5, pady=2)
 
             plt.ion()
 
@@ -429,6 +453,30 @@ class logSuccess:
             line_3 = a.plot([0., Counter], [lowThreshold, lowThreshold], "k--")  # plots threshold line, assigns to list
             line_4 = av.plot([0., Counter], [lowThreshold, lowThreshold], "k--")  # plots threshold line, to Analysis View
 
+        def onpick(event):
+            thisline = event.artist
+            xdata = thisline.get_xdata()
+            ydata = thisline.get_ydata()
+            ind = event.ind
+            points = tuple(zip(xdata[ind], ydata[ind]))
+            #print('onpick points:', points)
+            print(xdata[ind])
+            print(ydata[ind])
+
+            foP = ydata[ind]
+
+            A15 = Label(analysisView,
+                    borderwidth=10,
+                    width=15,
+                    relief="flat",
+                    bg="mint cream",
+                    text=foP)
+
+            A15.grid(row=7, column=5, pady=2)
+
+
+        #*********************************************************
+
         l1 = Label(splitView,
                    text="Above Threshold: ",
                    font="bold")
@@ -457,6 +505,10 @@ class logSuccess:
 
         R2 = Label(splitView,
                    text="Analysis Tools",
+                   font="bold")
+
+        l6 = Label(splitView,
+                   text="Below Threshold: ",
                    font="bold")
 
         checkbutton = Checkbutton(patientView, text="Autoscale")  # Not being implemented but an example of setup
@@ -531,7 +583,7 @@ class logSuccess:
                    font="bold")
 
         A5 = Label(analysisView,
-                   text="Total Activity: ",
+                   text="Below Threshold: ",
                    font="bold")
         """
         R2 = Label(splitView,
@@ -608,13 +660,22 @@ class logSuccess:
                     bg="mint cream",
                     text=foP)
 
+        A16 = Label(analysisView,
+                    text="Patient Notes",
+                    font="bold")             #creates the header for Patient notes
+
+        A17 = Text(analysisView,
+                   height=20,
+                   width=40)                 #creates the text box for patient notes
+
+
         A1.grid(row=2, column=4, pady=2)
         A2.grid(row=2, column=0, pady=2)
         A3.grid(row=3, column=0, pady=2)
         A4.grid(row=4, column=0, pady=2)
         A5.grid(row=3, column=4, pady=2)
         A6.grid(row=2, column=5, pady=2)
-        A7.grid(row=2, column=5, pady=2)
+        A7.grid(row=3, column=5, pady=2)
         A8.grid(row=2, column=1, pady=2)
         A9.grid(row=3, column=5, pady=2)
         A10.grid(row=5, column=4, pady=2)
@@ -623,20 +684,22 @@ class logSuccess:
         A13.grid(row=6, column=5, pady=2)
         A14.grid(row=7, column=4, pady=2)
         A15.grid(row=7, column=5, pady=2)
-        #A16.grid(row=2, column=4, pady=2)
+        A16.grid(row=6, column=0, pady=2)
+        A17.grid(row=7, column=0, pady=2)
 
         setThresholdAV.grid(row=1, column=4, pady=5)
 
         # ***********************************************************
 
-        l1.grid(row=2, column=4, pady=2)
+        l1.grid(row=0, column=4, pady=2)
         l2.grid(row=2, column=0, pady=2)
         l3.grid(row=3, column=0, pady=2)
         l4.grid(row=4, column=0, pady=2)
         l5.grid(row=3, column=4, pady=2)
-        #l6.grid(row=2, column=4, pady=2)
-        R3.grid(row=2, column=5, pady=2)
-        R4.grid(row=2, column=5, pady=2)
+        l6.grid(row=1, column=4, pady=2)
+
+        R3.grid(row=0, column=5, pady=2)
+        R4.grid(row=1, column=5, pady=2)
         R5.grid(row=2, column=1, pady=2)
         R6.grid(row=3, column=5, pady=2)
 
@@ -680,6 +743,9 @@ class logSuccess:
         # a.subplots_adjust(bottom=0.1, right=0.8, top=0.9)
         a.plot(x, y, label='Loaded from file!')
         av.plot(x, y, label='Loaded from file!')
+
+        line, = av.plot(x, y,'o',picker=0.01)  # 5 points tolerance         # For Force @ a point click event
+
         # a.plot([0., Counter], [highThreshold, highThreshold], "k--")            # Plotting threshold designation
         setThreshLine()
         a.set_xlabel('Time(seconds)')  # Set X axis title
@@ -723,6 +789,9 @@ class logSuccess:
         canvas1.get_tk_widget().grid(row=1, column=3, rowspan=4, padx=10,
                                      pady=10)
         # Setting positions of Analysis graph
+
+        figAV.canvas.mpl_connect('pick_event', onpick)
+
 
         canvas1b = FigureCanvasTkAgg(fig1, master=splitView)
         splitView.cursor = Cursor(a, useblit=True, color='red', linewidth=2)  # Used for Analysis graph cursor
