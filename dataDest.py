@@ -81,6 +81,9 @@ def main_account_screen():
            height="2", width="30",
            command=register).pack()  # calls function register
 
+    Button(text="Exit Application",
+           command=sys.exit(0)).pack()  # Button to exit app
+
     main_screen.mainloop()
 
 
@@ -114,6 +117,9 @@ def login():
     Button(login_screen, text="Login", width=10, height=1,
            command=login_verify).pack()  # calls login_verify to parse user file
 
+    Button(login_screen,
+           text="Exit Application",
+           command=sys.exit(0)).pack()  # Button to exit app
 
 # Verifies user login credentials against current list.
 def login_verify():
@@ -867,6 +873,9 @@ def register():
     Button(register_screen, text="Register", width=10, height=1, bg="#42e9f5",
            command=register_Doctor).pack()  # calls register_Doctor
 
+    Button(register_screen,
+           text="Exit Application",
+           command=sys.exit(0)).pack()  # Button to exit app
 
 # This method collects the Doctor's info. Then it saves the user's info into a File.
 def register_Doctor():
