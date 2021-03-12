@@ -16,6 +16,7 @@ from HexToDec import HexToDec
 
 global newVal
 global line_1
+global threshCounter
 
 """
 sacUser = input('SacLink username: ')
@@ -252,14 +253,20 @@ class logSuccess:
             global line_1
             global line_2
 
+
+            threshold = simpledialog.askinteger("Theshold Value ", "Enter new value: ")  # FINALLY !!!
+
             Counter = 0  # Set vals back to Zero
             threshCounter = 0
             impactCounter = 0
             totalCount = 0
 
-            threshold = simpledialog.askinteger("Theshold Value ", "Enter new value: ")  # FINALLY !!!
+            y = []
+
 
             print("In replot....")
+            print("Before Loop: ", threshCounter)  # Output to make sure everything is right
+            print("Threshold: ", threshold)  # Output to make sure everything is right
 
             with open(filename, 'r') as csvfile:  # Re-set file designation
                 plots = csv.reader(csvfile)
@@ -294,7 +301,7 @@ class logSuccess:
             print("Total Thresh %: ", threshTot)
             print("Impact Counter: ", impactCounter)
             print("Total Count: ", totalCount)
-            print("Seconds total: ", second)
+            print("Counter Val ", Counter)
             print(threshold)
 
             vals = np.array([[10., 10.], [threshCounter, threshCounter]])  # Setting pie chart %
@@ -637,7 +644,7 @@ class logSuccess:
         av.plot(x, y, label='Loaded from file!', linewidth=1)
 
 
-        line, = av.plot(x, y,'o',picker=0.01)  # 5 points tolerance
+        line, = av.plot(x, y,'o',picker=0.01)  # 5 points tolerance			# For Force @ a point click event
         #line, = av.scatter(x, y, 'o', picker=5)  # 5 points tolerance
 
 
