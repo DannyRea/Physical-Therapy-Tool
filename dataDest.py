@@ -654,6 +654,15 @@ class logSuccess:
                     bg="mint cream",
                     text=foP)
 
+        A16 = Label(analysisView,
+                    text="Patient Notes",
+                    font="bold")
+
+        A17 = Text(analysisView,
+                   height=20,
+                   width=40)
+
+
         A1.grid(row=2, column=4, pady=2)
         A2.grid(row=2, column=0, pady=2)
         A3.grid(row=3, column=0, pady=2)
@@ -669,7 +678,8 @@ class logSuccess:
         A13.grid(row=6, column=5, pady=2)
         A14.grid(row=7, column=4, pady=2)
         A15.grid(row=7, column=5, pady=2)
-        #A16.grid(row=2, column=4, pady=2)
+        A16.grid(row=9, column=4, pady=2)
+        A17.grid(row=8, column=4, pady=2)
 
         setThresholdAV.grid(row=1, column=4, pady=5)
 
