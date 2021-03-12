@@ -5,8 +5,8 @@ from tkinter.ttk import *
 from tkinter import *
 from tkinter import filedialog
 from tkinter import simpledialog, ttk
-#import mysql
-#from sshtunnel import SSHTunnelForwarder
+import mysql
+from sshtunnel import SSHTunnelForwarder
 import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.backends.backend_tkagg import (FigureCanvasTkAgg, NavigationToolbar2Tk)
@@ -16,16 +16,16 @@ from HexToDec import HexToDec
 
 global newVal
 global line_1
-global threshCounter
+global line_2
 
-"""
+
 sacUser = input('SacLink username: ')
 sacPass = input('SacLink password: ')
 
 server = SSHTunnelForwarder(
     ("ecs-pw-proj-web.ecs.csus.edu", 22),
     ssh_host_key=None,
-    ssh_username=sacUser,  # username goes here!
+    ssh_username= sacUser,  # username goes here!
     ssh_password=sacPass,  # password goes here!
     remote_bind_address=("10.115.234.32", 3306))
 
@@ -51,7 +51,7 @@ result = db_cursor.fetchall()
 for row in result:
     print(row)
     print("\n")
-"""
+
 
 # Creates a new window for patient and physician views
 def new_window(_class):
@@ -81,7 +81,10 @@ def main_account_screen():
     Button(text="Register",
            height="2", width="30",
            command=register).pack()  # calls function register
-
+    """
+    Button(text="Exit Application",
+           command=exit(0)).pack()  # Button to exit app
+    """
     main_screen.mainloop()
 
 
@@ -115,6 +118,11 @@ def login():
     Button(login_screen, text="Login", width=10, height=1,
            command=login_verify).pack()  # calls login_verify to parse user file
 
+    """
+    Button(login_screen,
+           text="Exit Application",
+           command=sys.exit(0)).pack()  # Button to exit app
+    """
 
 # Verifies user login credentials against current list.
 def login_verify():
@@ -150,12 +158,13 @@ class logSuccess:
 
         global patientFname
         global patientLname
-        global threshold
+        
 
-        # Counter = 0
-        threshold = 0
+        highThreshold = 0
+        lowThreshold = 0
         impactThreshold = 0
-        threshCounter = 0
+        highthreshCounter = 0
+        lowthreshCounter = 0
         impactCounter = 0
         threshTot = 0
         seconds = 0
@@ -211,10 +220,16 @@ class logSuccess:
                 if row:
                     Counter += 1  # Counting rows in text file and using them for x-axis
 
-        for i in y:  # Number of impacts over set threshold
-            if i > threshold:
-                threshCounter += 1
+        for i in y:  # Number of impacts under set threshold
+            if i < lowThreshold:
+                lowthreshCounter+= 1
                 continue
+
+        for i in y:  # Number of impacts over set threshold
+            if i > highThreshold:
+                highthreshCounter+= 1
+                continue
+
 
         for i in y:  # Number of impacts over ZERO
             if i > impactThreshold:
@@ -223,50 +238,55 @@ class logSuccess:
 
         for i in x:  # Number of impacts
             totalCount += 1
-            continue
 
         second = totalCount / 250
 
-        threshCalc = threshCounter / Counter  # % Calc
-        threshTot = 1 - threshCalc
+        highthreshCalc = highthreshCounter / Counter  # % Calc
+        lowthreshCalc = lowthreshCounter / Counter # % Calc
+        threshTot = lowthreshCounter+lowthreshCounter
 
-        print("Total Above: ", threshCounter)  # Output to make sure everything is right
+        print("Total Above: ", highthreshCounter)  # Output to make sure everything is right
+        print("Total Below: ", lowthreshCounter)  # Output to make sure everything is right
         print("Total Impacts: ", impactCounter)
         print("Total Points: ", Counter)
-        print("Threshold %: ", threshCalc)
+        print("High Threshold %: ", highthreshCalc)
+        print("Low Threshold %: ", lowthreshCalc)
         print("Total Thresh %: ", threshTot)
         print("Impact Counter: ", impactCounter)
         print("Total Count: ", totalCount)
         print("Seconds total: ", second)
 
-        vals = np.array([[10., 10.], [threshCounter, threshCounter]])  # Setting pie chart %
+        vals = np.array([[10., 10.], [highthreshCounter, highthreshCounter]])  # Setting pie chart %
+        vals3 = np.array([[10., 10.], [lowthreshCounter, lowthreshCounter]])  # Setting pie chart %
         vals2 = np.array([[50., 50.], [10., 10.]])  #
 
-        sizesB = [threshCalc, threshTot]  # Setting pie b (Threshold) chart labels
-        labelsB = 'Above %', 'Total %'
+        sizesB = [highthreshCalc, lowthreshCalc, (impactCounter - threshTot)]  # Setting pie b (Threshold) chart labels
+        labelsB = '% Above', '% Below', 'Total %'
 
         sizesC = [7, 93]  # Setting pie c (Impact) chart labels
         labelsC = 'Above %', 'Total %'
+
 
         def setFunc():
 
             global line_1
             global line_2
-
-
-            threshold = simpledialog.askinteger("Theshold Value ", "Enter new value: ")  # FINALLY !!!
+            global line_3
+            global line_4
 
             Counter = 0  # Set vals back to Zero
-            threshCounter = 0
+            highthreshCounter = 0
+            lowthreshCounter = 0
             impactCounter = 0
             totalCount = 0
 
             y = []
 
 
+            highThreshold = simpledialog.askinteger("Upper Threshold Value ", "Enter new value: ")  # FINALLY !!!
+            lowThreshold = simpledialog.askinteger("Lower Threshold Value ", "Enter new value: ")  # FINALLY !!!
+
             print("In replot....")
-            print("Before Loop: ", threshCounter)  # Output to make sure everything is right
-            print("Threshold: ", threshold)  # Output to make sure everything is right
 
             with open(filename, 'r') as csvfile:  # Re-set file designation
                 plots = csv.reader(csvfile)
@@ -276,9 +296,14 @@ class logSuccess:
                     if row:
                         Counter += 1  # Counting rows in text file and using them for x-axis
 
+            for i in y:  # Number of impacts under set threshold
+                if i < lowThreshold:
+                    lowthreshCounter += 1
+                    continue
+
             for i in y:  # Number of impacts over set threshold
-                if i > threshold:
-                    threshCounter += 1
+                if i > highThreshold:
+                    highthreshCounter += 1
                     continue
 
             for i in y:  # Number of impacts over ZERO
@@ -290,25 +315,34 @@ class logSuccess:
                 totalCount += 1
                 continue
 
-            threshCalc = threshCounter / Counter  # % Calc
-            threshTot = 1 - threshCalc
+            highthreshCalc = highthreshCounter / Counter  # % Calc
+            lowthreshCalc = lowthreshCounter / Counter  # % Calc
+            threshTot = highthreshCounter + lowthreshCounter
+            #threshTot = 1 - highthreshCalc
 
             print("In setFunc.......")  # Now IN Function
-            print("Total Above: ", threshCounter)  # Output to make sure everything is right
+            print("Total Above: ", highthreshCounter)  # Output to make sure everything is right
+            print("Total Below: ", lowthreshCounter)  # Output to make sure everything is right
             print("Total Impacts: ", impactCounter)
             print("Total Points: ", Counter)
-            print("Threshold %: ", threshCalc)
-            print("Total Thresh %: ", threshTot)
+            print("High Threshold %: ", highthreshCalc)
+            print("Low Threshold %: ", lowthreshCalc)
+            print("Total Thresh #: ", threshTot)
             print("Impact Counter: ", impactCounter)
             print("Total Count: ", totalCount)
-            print("Counter Val ", Counter)
-            print(threshold)
+            print("Seconds total: ", second)
+            print(highThreshold)
 
-            vals = np.array([[10., 10.], [threshCounter, threshCounter]])  # Setting pie chart %
-            vals2 = np.array([[50., 50.], [10., 10.]])  #
+            vals = np.array([[10., 10.], [highthreshCounter, highthreshCounter]])  # Setting pie chart %
+            vals3 = np.array([[100., 100.], [lowthreshCounter, lowthreshCounter]])  # Setting pie chart %
+            vals2 = np.array([[50., 50.], [10., 10.], [100., 100.]])  #
 
-            sizesB = [threshCalc, threshTot]  # Setting pie b (Threshold) chart labels
-            labelsB = 'Above %', 'Total %'
+            sizesB = [highthreshCalc, lowthreshCalc, (impactCounter - threshTot)]  # Setting pie b (Threshold) chart labels
+            #sizesB = [highthreshCalc, threshTot]  # Setting pie b (Threshold) chart labels
+            labelsB = '% Above', '% Below', 'Total %'
+
+            sizesC = [7, 93]  # Setting pie c (Impact) chart labels
+            labelsC = 'Above %', 'Total %'
 
             # plt.ion()
 
@@ -316,7 +350,7 @@ class logSuccess:
             fig5 = plt.figure(figsize=(4, 3), dpi=95)  # dpi zooms out and in with a change of value
 
             rePlot = fig4.add_subplot(1, 1, 1)  # Pie chart for client
-            rePlot.set_title("High Activity Peaks", fontsize=12)
+            rePlot.set_title("Activity Peaks", fontsize=12)
             rePlot.pie(sizesB, labels=labelsB, autopct='%1.1f%%', colors=outer_colors,
                        # startangle sets starting point of % divisions
                        radius=1.2, shadow=True, startangle=180,  # colors are random right now calling outer_colors
@@ -324,9 +358,8 @@ class logSuccess:
                        textprops={'fontsize': 7})
 
             rePlotPV = fig5.add_subplot(1, 1, 1)  # Pie chart for client
-            rePlotPV.set_title("High Activity Peaks", fontsize=12)
+            rePlotPV.set_title("Activity Peaks", fontsize=12)
             rePlotPV.pie(sizesB, labels=labelsB, autopct='%1.1f%%', colors=outer_colors,
-                         # startangle sets starting point of % divisions
                          radius=1.2, shadow=True, startangle=180,  # colors are random right now calling outer_colors
                          wedgeprops=dict(width=size, edgecolor='w'),
                          textprops={'fontsize': 7})
@@ -341,14 +374,41 @@ class logSuccess:
             canvasPV.get_tk_widget().grid(row=4, column=5, rowspan=4, padx=50,
                                           pady=150)  # Setting position of Pie chart threshold
 
-            R4 = Label(splitView,  # Re-set Grid Label Val
-                       borderwidth=10,
-                       width=15,
-                       relief="flat",
-                       bg="mint cream",
-                       text=threshCounter)
+            R3 = Label(splitView,
+                   borderwidth=10,
+                   width=15,
+                   relief="flat",
+                   bg="mint cream",
+                   text=highthreshCounter)  # One way to display a calculated value
 
-            R4.grid(row=2, column=5, pady=2)
+            R4 = Label(splitView,
+                   borderwidth=10,
+                   width=15,
+                   relief="flat",
+                   bg="mint cream",
+                   text=lowthreshCounter)
+
+            A6 = Label(analysisView,
+                   borderwidth=10,
+                   width=15,
+                   relief="flat",
+                   bg="mint cream",
+                   text=highthreshCounter)  # One way to display a calculated value
+
+            A7 = Label(analysisView,
+                   borderwidth=10,
+                   width=15,
+                   relief="flat",
+                   bg="mint cream",
+                   text=lowthreshCounter)
+
+            
+
+            R3.grid(row=0, column=5, pady=2)
+            R4.grid(row=1, column=5, pady=2)
+
+            A6.grid(row=2, column=5, pady=2)
+            A7.grid(row=3, column=5, pady=2)
 
             plt.ion()
 
@@ -358,24 +418,42 @@ class logSuccess:
                 line.remove()
 
             if not line_1:  # Checks empty list, and if true, plots the graph.
-                line_1 = a.plot([0., Counter], [threshold, threshold], "k--")
+                line_1 = a.plot([0., Counter], [highThreshold, highThreshold], "k--")
 
             if line_2:  # For Analysis View
                 line = line_2.pop(0)
                 line.remove()
+
             if not line_2:
-                line_2 = av.plot([0., Counter], [threshold, threshold], "k--")
+                line_2 = av.plot([0., Counter], [highThreshold, highThreshold], "k--")
+
+            # threshold = simpledialog.askinteger("Threshold Value ", "Enter new value: ")  # FINALLY !!!
+            if line_3:  # Checks to see if theres something in list, if so then pop it and remove line
+                line = line_3.pop(0)
+                line.remove()
+
+            if not line_3:  # Checks empty list, and if true, plots the graph.
+                line_3 = a.plot([0., Counter], [lowThreshold, lowThreshold], "k--")
+
+            if line_4:  # For Analysis View
+                line = line_4.pop(0)
+                line.remove()
+
+            if not line_4:
+                line_4 = av.plot([0., Counter], [lowThreshold, lowThreshold], "k--")
 
             plt.ioff()  # Trapping updated threshold inbetween ion() & ioff() so only threshold get drawn
 
         def setThreshLine():
             global line_1
             global line_2
+            global line_3
+            global line_4
 
-            line_1 = a.plot([0., Counter], [threshold, threshold], "k--")  # plots threshold line, assigns to list
-            line_2 = av.plot([0., Counter], [threshold, threshold], "k--")  # plots threshold line, to Analysis View
-
-        #***********  SELECT EVENT ******************************
+            line_1 = a.plot([0., Counter], [highThreshold, highThreshold], "k--")  # plots threshold line, assigns to list
+            line_2 = av.plot([0., Counter], [highThreshold, highThreshold], "k--")  # plots threshold line, to Analysis View
+            line_3 = a.plot([0., Counter], [lowThreshold, lowThreshold], "k--")  # plots threshold line, assigns to list
+            line_4 = av.plot([0., Counter], [lowThreshold, lowThreshold], "k--")  # plots threshold line, to Analysis View
 
         def onpick(event):
             thisline = event.artist
@@ -401,10 +479,13 @@ class logSuccess:
 
         #*********************************************************
 
-
         l1 = Label(splitView,
-                   text="Threshold Exceeded: ",
+                   text="Above Threshold: ",
                    font="bold")
+
+       # l6 = Label(splitView,
+        #           text="Below Threshold: ",
+        #           font="bold")
 
         l2 = Button(splitView,
                     text="Patient ID - Name: ",
@@ -428,21 +509,25 @@ class logSuccess:
                    text="Analysis Tools",
                    font="bold")
 
+        l6 = Label(splitView,
+                   text="Below Threshold: ",
+                   font="bold")
+
         checkbutton = Checkbutton(patientView, text="Autoscale")  # Not being implemented but an example of setup
 
         R3 = Label(splitView,
                    borderwidth=10,
-                   width=20,
+                   width=15,
                    relief="flat",
                    bg="mint cream",
-                   text=threshCounter)  # One way to display a calculated value
+                   text=highthreshCounter)  # One way to display a calculated value
 
         R4 = Label(splitView,
                    borderwidth=10,
                    width=15,
                    relief="flat",
                    bg="mint cream",
-                   text=threshCounter)
+                   text=lowthreshCounter)
 
         R5 = Label(splitView,
                    borderwidth=10,
@@ -459,7 +544,7 @@ class logSuccess:
                    text=impactCounter)
 
         setThreshold = tk.Button(splitView,
-                                 text="Set Threshold",
+                                 text="Set Thresholds",
                                  bg="mint cream",
                                  command=setFunc)  # command calls any function you want (setFunc, clear.....) !
         """
@@ -477,8 +562,13 @@ class logSuccess:
         foP = 0
 
         A1 = Label(analysisView,
-                   text="Threshold Exceeded: ",
+                   text="Above Threshold: ",
                    font="bold")
+
+        #A16 = Label(analysisView,
+        #           text="Below Threshold: ",
+        #           font="bold")
+
 
         A2 = Button(analysisView,
                     text="Patient ID - Name: ",
@@ -495,7 +585,7 @@ class logSuccess:
                    font="bold")
 
         A5 = Label(analysisView,
-                   text="Total Activity: ",
+                   text="Below Threshold: ",
                    font="bold")
         """
         R2 = Label(splitView,
@@ -508,17 +598,17 @@ class logSuccess:
 
         A6 = Label(analysisView,
                    borderwidth=10,
-                   width=20,
+                   width=15,
                    relief="flat",
                    bg="mint cream",
-                   text=threshCounter)  # One way to display a calculated value
+                   text=highthreshCounter)  # One way to display a calculated value
 
         A7 = Label(analysisView,
                    borderwidth=10,
                    width=15,
                    relief="flat",
                    bg="mint cream",
-                   text=threshCounter)
+                   text=lowthreshCounter)
 
         A8 = Label(analysisView,
                    borderwidth=10,
@@ -535,7 +625,7 @@ class logSuccess:
                    text=impactCounter)
 
         setThresholdAV = tk.Button(analysisView,
-                                   text="Set Threshold",
+                                   text="Set Thresholds",
                                    bg="mint cream",
                                    command=setFunc)  # command calls any function you want (setFunc, clear.....) !
 
@@ -571,6 +661,16 @@ class logSuccess:
                     relief="flat",
                     bg="mint cream",
                     text=foP)
+        """
+        A16 = Label(analysisView,
+                    text="Patient Notes",
+                    font="bold")             #creates the header for Patient notes
+
+        A17 = Text(analysisView,
+                   height=20,
+                   width=40)                 #creates the text box for patient notes
+
+        """
 
         A1.grid(row=2, column=4, pady=2)
         A2.grid(row=2, column=0, pady=2)
@@ -578,7 +678,7 @@ class logSuccess:
         A4.grid(row=4, column=0, pady=2)
         A5.grid(row=3, column=4, pady=2)
         A6.grid(row=2, column=5, pady=2)
-        A7.grid(row=2, column=5, pady=2)
+        A7.grid(row=3, column=5, pady=2)
         A8.grid(row=2, column=1, pady=2)
         A9.grid(row=3, column=5, pady=2)
         A10.grid(row=5, column=4, pady=2)
@@ -587,18 +687,22 @@ class logSuccess:
         A13.grid(row=6, column=5, pady=2)
         A14.grid(row=7, column=4, pady=2)
         A15.grid(row=7, column=5, pady=2)
+        #A16.grid(row=6, column=0, pady=2)
+        #A17.grid(row=7, column=0, pady=2)
 
         setThresholdAV.grid(row=1, column=4, pady=5)
 
         # ***********************************************************
 
-        l1.grid(row=2, column=4, pady=2)
+        l1.grid(row=0, column=4, pady=2)
         l2.grid(row=2, column=0, pady=2)
         l3.grid(row=3, column=0, pady=2)
         l4.grid(row=4, column=0, pady=2)
         l5.grid(row=3, column=4, pady=2)
-        R3.grid(row=2, column=5, pady=2)
-        R4.grid(row=2, column=5, pady=2)
+        l6.grid(row=1, column=4, pady=2)
+
+        R3.grid(row=0, column=5, pady=2)
+        R4.grid(row=1, column=5, pady=2)
         R5.grid(row=2, column=1, pady=2)
         R6.grid(row=3, column=5, pady=2)
 
@@ -641,14 +745,11 @@ class logSuccess:
         av = figAV.add_subplot(1, 1, 1)  # Analysis View Graph plot
         # a.subplots_adjust(bottom=0.1, right=0.8, top=0.9)
         a.plot(x, y, label='Loaded from file!')
-        av.plot(x, y, label='Loaded from file!', linewidth=1)
+        av.plot(x, y, label='Loaded from file!')
 
+        line, = av.plot(x, y,'o',picker=0.01)  # 5 points tolerance         # For Force @ a point click event
 
-        line, = av.plot(x, y,'o',picker=0.01)  # 5 points tolerance			# For Force @ a point click event
-        #line, = av.scatter(x, y, 'o', picker=5)  # 5 points tolerance
-
-
-        # a.plot([0., Counter], [threshold, threshold], "k--")            # Plotting threshold designation
+        # a.plot([0., Counter], [highThreshold, highThreshold], "k--")            # Plotting threshold designation
         setThreshLine()
         a.set_xlabel('Time(seconds)')  # Set X axis title
         a.set_ylabel('Force in Newtons')  # Set Y axis title
@@ -656,22 +757,19 @@ class logSuccess:
         av.set_xlabel('Time(seconds)')  # Set X axis title
         av.set_ylabel('Force in Newtons')  # Set Y axis title
         # a.set_xticks(['0','10','20','30','40','50','60','70','80'])
-        """
         a.set_xticklabels(['0', '10', '20', '30', '40', '50', '60', '70', '80'])
         a.set_yticks(
             [0, 250, 500, 750, 1000, 1250, 1500, 1750, 2000])  # Just using this right now but will most likely change
 
-        
         av.set_xticklabels(['0', '10', '20', '30', '40', '50', '60', '70', '80'])
         av.set_yticks(
             [0, 250, 500, 750, 1000, 1250, 1500, 1750, 2000])  # Just using this right now but will most likely change
         # a.xticks(x,values)
-        """
 
         # https://matplotlib.org/3.1.1/api/_as_gen/matplotlib.axes.Axes.pie.html#matplotlib.axes.Axes.pie
 
         b = fig2.add_subplot(1, 1, 1)  # Pie chart for client
-        b.set_title("High Activity Peaks", fontsize=12)
+        b.set_title("Activity Peaks", fontsize=12)
         b.pie(sizesB, labels=labelsB, autopct='%1.1f%%', colors=outer_colors,
               # startangle sets starting point of % divisions
               radius=1.2, shadow=True, startangle=180,  # colors are random right now calling outer_colors
@@ -685,8 +783,6 @@ class logSuccess:
               wedgeprops=dict(width=size, edgecolor='w'),
               textprops={'fontsize': 7})
 
-
-
         # End pie chart code block for verification.
         # Instances of figs included into a single Canvas
 
@@ -695,10 +791,10 @@ class logSuccess:
         canvas1.draw()
         canvas1.get_tk_widget().grid(row=1, column=3, rowspan=4, padx=10,
                                      pady=10)
+        # Setting positions of Analysis graph
 
         figAV.canvas.mpl_connect('pick_event', onpick)
 
-        # Setting positions of Analysis graph
 
         canvas1b = FigureCanvasTkAgg(fig1, master=splitView)
         splitView.cursor = Cursor(a, useblit=True, color='red', linewidth=2)  # Used for Analysis graph cursor
@@ -849,6 +945,9 @@ def register():
     Button(register_screen, text="Register", width=10, height=1, bg="#42e9f5",
            command=register_Doctor).pack()  # calls register_Doctor
 
+    Button(register_screen,
+           text="Exit Application",
+           command=sys.exit(0)).pack()  # Button to exit app
 
 # This method collects the Doctor's info. Then it saves the user's info into a File.
 def register_Doctor():
@@ -1074,21 +1173,12 @@ def patientSelection():
 def browseFiles():
     global filename
     # delete_importFile()         # Clean up import screen
-    
+
     filename = HexToDec(filedialog.askopenfilename(initialdir="/", title="Select a File", # Passes file to the
                                                    # HexToDec class. Returns filepath of modified file
                                                   filetypes=(("Text files", "*.txt*"),  # Only pulls txt files
                                                               ("all files", "*.*"))))
-    
-    """
-    filename = filedialog.askopenfilename(initialdir = "/",
-                                          title = "Select a File",
-                                          filetypes = (("Text files",
-                                                        "*.txt*"),
-                                                       ("all files",
-                                                        "*.*")))
 
-    """
     fileExplorer.configure(text="File Opened: " + "" + filename)
 
     if os.stat(filename).st_size == 0:  # If file is not null open main class else no go!
