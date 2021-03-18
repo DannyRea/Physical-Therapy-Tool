@@ -13,15 +13,17 @@ from matplotlib.backends.backend_tkagg import (FigureCanvasTkAgg, NavigationTool
 from matplotlib.widgets import Cursor
 import mysql.connector as db
 from HexToDec import HexToDec
+import matplotlib.gridspec as gridspec
 
 global newVal
 global line_1
 global line_2
 
-
 #tunnelfile = open("ssh.txt", 'r')
 #sacUser = tunnelfile.readline()
 #sacPass = tunnelfile.readline()
+
+
 
 sacUser = input('SacLink username: ')
 sacPass = input('SacLink password: ')
@@ -71,31 +73,40 @@ def main_account_screen():
     # menubar = Menu(main_screen)
     # main_screen.config(menu = menubar)
 
-    main_screen.geometry("300x250")
+    main_screen.geometry("300x250+0+0")
+    #main_screen.minsize(5, 5)
     main_screen.title("Account Login")
-    Label(text="Select Your Choice", bg="#42e9f5", width="300", height="2", font=("Calibri", 13)).pack()
-    Label(text="").pack()
+
+    Label(text="Select Your Choice",
+                        bg="#42e9f5", 
+                        width="300", 
+                        height="2", 
+                        font=("Calibri", 13)).pack(side = TOP, pady = 10)
+
+    #Label(text="").pack()
 
     Button(text="Login", height="2",
            width="30",
            command=login).pack()  # calls function login
 
-    Label(text="").pack()
+    #Label(text="").pack()
 
     Button(text="Register",
            height="2", width="30",
            command=register).pack()  # calls function register
-<<<<<<< HEAD
     """
     Button(text="Exit Application",
            command=exit(0)).pack()  # Button to exit app
+    
+    
+    Button(text = 'Close the window',
+            command = quit).pack()
     """
-=======
+    
+ 
 
-
-
->>>>>>> 5ed7d42d6e0ead2d5f359dd3c970a929c9714238
     main_screen.mainloop()
+
 
 
 # After initializing login display it asks for the user's info.
@@ -128,15 +139,14 @@ def login():
     Button(login_screen, text="Login", width=10, height=1,
            command=login_verify).pack()  # calls login_verify to parse user file
 
-<<<<<<< HEAD
     """
     Button(login_screen,
            text="Exit Application",
            command=sys.exit(0)).pack()  # Button to exit app
     """
-=======
 
->>>>>>> 5ed7d42d6e0ead2d5f359dd3c970a929c9714238
+    main_screen.withdraw()
+
 
 # Verifies user login credentials against current list.
 def login_verify():
@@ -146,22 +156,6 @@ def login_verify():
     password1 = password_verify.get()
     username_login_entry.delete(0, END)
     password_login_entry.delete(0, END)
-    
-    ##sql = "SELECT userName, passWord FROM USER WHERE userName = %s AND passWord = %s VALUES (%s, %s)"
-
-    ##val = (username1, password1)
-
-    ##db_cursor.execute(sql, val)
-    #result = db_cursor.fetchall()
-    
-    #if result == None:
-        #user_not_found()
-    #else:
-        #importFile()
-
-    #for row in result:
-        #print(row)
-        #print("\n")
 
     list_of_files = os.listdir()
     if username1 in list_of_files:  # if username is found
@@ -225,10 +219,12 @@ class logSuccess:
         splitView = ttk.Frame(tabControl)
         patientView = ttk.Frame(tabControl)
         analysisView = ttk.Frame(tabControl)
+        multiView = ttk.Frame(tabControl)
 
         tabControl.add(splitView, text='Split View')
         tabControl.add(patientView, text='Patient View')
         tabControl.add(analysisView, text='Analysis View')
+        tabControl.add(multiView, text='Multiple Plot View')
         tabControl.grid(sticky=NW)
 
         # val2=np.array([[20.,20.],[80.,80.],[20.,20.]])
@@ -311,10 +307,9 @@ class logSuccess:
             totalCount = 0
 
             y = []
-
-
-            highThreshold = simpledialog.askinteger("Upper Threshold Value ", "Enter new value: ")  # FINALLY !!!
-            lowThreshold = simpledialog.askinteger("Lower Threshold Value ", "Enter new value: ")  # FINALLY !!!
+          
+            highThreshold = simpledialog.askinteger(" ", "Enter upper value: ")  # FINALLY !!!
+            lowThreshold = simpledialog.askinteger(" ", "Enter lower value: ")  # FINALLY !!!
 
             print("In replot....")
 
@@ -347,7 +342,7 @@ class logSuccess:
 
             highthreshCalc = highthreshCounter / Counter  # % Calc
             lowthreshCalc = lowthreshCounter / Counter  # % Calc
-            threshTot = highthreshCounter + lowthreshCounter
+            threshTot = 1 - (highthreshCalc + lowthreshCalc)
             #threshTot = 1 - highthreshCalc
 
             print("In setFunc.......")  # Now IN Function
@@ -367,25 +362,26 @@ class logSuccess:
             vals3 = np.array([[100., 100.], [lowthreshCounter, lowthreshCounter]])  # Setting pie chart %
             vals2 = np.array([[50., 50.], [10., 10.], [100., 100.]])  #
 
-            sizesB = [highthreshCalc, lowthreshCalc, (impactCounter - threshTot)]  # Setting pie b (Threshold) chart labels
-            #sizesB = [highthreshCalc, threshTot]  # Setting pie b (Threshold) chart labels
-            labelsB = '% Above', '% Below', 'Total %'
+            #sizesB = [highthreshCalc, lowthreshCalc, (impactCounter - threshTot)]  # Setting pie b (Threshold) chart labels
+            sizesB = [highthreshCalc, lowthreshCalc, threshTot]  # Setting pie b (Threshold) chart labels
+            labelsB = '% Above', '% Below', "% Total "
 
             sizesC = [7, 93]  # Setting pie c (Impact) chart labels
             labelsC = 'Above %', 'Total %'
 
-            # plt.ion()
+            #plt.ion()
 
             fig4 = plt.figure(figsize=(4, 3), dpi=95)  # dpi zooms out and in with a change of value
             fig5 = plt.figure(figsize=(4, 3), dpi=95)  # dpi zooms out and in with a change of value
 
             rePlot = fig4.add_subplot(1, 1, 1)  # Pie chart for client
-            rePlot.set_title("Activity Peaks", fontsize=12)
+            rePlot.set_title("Activity Peaks", fontsize=12) 
             rePlot.pie(sizesB, labels=labelsB, autopct='%1.1f%%', colors=outer_colors,
                        # startangle sets starting point of % divisions
                        radius=1.2, shadow=True, startangle=180,  # colors are random right now calling outer_colors
                        wedgeprops=dict(width=size, edgecolor='w'),
                        textprops={'fontsize': 7})
+            
 
             rePlotPV = fig5.add_subplot(1, 1, 1)  # Pie chart for client
             rePlotPV.set_title("Activity Peaks", fontsize=12)
@@ -393,6 +389,7 @@ class logSuccess:
                          radius=1.2, shadow=True, startangle=180,  # colors are random right now calling outer_colors
                          wedgeprops=dict(width=size, edgecolor='w'),
                          textprops={'fontsize': 7})
+            
 
             canvasRP = FigureCanvasTkAgg(fig4, master=splitView)
             # canvasRP.draw()
@@ -508,6 +505,89 @@ class logSuccess:
 
 
         #*********************************************************
+
+        def multPlot():
+
+            xMV = []
+            yMV = []
+            x1 = []
+            y1 = []
+            x2 = []
+            y2 = []
+            x3 = []
+            y3 = []
+            x4 = []
+            y4 = []
+
+            Counter = 0
+
+
+            with open(filename, 'r') as csvfile:  # Re-set file designation
+                plots = csv.reader(csvfile)
+                for row in plots:
+                    yMV.append(int(row[0]))  # Using data points as y-axis points
+                    xMV.append(Counter)
+                    if row:
+                        Counter += 1  # Counting rows in text file and using them for x-axis
+
+            s1 = simpledialog.askinteger(" ", "Enter Graph 1 start value: ")  
+            f1 = simpledialog.askinteger(" ", "Enter Graph 1 end value: ")
+            s2 = simpledialog.askinteger(" ", "Enter Graph 2 start value: ")  
+            f2 = simpledialog.askinteger(" ", "Enter Graph 2 end value: ") 
+            s3 = simpledialog.askinteger(" ", "Enter Graph 3 start value: ")  
+            f3 = simpledialog.askinteger(" ", "Enter Graph 3 end value: ")
+            s4 = simpledialog.askinteger(" ", "Enter Graph 4 start value: ")  
+            f4 = simpledialog.askinteger(" ", "Enter Graph 4 end value: ")
+
+            s1Mult = s1 * 10
+            f1Mult = f1 * 10
+            s2Mult = s2 * 10
+            f2Mult = f2 * 10
+            s3Mult = s3 * 10
+            f3Mult = f3 * 10
+            s4Mult = s4 * 10
+            f4Mult = f4 * 10
+            
+            x1 = (x[s1Mult:f1Mult])         # List slicing!!
+            y1 = (y[s1Mult:f1Mult]) 
+            x2 = (x[s2Mult:f2Mult])         
+            y2 = (y[s2Mult:f2Mult])
+            x3 = (x[s3Mult:f3Mult])         
+            y3 = (y[s3Mult:f3Mult])
+            x4 = (x[s4Mult:f4Mult])         
+            y4 = (y[s4Mult:f4Mult]) 
+
+            #plt.ion()
+
+            figMV = plt.figure(constrained_layout=True)                     # Reset Multiple Plot View
+            specMV = gridspec.GridSpec(ncols=3, nrows=3, figure=figMV)
+
+            ax1 = figMV.add_subplot(specMV[0, 0])
+            ax2 = figMV.add_subplot(specMV[0, 1])
+            ax3 = figMV.add_subplot(specMV[1, 0])
+            ax4 = figMV.add_subplot(specMV[1, 1])
+            ax5 = figMV.add_subplot(specMV[2, :])
+
+            ax1.plot(x1, y1, color='darkorange')
+            ax2.plot(x2, y2, color='forestgreen')
+            ax3.plot(x3, y3, color='darkmagenta')
+            ax4.plot(x4, y4, color='royalblue')
+            ax5.plot(xMV, yMV)
+          
+            ax5.set_xticklabels(['0', '10', '20', '30', '40', '50', '60', '70', '80'])
+                  
+            canvasMV = FigureCanvasTkAgg(figMV, master=multiView)
+            #multiView.cursor = Cursor(figMV, useblit=True, color='red', linewidth=2)
+            canvasMV.draw()
+            canvasMV.get_tk_widget().grid(row=1, column=3, rowspan=5, padx=10,
+                                         pady=10)
+            
+          
+           
+            
+          
+              
+
 
         l1 = Label(splitView,
                    text="Above Threshold: ",
@@ -691,7 +771,7 @@ class logSuccess:
                     relief="flat",
                     bg="mint cream",
                     text=foP)
-        """
+        
         A16 = Label(analysisView,
                     text="Patient Notes",
                     font="bold")             #creates the header for Patient notes
@@ -700,7 +780,7 @@ class logSuccess:
                    height=20,
                    width=40)                 #creates the text box for patient notes
 
-        """
+          
 
         A1.grid(row=2, column=4, pady=2)
         A2.grid(row=2, column=0, pady=2)
@@ -717,9 +797,10 @@ class logSuccess:
         A13.grid(row=6, column=5, pady=2)
         A14.grid(row=7, column=4, pady=2)
         A15.grid(row=7, column=5, pady=2)
-        #A16.grid(row=6, column=0, pady=2)
-        #A17.grid(row=7, column=0, pady=2)
+        A16.grid(row=0, column=0, pady=2)
+        A17.grid(row=1, column=0, pady=2)
 
+        
         setThresholdAV.grid(row=1, column=4, pady=5)
 
         # ***********************************************************
@@ -761,21 +842,59 @@ class logSuccess:
         p3.grid(row=8, column=2)
         p4.grid(row=8, column=4)
 
+
+        m1 = Label(multiView,
+                    text="Multiple Plot View ",
+                    font="bold")
+
+        m2 = Label(multiView,
+                    text=" ",
+                    font="bold")
+
+        setPlot = tk.Button(multiView,
+                    text="Set Plots",
+                    bg="mint cream",
+                    command=multPlot)  # command calls any function you want (setFunc, clear.....) !
+
+        m1.grid(row=0, column=3)
+        m2.grid(row=0, column=0)
+        setPlot.grid(row=1, column=0, pady=5)
+
+
+  
         # checkbutton.grid(row = 2, column = 6, pady = 5)
         setThreshold.grid(row=4, column=5, pady=5)
         # replot.grid(row=1, column=5, pady=5)
 
         fig1 = plt.figure(figsize=(6, 6), dpi=95)  # Instances of individual figures for alignment
-        figAV = plt.figure(figsize=(10, 6), dpi=95)  # Instances of individual figures for alignment
+        figAV = plt.figure(figsize=(9, 6), dpi=95)  # Instances of individual figures for alignment
+        #figMV = plt.figure(figsize=(9, 6), dpi=95)  # Multiple Plot View
+        figMV = plt.figure(constrained_layout=True)  # Multiple Plot View
         fig2 = plt.figure(figsize=(4, 3), dpi=95)  # figsize sets overall size of each figure
         fig3 = plt.figure(figsize=(4, 3), dpi=95)  # dpi zooms out and in with a change of value
+
+        specMV = gridspec.GridSpec(ncols=5, nrows=5, figure=figMV)
 
         # plt.ion()
         a = fig1.add_subplot(1, 1, 1)  # Analysis View Graph plot
         av = figAV.add_subplot(1, 1, 1)  # Analysis View Graph plot
-        # a.subplots_adjust(bottom=0.1, right=0.8, top=0.9)
+      
         a.plot(x, y, label='Loaded from file!')
         av.plot(x, y, label='Loaded from file!')
+       
+        ax1 = figMV.add_subplot(specMV[0, :])
+        ax2 = figMV.add_subplot(specMV[1, :])
+        ax3 = figMV.add_subplot(specMV[2, :])
+        ax4 = figMV.add_subplot(specMV[3, :])
+        ax5 = figMV.add_subplot(specMV[4, :])
+
+        ax1.plot(x, y, color='darkmagenta')
+        ax2.plot(x, y, color='forestgreen')
+        ax3.plot(x, y, color='darkmagenta')
+        ax4.plot(x, y, color='royalblue')
+        ax5.plot(x, y)
+
+        #mv, axis = add.subplots(2, 2)
 
         line, = av.plot(x, y,'o',picker=0.01)  # 5 points tolerance         # For Force @ a point click event
 
@@ -786,6 +905,8 @@ class logSuccess:
 
         av.set_xlabel('Time(seconds)')  # Set X axis title
         av.set_ylabel('Force in Newtons')  # Set Y axis title
+
+      
         # a.set_xticks(['0','10','20','30','40','50','60','70','80'])
         a.set_xticklabels(['0', '10', '20', '30', '40', '50', '60', '70', '80'])
         a.set_yticks(
@@ -794,7 +915,13 @@ class logSuccess:
         av.set_xticklabels(['0', '10', '20', '30', '40', '50', '60', '70', '80'])
         av.set_yticks(
             [0, 250, 500, 750, 1000, 1250, 1500, 1750, 2000])  # Just using this right now but will most likely change
-        # a.xticks(x,values)
+
+        ax1.set_xticklabels(['0', '10', '20', '30', '40', '50', '60', '70', '80'])
+        ax2.set_xticklabels(['0', '10', '20', '30', '40', '50', '60', '70', '80'])
+        ax3.set_xticklabels(['0', '10', '20', '30', '40', '50', '60', '70', '80'])
+        ax4.set_xticklabels(['0', '10', '20', '30', '40', '50', '60', '70', '80'])
+        ax5.set_xticklabels(['0', '10', '20', '30', '40', '50', '60', '70', '80'])
+        
 
         # https://matplotlib.org/3.1.1/api/_as_gen/matplotlib.axes.Axes.pie.html#matplotlib.axes.Axes.pie
 
@@ -852,6 +979,12 @@ class logSuccess:
         canvas3b.get_tk_widget().grid(row=4, column=5, rowspan=4, padx=50,
                                       pady=150)  # Setting position of Pie chart Impacts
 
+        canvasMV = FigureCanvasTkAgg(figMV, master=multiView)
+        #multiView.cursor = Cursor(figMV, useblit=True, color='red', linewidth=2)
+        canvasMV.draw()
+        canvasMV.get_tk_widget().grid(row=1, column=3, rowspan=5, padx=10,
+                                     pady=10)
+
         # navigational toolbar setup & pos
         toolbarFrame = Frame(master=splitView)
         toolbarFrame.grid(row=4, column=3)
@@ -860,7 +993,12 @@ class logSuccess:
         toolbarFrame = Frame(master=analysisView)
         toolbarFrame.grid(row=5, column=3)
         toolbar = NavigationToolbar2Tk(canvas1, toolbarFrame)
-
+        
+        toolbarFrame = Frame(master=multiView)
+        toolbarFrame.grid(row=6, column=3)
+        toolbar = NavigationToolbar2Tk(canvasMV, toolbarFrame)
+        
+       
 
 # Used for Analysis graph cursor
 
@@ -975,6 +1113,9 @@ def register():
     Button(register_screen, text="Register", width=10, height=1, bg="#42e9f5",
            command=register_Doctor).pack()  # calls register_Doctor
 
+    Button(register_screen,
+           text="Exit Application",
+           command=sys.exit(0)).pack()  # Button to exit app
 
 # This method collects the Doctor's info. Then it saves the user's info into a File.
 def register_Doctor():
