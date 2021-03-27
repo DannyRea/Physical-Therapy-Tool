@@ -19,6 +19,10 @@ global newVal
 global line_1
 global line_2
 
+#tunnelfile = open("ssh.txt", 'r')
+#sacUser = tunnelfile.readline()
+#sacPass = tunnelfile.readline()
+
 
 sacUser = input('SacLink username: ')
 sacPass = input('SacLink password: ')
@@ -151,6 +155,24 @@ def login_verify():
     password1 = password_verify.get()
     username_login_entry.delete(0, END)
     password_login_entry.delete(0, END)
+    
+        
+    ##sql = "SELECT userName, passWord FROM USER WHERE userName = %s AND passWord = %s VALUES (%s, %s)"
+
+    ##val = (username1, password1)
+
+    ##db_cursor.execute(sql, val)
+    #result = db_cursor.fetchall()
+    
+    #if result == None:
+        #user_not_found()
+    #else:
+        #importFile()
+
+    #for row in result:
+        #print(row)
+        #print("\n")
+
 
     list_of_files = os.listdir()
     if username1 in list_of_files:  # if username is found
