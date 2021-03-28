@@ -518,7 +518,6 @@ class logSuccess:
         
             Counter = 0
 
-
             with open(filename, 'r') as csvfile:  # Re-set file designation
                 plots = csv.reader(csvfile)
                 for row in plots:
@@ -527,7 +526,6 @@ class logSuccess:
                     if row:
                         Counter += 1  # Counting rows in text file and using them for x-axis
           
-
             s1 = simpledialog.askinteger(" ", "Enter Graph 1 start value: ")  
             f1 = simpledialog.askinteger(" ", "Enter Graph 1 end value: ")
             s2 = simpledialog.askinteger(" ", "Enter Graph 2 start value: ")  
@@ -536,51 +534,54 @@ class logSuccess:
             f3 = simpledialog.askinteger(" ", "Enter Graph 3 end value: ")
             s4 = simpledialog.askinteger(" ", "Enter Graph 4 start value: ")  
             f4 = simpledialog.askinteger(" ", "Enter Graph 4 end value: ")
-            """
-            s1Mult = s1 * 100
-            f1Mult = f1 * 100
-            s2Mult = s2 * 100
-            f2Mult = f2 * 100
-            s3Mult = s3 * 100
-            f3Mult = f3 * 100
-            s4Mult = s4 * 100
-            f4Mult = f4 * 100
-            """
-                      
-            x1 = (xMV[s1:f1])         # List slicing!!
-            y1 = (yMV[s1:f1]) 
-            x2 = (xMV[s2:f2])         
-            y2 = (yMV[s2:f2])
-            x3 = (xMV[s3:f3])         
-            y3 = (yMV[s3:f3])
-            x4 = (xMV[s4:f4])         
-            y4 = (yMV[s4:f4]) 
+            
+            s1Mult = s1 * 250
+            f1Mult = f1 * 250
+            s2Mult = s2 * 250
+            f2Mult = f2 * 250
+            s3Mult = s3 * 250
+            f3Mult = f3 * 250
+            s4Mult = s4 * 250
+            f4Mult = f4 * 250
+           
+            x1 = (xMV[s1Mult:f1Mult])         # List slicing!!
+            y1 = (yMV[s1Mult:f1Mult]) 
+            x2 = (xMV[s2Mult:f2Mult])         
+            y2 = (yMV[s2Mult:f2Mult])
+            x3 = (xMV[s3Mult:f3Mult])         
+            y3 = (yMV[s3Mult:f3Mult])
+            x4 = (xMV[s4Mult:f4Mult])         
+            y4 = (yMV[s4Mult:f4Mult]) 
 
-            #plt.ion()
+            figMV = plt.figure(constrained_layout=True)
+            figMV.set_figheight(5)
+            figMV.set_figwidth(5)
 
-            figMV = plt.figure(constrained_layout=True)                     # Reset Multiple Plot View
-            specMV = gridspec.GridSpec(ncols=3, nrows=3, figure=figMV)
+            specMV = gridspec.GridSpec(ncols=2, nrows=2, figure=figMV,
+                                        width_ratios=[8, 8], wspace=0.5,
+                                        hspace=0.5, height_ratios=[8, 8])
 
-            ax1 = figMV.add_subplot(specMV[0, 0])
-            ax2 = figMV.add_subplot(specMV[0, 1])
-            ax3 = figMV.add_subplot(specMV[1, 0])
-            ax4 = figMV.add_subplot(specMV[1, 1])
-            ax5 = figMV.add_subplot(specMV[2, :])
-
+            ax1 = figMV.add_subplot(specMV[0])
+            ax2 = figMV.add_subplot(specMV[1])
+            ax3 = figMV.add_subplot(specMV[2])
+            ax4 = figMV.add_subplot(specMV[3])
+            
             ax1.plot(x1, y1, color='darkorange')
             ax2.plot(x2, y2, color='forestgreen')
             ax3.plot(x3, y3, color='darkmagenta')
             ax4.plot(x4, y4, color='royalblue')
-            ax5.plot(xMV, yMV)
-                             
+                            
             canvasMV = FigureCanvasTkAgg(figMV, master=multiView)
-            #multiView.cursor = Cursor(figMV, useblit=True, color='red', linewidth=2)
             canvasMV.draw()
-            canvasMV.get_tk_widget().grid(row=1, column=3, rowspan=5, padx=10,
+            canvasMV.get_tk_widget().grid(row=2, column=0, rowspan=5, padx=10,
                                          pady=10)
             
   
         def primSec(): 
+
+            #fig1.clear()
+            #figAV.clear()
+            
             secCounter = 0
             Counter = 0
 
@@ -607,29 +608,43 @@ class logSuccess:
                     x2.append(secCounter)
                     if row:
                         secCounter += 1  # Counting rows in text file and using them for x-axis
-                     
+            
+                    
             a.plot(x1, y1, color="r") 
             a.plot(x2, y2, color="g")
-
-            a.set_xlabel('Time(seconds)')  # Set X axis title
-            a.set_ylabel('Force in Newtons')  # Set Y axis title
-
-            a.set_xticklabels(['0', '10', '20', '30', '40', '50', '60', '70', '80'])
-            a.set_yticks(
-                       [0, 250, 500, 750, 1000, 1250, 1500, 1750, 2000])  # Just using this right now but will most likely change
-
+            av.plot(x1, y1, color="r") 
+            av.plot(x2, y2, color="b")
+                 
             canvas1b = FigureCanvasTkAgg(fig1, master=splitView)
             splitView.cursor = Cursor(a, useblit=True, color='red', linewidth=2)  # Used for Analysis graph cursor
             canvas1b.draw()
             canvas1b.get_tk_widget().grid(row=1, column=3, rowspan=4, padx=10,
                                                  pady=150)
 
+            canvas1 = FigureCanvasTkAgg(figAV, master=analysisView)
+            analysisView.cursor = Cursor(av, useblit=True, color='red', linewidth=2)
+            canvas1.draw()
+            canvas1.get_tk_widget().grid(row=1, column=3, rowspan=4, padx=10,
+                                         pady=10)
+
+            figAV.canvas.mpl_connect('pick_event', onpick)
+            # Setting positions of Analysis graph
+            lineA1, = av.plot(x1, y1,'o',picker=0.01)  # 5 points tolerance         # For Force @ a point click event
+            lineA2, = av.plot(x2, y2,'o',picker=0.01)  # 5 points tolerance         # For Force @ a point click event
+
             toolbarFrame = Frame(master=splitView)
             toolbarFrame.grid(row=4, column=3)
             toolbar = NavigationToolbar2Tk(canvas1b, toolbarFrame)
-              
 
-                  
+            toolbarFrame = Frame(master=analysisView)
+            toolbarFrame.grid(row=7, column=3)
+            toolbar = NavigationToolbar2Tk(canvas1, toolbarFrame)
+            
+
+        def setPrim():
+
+            importFile()
+            
        # Split View ***************************************       
 
 
@@ -646,12 +661,12 @@ class logSuccess:
                    text="Set Primary & Secondary Data",
                    font="bold",
                    command=primSec)
-        """
+        
         l4 = tk.Button(splitView,
-                   text="Set Seconday Data",
+                   text="Set Primary Data",
                    font="bold",
-                   command=secondary)
-        """
+                   command=setPrim)
+        
         l5 = Label(splitView,
                    text="Total Activity: ",
                    font="bold")
@@ -701,7 +716,7 @@ class logSuccess:
         l1.grid(row=0, column=4, pady=2)
         l2.grid(row=0, column=0, pady=2)
         l3.grid(row=1, column=3, pady=2)
-        #l4.grid(row=1, column=0, pady=2)
+        l4.grid(row=0, column=3, pady=2)
         l5.grid(row=3, column=4, pady=2)
         l6.grid(row=1, column=4, pady=2)
 
@@ -893,35 +908,41 @@ class logSuccess:
   
         fig1 = plt.figure(figsize=(7, 6), dpi=95)  # Instances of individual figures for alignment
         figAV = plt.figure(figsize=(9, 6), dpi=95)  # Instances of individual figures for alignment
-        #figMV = plt.figure(figsize=(9, 6), dpi=95)  # Multiple Plot View
-        figMV = plt.figure(constrained_layout=True)  # Multiple Plot View
+        figMVS = plt.figure(figsize=(6,6))  # Multiple Plot View
+
+        figMV = plt.figure(constrained_layout=True)
+        figMV.set_figheight(5)
+        figMV.set_figwidth(5)
+
         fig2 = plt.figure(figsize=(4, 3), dpi=95)  # figsize sets overall size of each figure
         fig3 = plt.figure(figsize=(4, 3), dpi=95)  # dpi zooms out and in with a change of value
 
-        specMV = gridspec.GridSpec(ncols=5, nrows=5, figure=figMV)
+        specMVS = figMVS.add_subplot(1, 1, 1)
+        specMV = gridspec.GridSpec(ncols=2, nrows=2, figure=figMV,
+                        width_ratios=[8, 8], wspace=0.5,
+                        hspace=0.5, height_ratios=[8, 8])
 
-        #sec = fig1.add_subplot(1, 1, 1)  # Analysis View Graph plot
+  
         a = fig1.add_subplot(1, 1, 1)  # Analysis View Graph plot
         av = figAV.add_subplot(1, 1, 1)  # Analysis View Graph plot
+        ax = figMVS.add_subplot(1, 1, 1)  # Mulit View Bottom
          
       
         a.plot(x, y, label='Loaded from file!')
         av.plot(x, y, label='Loaded from file!')
-        #sec.plot(X, Y, color='r') 
+      
+        ax1 = figMV.add_subplot(specMV[0])
+        ax2 = figMV.add_subplot(specMV[1])
+        ax3 = figMV.add_subplot(specMV[2])
+        ax4 = figMV.add_subplot(specMV[3])
+        #ax5 = figMV.add_subplot(specMV[4, :])
 
-        ax1 = figMV.add_subplot(specMV[0, :])
-        ax2 = figMV.add_subplot(specMV[1, :])
-        ax3 = figMV.add_subplot(specMV[2, :])
-        ax4 = figMV.add_subplot(specMV[3, :])
-        ax5 = figMV.add_subplot(specMV[4, :])
-
-        ax1.plot(x, y, color='darkmagenta')
+        ax1.plot(x, y, color='darkorange')
         ax2.plot(x, y, color='forestgreen')
         ax3.plot(x, y, color='darkmagenta')
         ax4.plot(x, y, color='royalblue')
-        ax5.plot(x, y)
 
-        #mv, axis = add.subplots(2, 2)
+        ax.plot(x, y)
 
         line, = av.plot(x, y,'o',picker=0.01)  # 5 points tolerance         # For Force @ a point click event
 
@@ -929,12 +950,16 @@ class logSuccess:
         setThreshLine()
         a.set_xlabel('Time(seconds)')  # Set X axis title
         a.set_ylabel('Force in Newtons')  # Set Y axis title
-
         av.set_xlabel('Time(seconds)')  # Set X axis title
         av.set_ylabel('Force in Newtons')  # Set Y axis title
-
-      
-        # a.set_xticks(['0','10','20','30','40','50','60','70','80'])
+        ax.set_xlabel('Time(seconds)')  # Set X axis title
+        ax.set_ylabel('Force in Newtons')  # Set Y axis title
+        """
+        ax1.set_xticklabels(['0', '10', '20', '30', '40', '50', '60', '70', '80'])
+        ax2.set_xticklabels(['0', '10', '20', '30', '40', '50', '60', '70', '80'])
+        ax3.set_xticklabels(['0', '10', '20', '30', '40', '50', '60', '70', '80'])
+        ax4.set_xticklabels(['0', '10', '20', '30', '40', '50', '60', '70', '80'])
+        """   
         a.set_xticklabels(['0', '10', '20', '30', '40', '50', '60', '70', '80'])
         a.set_yticks(
             [0, 250, 500, 750, 1000, 1250, 1500, 1750, 2000])  # Just using this right now but will most likely change
@@ -943,16 +968,10 @@ class logSuccess:
         av.set_yticks(
             [0, 250, 500, 750, 1000, 1250, 1500, 1750, 2000])  # Just using this right now but will most likely change
 
-        """
-        ax1.set_xticklabels(['0', '10', '20', '30', '40', '50', '60', '70', '80'])
-        ax2.set_xticklabels(['0', '10', '20', '30', '40', '50', '60', '70', '80'])
-        ax3.set_xticklabels(['0', '10', '20', '30', '40', '50', '60', '70', '80'])
-        ax4.set_xticklabels(['0', '10', '20', '30', '40', '50', '60', '70', '80'])
-        ax5.set_xticklabels(['0', '10', '20', '30', '40', '50', '60', '70', '80'])
-        """
-
-        # https://matplotlib.org/3.1.1/api/_as_gen/matplotlib.axes.Axes.pie.html#matplotlib.axes.Axes.pie
-
+        ax.set_xticklabels(['0', '10', '20', '30', '40', '50', '60', '70', '80'])
+        ax.set_yticks(
+            [0, 250, 500, 750, 1000, 1250, 1500, 1750, 2000])  # Just using this right now but will most likely change
+     
         b = fig2.add_subplot(1, 1, 1)  # Pie chart for client
         b.set_title("Activity Peaks", fontsize=12)
         b.pie(sizesB, labels=labelsB, autopct='%1.1f%%', colors=outer_colors,
@@ -1010,7 +1029,13 @@ class logSuccess:
         canvasMV = FigureCanvasTkAgg(figMV, master=multiView)
         #multiView.cursor = Cursor(figMV, useblit=True, color='red', linewidth=2)
         canvasMV.draw()
-        canvasMV.get_tk_widget().grid(row=1, column=3, rowspan=5, padx=10,
+        canvasMV.get_tk_widget().grid(row=2, column=0, rowspan=2, padx=10,
+                                     pady=10)
+
+        canvasMVS = FigureCanvasTkAgg(figMVS, master=multiView)
+        #multiView.cursor = Cursor(figMV, useblit=True, color='red', linewidth=2)
+        canvasMVS.draw()
+        canvasMVS.get_tk_widget().grid(row=2, column=4, rowspan=2, padx=10,
                                      pady=10)
 
         # navigational toolbar setup & pos
@@ -1019,13 +1044,14 @@ class logSuccess:
         toolbar = NavigationToolbar2Tk(canvas1b, toolbarFrame)
 
         toolbarFrame = Frame(master=analysisView)
-        toolbarFrame.grid(row=5, column=3)
+        toolbarFrame.grid(row=7, column=3)
         toolbar = NavigationToolbar2Tk(canvas1, toolbarFrame)
-        
+
+        """ 
         toolbarFrame = Frame(master=multiView)
-        toolbarFrame.grid(row=6, column=3)
+        toolbarFrame.grid(row=7, column=3)
         toolbar = NavigationToolbar2Tk(canvasMV, toolbarFrame)
- 
+        """
 
 # Failed login attempt.
 # Clears user input and informs user of failed login.
@@ -1389,29 +1415,8 @@ def browseFiles():
         print(filename)
 
         new_window(logSuccess)  # Calls main class here!!!!!
+  
 
-def browseSecFiles():
-    #global filename
-    # delete_importFile()         # Clean up import screen
- 
-    filename = filedialog.askopenfilename(initialdir = "/",
-                                            title = "Select a File",
-                                         filetypes = (("Text files",
-                                                          "*.txt*"),
-                                                       ("all files",
-                                                            "*.*")))
-                                                                                                                 
-    fileExplorer.configure(text="File Opened: " + "" + filename)
-    
-
-    if os.stat(filename).st_size == 0:  # If file is not null open main class else no go!
-        print('File is empty')
-
-    else:
-        print('File is not empty')
-        print(filename)
-
-        #new_window(logSuccess)  # Calls main class here!!!!!
 
 # Allows user to search and import data from external service.
 def importFile():
@@ -1441,32 +1446,7 @@ def importFile():
     buttonExplore.grid(column=0, row=2)
     buttonExit.grid(column=0, row=3)
 
-def importFile2():
-    global importFile_screen
-    global fileExplorer
 
-    delete_login()  # Clean up login screen
-    importFile_screen = tk.Tk()
-
-    importFile_screen.title('File Explorer')  # Window Title
-    importFile_screen.geometry("350x300")
-    importFile_screen.config(background="white")  # Set window background color
-    fileExplorer = Label(importFile_screen,
-                         text="File Explorer ",
-                         width=50, height=4,
-                         fg="blue")
-
-    buttonExplore = Button(importFile_screen,
-                           text="Browse Files",
-                           command=browseSecFiles)  # Command call for browseFile function
-
-    buttonExit = Button(importFile_screen,
-                        text="Exit",
-                        command=exit)  # Exits out of program
-
-    fileExplorer.grid(column=0, row=1)  # Using grid layout
-    buttonExplore.grid(column=0, row=2)
-    buttonExit.grid(column=0, row=3)
 
 # -------------------- File Exploration ---------- End ----------
 
@@ -1491,6 +1471,8 @@ def delete_importFile():
 
 def delete_login():
     login_screen.destroy()
+
+
 
 
 # -------------------- Remove Pop Ups From Display ---------- End ----------
