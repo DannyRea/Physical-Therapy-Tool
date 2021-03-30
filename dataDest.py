@@ -14,18 +14,22 @@ from matplotlib.widgets import Cursor
 import mysql.connector as db
 from HexToDec import HexToDec
 import matplotlib.gridspec as gridspec
+import re
 
 global newVal
 global line_1
 global line_2
 
-#tunnelfile = open("ssh.txt", 'r')
-#sacUser = tunnelfile.readline()
-#sacPass = tunnelfile.readline()
+tunnelfile = open("ssh.txt", 'r')
+sacUser = tunnelfile.readline()
+sacPass = tunnelfile.readline()
+
+sacUser = re.sub(r"[\n\t\s]*", "", sacUser)
+sacPass = re.sub(r"[\n\t\s]*", "", sacPass)
 
 
-sacUser = input('SacLink username: ')
-sacPass = input('SacLink password: ')
+#sacUser = input('SacLink username: ')
+#sacPass = input('SacLink password: ')
 
 server = SSHTunnelForwarder(
     ("ecs-pw-proj-web.ecs.csus.edu", 22),
