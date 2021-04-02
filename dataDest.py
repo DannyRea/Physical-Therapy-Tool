@@ -882,25 +882,36 @@ class logSuccess:
 
         # Patient View ***********************************************************
 
-    
         p1 = Label(patientView,
                    borderwidth=10,
                    width=15,
                    relief="flat",
                    bg="mint cream",
-                   text=("Impacts", impactCounter),
+                   text="Impacts\n%r"%impactCounter,
                    font="bold")
 
         p2 = Label(patientView,
-                   text="Time period",
+                   borderwidth=10,
+                   width=15,
+                   relief="flat",
+                   bg="mint cream",
+                   text="Time period\n%r"%seconds,
                    font="bold")
 
         p3 = Label(patientView,
+                   borderwidth=10,
+                   width=15,
+                   relief="flat",
+                   bg="mint cream",
                    text="Average Newtons",
                    font="bold")
 
         p4 = Label(patientView,
-                   text="Total Datapoints",
+                   borderwidth=10,
+                   width=15,
+                   relief="flat",
+                   bg="mint cream",
+                   text="Total Datapoints\n%r"%totalCount,
                    font="bold")
 
         p1.grid(row=6, column=3)
